@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "preview": "vite preview",
     "test": "vitest"
   },
@@ -29,7 +31,6 @@
     "prettier": "^3.9.6",
     "typescript": "~6.0.2",
     "vite": "^8.2.2",
-    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^5.0.0"
   }
 }

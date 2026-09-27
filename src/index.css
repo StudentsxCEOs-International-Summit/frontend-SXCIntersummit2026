@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,600;0,700;0,800;1,700;1,800;1,900&family=Poppins:ital,wght@0,500;0,600;1,500;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=Poppins:wght@400;500;600&display=swap');
 @import 'tailwindcss';
 
 @theme inline {
@@ -126,7 +126,51 @@
 
 /* Components */
 @layer components {
-  /* Reusable component styles can be added here */
+  /* Landing page: white headline text with dark-blue outline + glow */
+  .text-outline-blue {
+    color: var(--color-ds-white);
+    text-shadow:
+      -2px -2px 0 #0a3fb8,
+      2px -2px 0 #0a3fb8,
+      -2px 2px 0 #0a3fb8,
+      2px 2px 0 #0a3fb8,
+      0 -2px 0 #0a3fb8,
+      0 2px 0 #0a3fb8,
+      -2px 0 0 #0a3fb8,
+      2px 0 0 #0a3fb8,
+      0 6px 18px rgb(10 63 184 / 0.55);
+  }
+
+  /* Thinner outline for small text on gold buttons */
+  .text-outline-sm {
+    color: var(--color-primary);
+    text-shadow:
+      -1px -1px 0 #fff,
+      1px -1px 0 #fff,
+      -1px 1px 0 #fff,
+      1px 1px 0 #fff;
+  }
+
+  .bg-gold-gloss {
+    background-image: linear-gradient(90deg, #fff6e0 0%, #fbd878 45%, #f4a300 100%);
+  }
+
+  .bg-glass-blue {
+    background-image:
+      linear-gradient(160deg, rgb(255 255 255 / 0.35) 0%, rgb(255 255 255 / 0) 55%),
+      linear-gradient(135deg, #5b95f7 0%, #1f68f0 100%);
+  }
+
+  .bg-landing {
+    background-image: linear-gradient(
+      180deg,
+      #5b8cf6 0%,
+      #3d7cf5 14%,
+      #2f74f6 30%,
+      #1868f6 55%,
+      #1266f5 100%
+    );
+  }
 }
 
 /* Utilities */
@@ -171,5 +215,25 @@
 
   .bg-gradient-blue-dark {
     background-image: linear-gradient(135deg, #0262f4 0%, #1553ae 100%);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: float 9s ease-in-out infinite;
   }
 }

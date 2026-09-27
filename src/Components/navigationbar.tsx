@@ -26,27 +26,18 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isProgramDropdownOpen, setIsProgramDropdownOpen] = useState(false)
 
-  const defaultNavItems = [
+  const defaultNavItems: NonNullable<NavigationBarProps['items']> = [
     { label: 'Home', href: '#home' },
     { label: 'About', href: '#about' },
-    {
-      label: 'Program',
-      href: '#program',
-      hasDropdown: true,
-      dropdownItems: [
-        { label: 'Summit Overview', href: '#program-overview' },
-        { label: 'Keynote Sessions', href: '#keynotes' },
-        { label: 'Workshops', href: '#workshops' },
-        { label: 'Networking & Gala', href: '#networking' },
-      ],
-    },
+    { label: 'IBCC', href: '#competitions' },
+    // TODO: point to the merchandise page once it exists.
     { label: 'Merchandise', href: '#merchandise' },
   ]
 
   const navItems = items || defaultNavItems
 
   return (
-    <header className="w-full flex justify-center px-4 sm:px-6 lg:px-8 py-5 sticky top-0 z-50">
+    <header className="fixed inset-x-0 top-0 z-50 flex w-full justify-center px-4 py-5 sm:px-6 lg:px-8">
       {/* Outer Pill Container */}
       <nav
         aria-label="Main Navigation"
@@ -68,7 +59,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
           >
             <img
               src={logoSrc}
-              alt="image"
+              alt="SxC International Summit"
               className="h-12 sm:h-[52px] w-auto max-w-[160px] sm:max-w-[190px] object-contain select-none drop-shadow-sm transition-transform duration-200 hover:scale-105"
               loading="eager"
             />
@@ -166,8 +157,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
             onClick={onSignIn}
             className="group relative h-[44px] sm:h-[48px] px-8 sm:px-10 rounded-full font-semibold text-[16px] sm:text-[17px] tracking-wide text-[#1c55d2] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer select-none flex items-center justify-center"
             style={{
-              background:
-                'linear-gradient(180deg, #fff9e6 0%, #fcd65b 45%, #f49e0b 100%)',
+              background: 'linear-gradient(180deg, #fff9e6 0%, #fcd65b 45%, #f49e0b 100%)',
               border: '2px solid rgba(255, 255, 255, 0.95)',
               boxShadow:
                 '0 4px 16px rgba(245, 158, 11, 0.45), inset 0 1px 2px rgba(255, 255, 255, 1)',
@@ -187,11 +177,21 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
             aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? (
-              <svg className="w-6 h-6 stroke-[2]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg
+                className="w-6 h-6 stroke-[2]"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             ) : (
-              <svg className="w-6 h-6 stroke-[2]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg
+                className="w-6 h-6 stroke-[2]"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             )}
@@ -239,8 +239,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
               }}
               className="w-full py-2.5 rounded-full font-semibold text-[16px] text-[#1c55d2] transition-transform active:scale-95"
               style={{
-                background:
-                  'linear-gradient(180deg, #fff7dc 0%, #fbd558 46%, #f59e0b 100%)',
+                background: 'linear-gradient(180deg, #fff7dc 0%, #fbd558 46%, #f59e0b 100%)',
                 border: '1.5px solid rgba(255, 255, 255, 0.95)',
                 boxShadow:
                   '0 4px 14px rgba(245, 158, 11, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.95)',

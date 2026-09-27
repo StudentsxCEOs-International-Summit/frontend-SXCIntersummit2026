@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 function NotFoundPage() {
   return (
-    <main className="not-found-page">
+    <section className="not-found-page pt-32">
       <div className="not-found-page__header">
         <span className="not-found-page__brand">SXC Intersummit</span>
         <span className="not-found-page__status">Error 404</span>
@@ -26,7 +26,7 @@ function NotFoundPage() {
           </Link>
         </div>
       </div>
-    </main>
+    </section>
   )
 }
 

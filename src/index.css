@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&family=Poppins:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Poppins:wght@200;300;400;500;600;700&display=swap');
 @import 'tailwindcss';
 
 @theme inline {
@@ -17,6 +17,16 @@
 
   --color-ds-white: #ffffff;
   --color-ds-black: #0f172a;
+
+  /* Register / auth brand palette */
+  --color-brand-blue-900: #0b4e9b;
+  --color-brand-blue-700: #075ec9;
+  --color-brand-blue-500: #175adf;
+  --color-brand-blue-300: #38b8ff;
+  --color-brand-blue-muted: #6e91b5;
+  --color-brand-blue-border: #d8e7f4;
+  --color-brand-blue-surface: #f7fafd;
+  --color-brand-gold: #ffb600;
 
   /* Typography */
   --font-heading: 'Plus Jakarta Sans', sans-serif;

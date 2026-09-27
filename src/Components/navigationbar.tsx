@@ -15,6 +15,8 @@ export interface NavigationBarProps {
     hasDropdown?: boolean
     dropdownItems?: Array<{ label: string; href: string }>
   }>
+  /** Positioning mode: 'fixed' | 'absolute' | 'sticky'. Defaults to 'fixed' */
+  position?: 'fixed' | 'absolute' | 'sticky'
 }
 
 export const NavigationBar: React.FC<NavigationBarProps> = ({
@@ -22,6 +24,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   activeItem = 'Home',
   onSignIn,
   items,
+  position = 'fixed',
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isProgramDropdownOpen, setIsProgramDropdownOpen] = useState(false)
@@ -46,11 +49,11 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   const navItems = items || defaultNavItems
 
   return (
-    <header className="w-full flex justify-center px-4 sm:px-6 lg:px-8 py-5 sticky top-0 z-50">
+    <header className={`w-full flex justify-center px-4 sm:px-6 lg:px-8 py-5 ${position} top-0 left-0 right-0 z-50 pointer-events-none`}>
       {/* Outer Pill Container */}
       <nav
         aria-label="Main Navigation"
-        className="w-full max-w-[1240px] h-[70px] sm:h-[76px] rounded-full px-5 sm:px-8 flex items-center justify-between relative transition-all duration-300 font-['Poppins',sans-serif]"
+        className="w-full max-w-[1240px] h-[70px] sm:h-[76px] rounded-full px-5 sm:px-8 flex items-center justify-between relative transition-all duration-300 font-['Poppins',sans-serif] pointer-events-auto"
         style={{
           background:
             'linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.0) 50%), linear-gradient(90deg, #4282f6 0%, #3175f6 45%, #1e5fed 100%)',
@@ -202,7 +205,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
       {/* Mobile Drawer Menu */}
       {isMobileMenuOpen && (
         <div
-          className="absolute top-full left-4 right-4 mt-2 p-5 rounded-3xl md:hidden z-50 backdrop-blur-md flex flex-col gap-4 animate-in fade-in duration-200"
+          className="absolute top-full left-4 right-4 mt-2 p-5 rounded-3xl md:hidden z-50 backdrop-blur-md flex flex-col gap-4 animate-in fade-in duration-200 pointer-events-auto"
           style={{
             background: 'linear-gradient(135deg, #2b6fe9 0%, #194dc4 100%)',
             border: '2px solid rgba(255, 255, 255, 0.8)',

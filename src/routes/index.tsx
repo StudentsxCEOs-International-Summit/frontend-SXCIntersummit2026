@@ -2,8 +2,8 @@ import { Route, Routes } from 'react-router-dom'
 import MainLayout from '@/layout/MainLayout'
 import HomePage from '@/pages/HomePage'
 import NotFoundPage from '@/pages/NotFoundPage'
-import RegisterPage from '@/pages/RegisterPage'
-import LoginPage from '@/pages/LoginPage'
+import RegisterPage from '@/pages/auth/RegisterPage'
+import LoginPage from '@/pages/auth/LoginPage'
 
 function AppRoutes() {
   return (

@@ -1,7 +1,7 @@
 import logo from '@/assets/ic-iconinternasional.svg'
 import blueStarIcon from '@/assets/ic-bluestar.svg'
 import yellowStarIcon from '@/assets/ic-star.svg'
-import { PanelBackground } from '@/components/register/decorative'
+import { PanelBackground } from '@/components/auth/decorative'
 import { Dot } from '@/components/ui'
 
 export function RegisterHeroPanel() {
@@ -47,7 +47,7 @@ export function RegisterHeroPanel() {
             <span>Connect</span>
             <Dot size={8} />
             <span>Learn</span>
-           <Dot size={8} />
+            <Dot size={8} />
             <span>Grow</span>
           </p>
 

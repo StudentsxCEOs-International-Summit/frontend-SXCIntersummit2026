@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import MainLayout from '@/layout/MainLayout'
-import HomePage from '@/pages/HomePage'
-import NotFoundPage from '@/pages/NotFoundPage'
+import HomePage from '@/Pages/HomepageTemp'
+import NotFoundPage from '@/Pages/NotFoundPage'
 
 function AppRoutes() {
   return (

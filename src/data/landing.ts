@@ -4,17 +4,21 @@
 export interface TimelineItem {
   title: string
   date: string
-  active?: boolean
+  startDate: string
+  endDate: string
 }
 
 // TODO: replace with the real schedule (mockup repeats one placeholder).
 export const timeline: TimelineItem[] = [
-  { title: 'BMC Open Registration', date: '15th - 20th October 2026' },
-  { title: 'BMC Open Registration', date: '15th - 20th October 2026' },
-  { title: 'BMC Open Registration', date: '15th - 20th October 2026', active: true },
-  { title: 'BMC Open Registration', date: '15th - 20th October 2026' },
-  { title: 'BMC Open Registration', date: '15th - 20th October 2026' },
+  { title: 'Open Registration', date: '30th October - 19th December 2026', startDate: '2026-10-30', endDate: '2026-12-19' },
+  { title: 'Preliminary Submission', date: '31st December 2026', startDate: '2026-12-31', endDate: '2026-12-31' },
+  { title: 'Preliminary Deliberation', date: '4th January - 10th January 2027', startDate: '2027-01-04', endDate: '2027-01-10' },
+  { title: 'Semifinal Annoucement', date: '11th January 2027', startDate: '2027-01-11', endDate: '2027-01-11' },
+  { title: 'Semifinal Re-Registration & Submission', date: '12th January - 19 January 2027', startDate: '2027-01-12', endDate: '2027-01-19' },
+  { title: 'Semifinal Deliberation', date: '20th January - 24th January 2027', startDate: '2027-01-20', endDate: '2027-01-24' },
+  { title: 'Final Annoucement', date: '25 January 2027', startDate: '2027-01-25', endDate: '2027-01-25' },
 ]
+
 
 export interface ProgramCard {
   tab: string

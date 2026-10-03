@@ -111,28 +111,7 @@ function TimelineSection() {
       id="timeline"
       className="w-full relative mx-auto max-w-[1200px] scroll-mt-28 px-4 sm:px-6"
     >
-      <div className="flex justify-center mb-8">
-        <div className="relative inline-block text-center">
-          <span
-            aria-hidden="true"
-            className="absolute inset-0 px-5 text-4xl md:text-5xl lg:text-6xl font-extrabold italic tracking-tight select-none pointer-events-none"
-            style={{
-              backgroundImage: 'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 110%)',
-              WebkitBackgroundClip: 'text',
-              backgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              WebkitTextStroke: '8px transparent',
-              paintOrder: 'stroke fill',
-              filter: 'drop-shadow(0 0 12px rgba(2, 98, 244, 0.5)) drop-shadow(0 4px 10px rgba(0, 63, 158, 0.6))',
-            }}
-          >
-            Timeline
-          </span>
-          <span className="relative block px-5 text-4xl md:text-5xl lg:text-6xl font-extrabold italic tracking-tight text-white">
-            Timeline
-          </span>
-        </div>
-      </div>
+      <SectionTitle className=" bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Timeline</SectionTitle>
 
       {/* Gradient border wrapper */}
       <div className="mt-12 rounded-[32px] bg-gradient-to-br from-white/90 to-transparent p-[3px]">

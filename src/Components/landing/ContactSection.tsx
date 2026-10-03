@@ -21,10 +21,31 @@ function ContactSection() {
       id="contact"
       className="w-full mx-auto flex max-w-[1200px] flex-col items-start gap-8 px-4 sm:flex-row sm:items-center sm:gap-14 sm:px-6"
     >
-      <h2 className="text-outline-blue text-center font-heading text-5xl leading-[1.15] font-extrabold sm:text-6xl">
-        Contact
-        <br />
-        Person
+      <h2 className="relative inline-block text-center font-heading">
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 px-5 text-5xl sm:text-6xl leading-[1.15] font-extrabold tracking-tight select-none pointer-events-none"
+          style={{
+            backgroundImage:
+              'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 110%)',
+            WebkitBackgroundClip: 'text',
+            backgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            WebkitTextStroke: '10px transparent',
+            paintOrder: 'stroke fill',
+            filter:
+              'drop-shadow(0 0 12px rgba(2, 98, 244, 0.5)) drop-shadow(0 4px 10px rgba(0, 63, 158, 0.6))',
+          }}
+        >
+          Contact
+          <br />
+          Person
+        </span>
+        <span className="relative block px-5 text-5xl sm:text-6xl leading-[1.15] font-extrabold tracking-tight text-white">
+          Contact
+          <br />
+          Person
+        </span>
       </h2>
       <div className="h-px w-full border-t-4 border-dashed border-accent sm:h-40 sm:w-0 sm:border-t-0 sm:border-l-4" />
       <ul className="flex flex-col gap-6">

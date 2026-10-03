@@ -43,19 +43,22 @@ function Footer() {
   return (
     <footer className="relative mt-24 overflow-hidden">
       <div
-        className="pointer-events-none relative flex items-end justify-between"
+        className="pointer-events-none relative flex items-end justify-center w-full"
         aria-hidden="true"
       >
-        <img src={town} alt="" className="w-1/2 max-w-[640px] -scale-x-100" />
-        <img src={town} alt="" className="w-1/2 max-w-[640px]" />
+        <img src={town} alt="" className="w-1/2 object-cover" />
+        <img src={town} alt="" className="w-1/2 object-cover" />
       </div>
 
-      <div className="relative -mt-3 overflow-hidden rounded-t-[36px] border-t-2 border-white/60 sm:-mt-24">
-        <img src={buildings} alt="" className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-[linear-gradient(135deg,rgb(62_136_245/0.88)_0%,rgb(134_177_238/0.85)_100%)]" />
+      {/* Gradient border wrapper */}
+      <div className="relative -mt-3 sm:-mt-24 pt-1 px-1 rounded-t-[36px] bg-[linear-gradient(90deg,#003F9E_0%,#0262F4_65%,#FFFFFF_110%)]">
+        {/* Inner container */}
+        <div className="relative overflow-hidden rounded-t-[34px] w-full h-full">
+          <img src={buildings} alt="" className="absolute inset-0 h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgb(62_136_245/0.88)_0%,rgb(134_177_238/0.85)_100%)]" />
 
-        <div className="relative mx-auto grid max-w-[1300px] gap-10 px-6 py-14 sm:px-12 md:grid-cols-[1.1fr_1fr_1.2fr]">
-          <div>
+          <div className="relative mx-auto grid max-w-[1300px] gap-10 px-6 py-14 sm:px-12 md:grid-cols-[1.1fr_1fr_1.2fr]">
+            <div>
             <img
               src={summitLogo}
               alt="StudentsxCEOs International Summit"
@@ -86,6 +89,7 @@ function Footer() {
           </div>
           <FooterLinks title="Events" items={footerEvents} href="#events" />
           <FooterLinks title="Competition" items={footerCompetitions} href="#competitions" />
+        </div>
         </div>
       </div>
     </footer>

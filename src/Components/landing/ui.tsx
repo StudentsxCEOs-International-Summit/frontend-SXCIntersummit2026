@@ -3,14 +3,42 @@ import diamonds from '@/assets/ic-diamonds.svg'
 import wave from '@/assets/ic-wave.svg'
 import type { ProgramCard as ProgramCardData } from '@/data/landing'
 
-export function SectionTitle({ children, id }: { children: ReactNode; id?: string }) {
+export function SectionTitle({ children, id, className }: { children: ReactNode; id?: string; className?: string }) {
+  const isCustom = !!className && className !== "bg-glass-blue";
+  
+  const outerClass = isCustom 
+    ? `${className} rounded-2xl p-[3px] shadow-[0_0_30px_rgba(2,98,244,0.6)] sm:min-w-[380px]`
+    : `bg-glass-blue rounded-2xl border-2 border-white/90 shadow-[0_0_30px_rgba(2,98,244,0.6)] sm:min-w-[380px]`;
+    
+  const innerClass = isCustom
+    ? "h-full w-full rounded-[calc(1rem-2px)] bg-glass-blue px-10 py-4 text-center"
+    : "h-full w-full rounded-[calc(1rem-2px)] px-10 py-4 text-center";
+
   return (
-    <div className="flex justify-center">
-      <h2
-        id={id}
-        className="bg-glass-blue text-outline-blue rounded-2xl border-2 border-white/90 px-10 py-2 text-center text-2xl font-extrabold italic shadow-[0_8px_24px_rgb(10_63_184/0.45)] sm:min-w-[380px] sm:text-[2rem]"
-      >
-        {children}
+    <div className="flex justify-center mb-10">
+      <h2 id={id} className={outerClass}>
+        <div className={innerClass}>
+          <div className="relative inline-block">
+          <span
+            aria-hidden="true"
+            className="absolute inset-0 px-2 text-xl md:text-3xl font-extrabold italic tracking-tight select-none pointer-events-none"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 110%)',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              WebkitTextStroke: '6px transparent',
+              paintOrder: 'stroke fill',
+              filter: 'drop-shadow(0 0 8px rgba(2, 98, 244, 0.5)) drop-shadow(0 4px 8px rgba(0, 63, 158, 0.6))',
+            }}
+          >
+            {children}
+          </span>
+          <span className="relative block px-2 text-xl md:text-3xl font-extrabold italic tracking-tight text-white">
+            {children}
+          </span>
+        </div>
+        </div>
       </h2>
     </div>
   )
@@ -89,7 +117,7 @@ export function ProgramCard({ card }: { card: ProgramCardData }) {
   return (
     <article className="flex h-full flex-col">
       <CardTab className="relative z-10 mx-4">{card.tab}</CardTab>
-      <div className="bg-glass-blue -mt-4 flex flex-1 flex-col gap-4 rounded-3xl border-[3px] border-white/90 px-6 pt-8 pb-6 shadow-[0_10px_30px_rgb(10_63_184/0.35)]">
+      <div className="bg-glass-blue -mt-4 flex flex-1 flex-col gap-4 rounded-3xl border-[3px] border-white/90 px-6 pt-8 pb-6 shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(255,255,255,0.6)]">
         <ProgramThumbnail title={card.title} />
         <div className="flex-1">
           <p className="line-clamp-3 text-justify font-body text-sm text-white">

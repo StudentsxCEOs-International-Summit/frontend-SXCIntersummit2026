@@ -5,7 +5,7 @@ import { ProgramCard, SectionTitle } from './ui'
 export function CompetitionsSection() {
   return (
     <section id="competitions" className="w-full mx-auto max-w-[1200px] scroll-mt-28 px-4 sm:px-6">
-      <SectionTitle>Competitions</SectionTitle>
+      <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Competitions</SectionTitle>
       <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {competitions.map((card) => (
           <ProgramCard key={card.title} card={card} />
@@ -58,7 +58,7 @@ export function EventsSection() {
 
   return (
     <section id="events" className="w-full mx-auto max-w-[1300px] scroll-mt-28 px-4 sm:px-6">
-      <SectionTitle>Events</SectionTitle>
+      <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Events</SectionTitle>
       <div className="mt-12 flex items-center gap-3 sm:gap-5">
         <CarouselButton direction="prev" onClick={() => scroll(-1)} />
         <ul

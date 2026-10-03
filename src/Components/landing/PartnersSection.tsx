@@ -1,7 +1,8 @@
 import { SectionTitle } from './ui'
+import adInLogo from '@/assets/media-partners/55-ADINS.svg'
 
-// File names follow `<order>-<L|M|S>-<name>.webp`; the tier sets the logo size.
-const logoModules = import.meta.glob<string>('@/assets/media-partners/*.webp', {
+// File names follow `<order>_<L|M|S>_<name>.<ext>`; the tier sets the logo size.
+const logoModules = import.meta.glob<string>('@/assets/media-partners/*.{png,jpg,jpeg,svg}', {
   eager: true,
   import: 'default',
 })
@@ -10,9 +11,24 @@ type Tier = 'L' | 'M' | 'S'
 
 const mediaPartners = Object.entries(logoModules)
   .map(([path, src]) => {
-    const file = path.split('/').pop()!.replace('.webp', '')
-    const [order, tier, ...name] = file.split('-')
-    return { src, order: Number(order), tier: tier as Tier, name: name.join(' ') }
+    const file = path.split('/').pop()!.replace(/\.(png|jpg|jpeg|svg)$/i, '')
+    const parts = file.split('_')
+    
+    let order = 999
+    let tier: Tier = 'S'
+    let name = file
+
+    if (!isNaN(Number(parts[0]))) {
+      order = Number(parts[0])
+      if (['L', 'M', 'S'].includes(parts[1])) {
+        tier = parts[1] as Tier
+        name = parts.slice(2).join(' ')
+      } else {
+        name = parts.slice(1).join(' ')
+      }
+    }
+
+    return { src, order, tier, name }
   })
   .sort((a, b) => a.order - b.order)
 
@@ -28,12 +44,10 @@ const panel =
 export function CaseCollaboratorSection() {
   return (
     <section id="case-collaborator" className="w-full mx-auto max-w-[1200px] px-4 sm:px-6">
-      <SectionTitle>Case Collaborator</SectionTitle>
+      <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Case Collaborator</SectionTitle>
       {/* TODO: replace the wordmark with the AD-INS logo asset from Figma. */}
       <div className={`${panel} mt-12 flex items-center justify-center px-6 py-16 sm:py-20`}>
-        <p className="font-heading text-5xl font-extrabold tracking-[0.15em] text-ds-black sm:text-7xl">
-          <span className="text-[#d32f2f]">A</span>D·INS
-        </p>
+        <img src={adInLogo}/>
       </div>
     </section>
   )
@@ -42,7 +56,7 @@ export function CaseCollaboratorSection() {
 export function MediaPartnerSection() {
   return (
     <section id="media-partner" className="w-full mx-auto max-w-[1200px] px-4 sm:px-6">
-      <SectionTitle>Media Partner</SectionTitle>
+      <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Media Partner</SectionTitle>
       <div className={`${panel} mt-12 flex flex-col gap-6 px-6 py-12 sm:px-12`}>
         {(['L', 'M', 'S'] as const).map((tier) => (
           <ul key={tier} className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4">

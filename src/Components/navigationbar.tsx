@@ -86,17 +86,15 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                     type="button"
                     onClick={() => setIsProgramDropdownOpen(!isProgramDropdownOpen)}
                     aria-expanded={isProgramDropdownOpen}
-                    className={`flex items-center gap-1.5 text-[16px] lg:text-[17px] font-semibold tracking-wide transition-all duration-200 cursor-pointer focus:outline-none ${
-                      isActive
+                    className={`flex items-center gap-1.5 text-[16px] lg:text-[17px] font-semibold tracking-wide transition-all duration-200 cursor-pointer focus:outline-none ${isActive
                         ? 'text-white underline underline-offset-[10px] decoration-2 decoration-white'
                         : 'text-white/95 hover:text-white hover:opacity-90'
-                    }`}
+                      }`}
                   >
                     <span>{item.label}</span>
                     <svg
-                      className={`w-4 h-4 text-white transition-transform duration-200 stroke-[2.5] ${
-                        isProgramDropdownOpen ? 'rotate-180' : ''
-                      }`}
+                      className={`w-4 h-4 text-white transition-transform duration-200 stroke-[2.5] ${isProgramDropdownOpen ? 'rotate-180' : ''
+                        }`}
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -109,11 +107,10 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                   {/* Program Dropdown Menu */}
                   {item.dropdownItems && (
                     <div
-                      className={`absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 py-2 rounded-2xl transition-all duration-200 origin-top shadow-2xl backdrop-blur-md ${
-                        isProgramDropdownOpen
+                      className={`absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 py-2 rounded-2xl transition-all duration-200 origin-top shadow-2xl backdrop-blur-md ${isProgramDropdownOpen
                           ? 'opacity-100 scale-100 pointer-events-auto visible'
                           : 'opacity-0 scale-95 pointer-events-none invisible'
-                      }`}
+                        }`}
                       style={{
                         background: 'linear-gradient(135deg, #1d5ce5 0%, #1545b7 100%)',
                         border: '1.5px solid rgba(255, 255, 255, 0.75)',
@@ -140,11 +137,10 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
               <li key={item.label}>
                 <a
                   href={item.href}
-                  className={`text-[16px] lg:text-[17px] tracking-wide transition-all duration-200 block ${
-                    isActive
+                  className={`text-[16px] lg:text-[17px] tracking-wide transition-all duration-200 block ${isActive
                       ? 'text-white font-semibold underline underline-offset-[10px] decoration-2 decoration-white'
                       : 'text-white/95 font-semibold hover:text-white hover:opacity-90'
-                  }`}
+                    }`}
                 >
                   <span>{item.label}</span>
                 </a>
@@ -220,11 +216,10 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                   <a
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`block py-1 text-[16px] ${
-                      isActive
+                    className={`block py-1 text-[16px] ${isActive
                         ? 'text-white font-semibold underline underline-offset-4 decoration-2 decoration-white'
                         : 'text-white/90 font-medium hover:text-white'
-                    }`}
+                      }`}
                   >
                     <span>{item.label}</span>
                   </a>

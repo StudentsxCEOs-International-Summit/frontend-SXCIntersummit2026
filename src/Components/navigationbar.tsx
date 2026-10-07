@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import defaultLogo from '@/assets/ic-iconinternasional.svg'
 
 export interface NavigationBarProps {
@@ -30,11 +31,11 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   const [isProgramDropdownOpen, setIsProgramDropdownOpen] = useState(false)
 
   const defaultNavItems: NonNullable<NavigationBarProps['items']> = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'IBCC', href: '#competitions' },
+    { label: 'Home', href: '/' },
+    { label: 'About', href: '/about' },
+    { label: 'IBCC', href: '/#competitions' },
     // TODO: point to the merchandise page once it exists.
-    { label: 'Merchandise', href: '#merchandise' },
+    { label: 'Merchandise', href: '/#merchandise' },
   ]
 
   const navItems = items || defaultNavItems
@@ -55,8 +56,8 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
       >
         {/* Left: Logo using an <img> tag */}
         <div className="flex items-center flex-shrink-0">
-          <a
-            href="#home"
+          <Link
+            to="/"
             className="flex items-center focus:outline-none focus:ring-2 focus:ring-white/40 rounded-full"
             aria-label="Home"
           >
@@ -66,7 +67,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
               className="h-12 sm:h-[52px] w-auto max-w-[160px] sm:max-w-[190px] object-contain select-none drop-shadow-sm transition-transform duration-200 hover:scale-105"
               loading="eager"
             />
-          </a>
+          </Link>
         </div>
 
         {/* Center: Navigation Links (Text) for Desktop */}
@@ -118,14 +119,14 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                       }}
                     >
                       {item.dropdownItems.map((subItem) => (
-                        <a
+                        <Link
                           key={subItem.label}
-                          href={subItem.href}
+                          to={subItem.href}
                           className="block px-4 py-2.5 text-[14px] text-white/90 hover:text-white hover:bg-white/15 rounded-xl mx-1.5 transition-colors font-medium"
                           onClick={() => setIsProgramDropdownOpen(false)}
                         >
                           <span>{subItem.label}</span>
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   )}
@@ -135,15 +136,15 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
 
             return (
               <li key={item.label}>
-                <a
-                  href={item.href}
+                <Link
+                  to={item.href}
                   className={`text-[16px] lg:text-[17px] tracking-wide transition-all duration-200 block ${isActive
                       ? 'text-white font-semibold underline underline-offset-[10px] decoration-2 decoration-white'
                       : 'text-white/95 font-semibold hover:text-white hover:opacity-90'
                     }`}
                 >
                   <span>{item.label}</span>
-                </a>
+                </Link>
               </li>
             )
           })}
@@ -213,8 +214,8 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
               const isActive = activeItem.toLowerCase() === item.label.toLowerCase()
               return (
                 <li key={item.label} className="border-b border-white/10 pb-2">
-                  <a
-                    href={item.href}
+                  <Link
+                    to={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`block py-1 text-[16px] ${isActive
                         ? 'text-white font-semibold underline underline-offset-4 decoration-2 decoration-white'
@@ -222,7 +223,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                       }`}
                   >
                     <span>{item.label}</span>
-                  </a>
+                  </Link>
                 </li>
               )
             })}

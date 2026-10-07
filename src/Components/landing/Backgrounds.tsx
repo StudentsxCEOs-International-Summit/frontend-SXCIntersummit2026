@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import wave from '@/assets/ic-wave.svg'
+import wave from '@/assets/About/ic-wave.svg'
 import brokeLine from '@/assets/ic-brokeline.svg'
 import loopCurveLine from '@/assets/ic-loopcurveline.svg'
 import dice from '@/assets/ic-dice.svg'

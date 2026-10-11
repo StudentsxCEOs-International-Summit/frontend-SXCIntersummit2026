@@ -8,6 +8,9 @@ import diamonds from '@/assets/ic-diamonds.svg'
 import blueDiamonds from '@/assets/ic-bluediamonds.svg'
 import starGlow from '@/assets/ic-star_glow.svg'
 import starYellowGlow from '@/assets/ic-star_yellowglow.svg'
+import key from '@/assets/ic-key.svg'
+import yellowChess from '@/assets/ic-yellowchess.svg'
+import highBuilding from '@/assets/ic-highbuilding.svg'
 
 /** Shared classes for every decorative image (static – no animation). */
 const deco = 'pointer-events-none absolute select-none max-w-none'
@@ -28,12 +31,12 @@ export function BackgroundSection({
   children: ReactNode
 }) {
   return (
-    <div className={`relative isolate flex flex-col gap-24 py-12 sm:gap-32 sm:py-16 ${className}`}>
+    <section className={`min-h-screen flex relative flex-col gap-12 sm:gap-32 py-12 sm:py-16 ${className}`}>
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         {background}
       </div>
       {children}
-    </div>
+    </section>
   )
 }
 
@@ -54,16 +57,8 @@ export function AboutBackground() {
 export function TimelineBackground() {
   return (
     <>
-
-      {/* Diagonal light beams */}
-      <img src={brokeLine} alt="" className={`${deco} inset-0 h-full w-full object-cover`} />
-      {/* Glows left + right */}
-      <div className="absolute top-[40%] -left-40 h-[420px] w-[420px] rounded-full bg-white/20 blur-[120px]" />
-      <div className="absolute top-[10%] -right-40 h-[360px] w-[360px] rounded-full bg-white/15 blur-[120px]" />
-
-      <img src={starGlow} alt="" className={`${sideDeco} top-8 -left-24 w-60 -rotate-12`} />
-      <img src={blueDice} alt="" className={`${sideDeco} bottom-[12%] -left-10 w-40 md:w-72 rotate-12`} />
-      <img src={dice} alt="" className={`${sideDeco} top-[55%] -right-12 w-36 -rotate-12`} />
+      <img src={key} alt="" className={`${sideDeco} top-[30%] -left-12 w-32 rotate-12 filter grayscale brightness-125 hue-rotate-180`} />
+      <img src={key} alt="" className={`${sideDeco} top-[55%] right-0 w-32 -rotate-12`} />
     </>
   )
 }
@@ -72,13 +67,11 @@ export function TimelineBackground() {
 export function ProgramsBackground() {
   return (
     <>
-
-      {/* Ribbon, mirrored so it flows the other way */}
-      <img src={wave} alt="" className={`${deco} top-[45%] -left-[10%] w-[120%] -scale-x-100 opacity-60`} />
-      <div className="absolute top-[30%] -right-40 h-[420px] w-[420px] rounded-full bg-white/15 blur-[120px]" />
-
-      <img src={diamonds} alt="" className={`${sideDeco} top-[30%] -right-28 w-72 rotate-45`} />
-      <img src={blueDiamonds} alt="" className={`${sideDeco} top-[60%] -left-20 w-60`} />
+      <img src={yellowChess} alt="" className={`${sideDeco} top-[20%] -left-8 w-32 -rotate-12`} />
+      <img src={blueDiamonds} alt="" className={`${sideDeco} top-[40%] right-0 w-40 rotate-12`} />
+      
+      {/* Looping line near the bottom */}
+      <img src={loopCurveLine} alt="" className={`${deco} bottom-[5%] left-0 w-full opacity-60`} />
     </>
   )
 }
@@ -87,14 +80,9 @@ export function ProgramsBackground() {
 export function PartnersBackground() {
   return (
     <>
-
-      {/* Diagonal light beams (flipped vertically to vary from the Timeline band) */}
-      <img src={brokeLine} alt="" className={`${deco} inset-0 h-full w-full -scale-y-100 object-cover`} />
-      {/* Looping line near the bottom */}
-      <img src={loopCurveLine} alt="" className={`${deco} bottom-[8%] left-0 w-full`} />
-
-      <img src={blueDice} alt="" className={`${sideDeco} top-[15%] -right-30 w-40 sm:w-80 -rotate-32`} />
-      <img src={dice} alt="" className={`${sideDeco} top-[50%] -left-14 w-44 rotate-12`} />
     </>
   )
 }
+
+
+

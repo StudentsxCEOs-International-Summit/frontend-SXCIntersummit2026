@@ -5,7 +5,7 @@ function TaglineSection() {
     <section
       id="about-tagline"
       aria-labelledby="about-tagline-title"
-      className="relative mx-auto flex w-full max-w-[1200px] flex-col items-center gap-6 px-4 text-center sm:gap-8 sm:px-6"
+      className="relative mx-auto flex w-full max-w-[1200px] flex-col justify-center items-center gap-6 px-4 text-center sm:gap-8 sm:px-6"
     >
       <h2
         id="about-tagline-title"
@@ -13,18 +13,15 @@ function TaglineSection() {
       >
         <OutlinedText
           stroke={6}
-          className="font-heading text-xl leading-tight font-extrabold tracking-tight italic md:text-[1.75rem]"
+          className="font-heading text-xl leading-tight px-2 font-extrabold tracking-tight italic md:text-[1.75rem]"
         >
           Tagline
         </OutlinedText>
       </h2>
-      <p className="font-heading leading-tight">
-        <OutlinedText
-          stroke={10}
-          className="text-3xl font-extrabold tracking-tight italic sm:text-5xl lg:text-6xl"
-        >
+      <p className="font-heading font-stretch-extra-expanded leading-tight **:text-3xl font-extrabold tracking-tight italic sm:text-5xl lg:text-6xl">
+        
           &ldquo;Foster True Innovation&rdquo;
-        </OutlinedText>
+        
       </p>
     </section>
   )

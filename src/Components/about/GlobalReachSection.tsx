@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import worldMapUrl from '@/assets/About/ic-WorldMap.svg'
-import starGlow from '@/assets/ic-star_glow.svg'
 import { AboutPill } from './AboutShared'
 
 /**
@@ -42,13 +41,6 @@ function GlobalReachSection() {
       aria-labelledby="about-global-reach-title"
       className="relative mx-auto w-full max-w-[1240px] px-4 sm:px-6"
     >
-      <img
-        src={starGlow}
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute top-0 -right-10 hidden w-40 rotate-12 select-none md:block lg:-right-24 lg:w-56"
-      />
-
       <AboutPill id="about-global-reach-title">See Where the Summit Has Reached!</AboutPill>
 
       {/* Map (includes the institution callouts, flags and logos from Figma) */}

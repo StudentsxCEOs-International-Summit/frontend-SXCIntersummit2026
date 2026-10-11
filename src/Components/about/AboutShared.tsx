@@ -1,6 +1,8 @@
 import type { CSSProperties, ReactNode } from 'react'
 import titleLeft from '@/assets/About/ic-containTitleLeft.svg'
 import titleRight from '@/assets/About/ic-containTitleRight.svg'
+import visionLeft from '@/assets/About/ic-visionLeft.svg'
+import visionRight from '@/assets/About/ic-visionRight.svg'
 
 /**
  * Small building blocks shared by the About page sections.
@@ -91,9 +93,8 @@ export function CardLabel({
         className="pointer-events-none absolute inset-0 h-full w-full select-none"
       />
       <span
-        className={`absolute top-[6%] bottom-[16%] flex items-center justify-center ${
-          isLeft ? 'right-[4%] left-[6%]' : 'right-[6%] left-[3%]'
-        }`}
+        className={`absolute top-[6%] bottom-[16%] flex items-center justify-center ${isLeft ? 'right-[4%] left-[6%]' : 'right-[6%] left-[3%]'
+          }`}
       >
         <OutlinedText
           stroke={5}
@@ -107,41 +108,37 @@ export function CardLabel({
 }
 
 /**
- * Light glass card with an angled edge and gradient border.
- * The angled clip-path is only applied from `md` up so text never gets cut on phones.
+ * Angled panel container using ic-visionLeft / ic-visionRight SVGs directly.
  */
 export function AngledPanel({
-  clip,
+  side = 'left',
   children,
   className = '',
   innerClassName = '',
-  tone = 'light',
 }: {
-  clip: string
+  side?: 'left' | 'right'
+  clip?: string
   children: ReactNode
   className?: string
   innerClassName?: string
   tone?: 'light' | 'blue'
 }) {
-  const clipVar = { '--clip': clip } as CSSProperties
-  const fill =
-    tone === 'light'
-      ? 'bg-[linear-gradient(165deg,#ffffff_0%,#e3eeff_45%,#8BB9F4_100%)]'
-      : 'bg-glass-blue'
+  const isLeft = side === 'left'
   return (
     <div
-      className={`relative ${className}`}
-      style={{ filter: 'drop-shadow(-2px 5px 3px rgba(0, 0, 0, 0.22))' }}
+      className={`relative w-full ${
+        isLeft ? 'aspect-[626/197]' : 'aspect-[621/193]'
+      } ${className}`}
     >
-      <div
-        className="absolute inset-0 rounded-[18px] bg-[linear-gradient(160deg,#ffffff_0%,rgba(2,98,244,0.15)_50%,#003F9E_100%)] md:[clip-path:var(--clip)]"
-        style={clipVar}
+      <img
+        src={isLeft ? visionLeft : visionRight}
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 h-full w-full select-none"
       />
-      <div
-        className={`absolute inset-[4px] rounded-[14px] ${fill} md:[clip-path:var(--clip)]`}
-        style={clipVar}
-      />
-      <div className={`relative ${innerClassName}`}>{children}</div>
+      <div className={`relative flex h-full w-full items-center justify-center ${innerClassName}`}>
+        {children}
+      </div>
     </div>
   )
 }

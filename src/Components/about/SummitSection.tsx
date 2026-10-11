@@ -1,4 +1,4 @@
-import containMainRight from '@/assets/About/ic-containMainright.svg'
+import containMainLeft from '@/assets/About/ic-containMainleft.svg'
 import blueKey from '@/assets/About/ic-BlueKey.png'
 import summitLogo from '@/assets/ic-iconinternasional.svg'
 import { CardLabel, cardText } from './AboutShared'
@@ -8,21 +8,21 @@ function SummitSection() {
     <section
       id="sxc-summit"
       aria-labelledby="sxc-summit-title"
-      className="relative mx-auto w-full max-w-[1200px] px-4 sm:px-6"
+      className="relative mx-auto w-full max-w-300 px-4 sm:px-6"
     >
       <div className="relative pt-8 lg:pt-9">
         <CardLabel
-          side="right"
-          className="absolute top-0 right-[2%] z-10 w-[82%] sm:w-[48%] lg:right-[9%] lg:w-[28%]"
+          side="left"
+          className="absolute -bottom-9 right-0 z-10 w-2/5 px-10"
           textClassName="text-base sm:text-lg lg:text-xl"
         >
-          <span id="sxc-summit-title">SxC International Summit 2026</span>
+          <span className='px-2' id="sxc-summit-title">SxC International Summit 2026</span>
         </CardLabel>
 
-        <div className="relative lg:aspect-[1202/344]">
+        <div className="relative lg:aspect-1202/344">
           {/* Desktop: exact Figma container shape */}
           <img
-            src={containMainRight}
+            src={containMainLeft}
             alt=""
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 hidden h-full w-full select-none lg:block"
@@ -45,12 +45,6 @@ function SummitSection() {
               the digital era.
             </p>
             <div className="relative w-44 shrink-0 lg:w-[19%]">
-              <img
-                src={blueKey}
-                alt=""
-                aria-hidden="true"
-                className="pointer-events-none absolute -top-10 -right-12 w-28 rotate-[100deg] opacity-60 select-none lg:-top-[35%] lg:-right-[35%] lg:w-[70%]"
-              />
               <img
                 src={summitLogo}
                 alt="SxC International Summit 2026 logo"

@@ -1,4 +1,5 @@
 import town from '@/assets/landing/town.webp'
+
 import buildings from '@/assets/landing/footer-buildings.webp'
 import summitLogo from '@/assets/ic-iconsummit.svg'
 import instagram from '@/assets/ic-instagram.svg'

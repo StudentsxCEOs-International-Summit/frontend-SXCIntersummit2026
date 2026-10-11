@@ -1,5 +1,6 @@
 import highBuilding from '@/assets/ic-highbuilding.svg'
 import dice from '@/assets/ic-dice.svg'
+import wave from '@/assets/About/ic-wave.svg'
 import { OutlinedText } from './AboutShared'
 
 function AboutHero() {
@@ -9,31 +10,6 @@ function AboutHero() {
       aria-labelledby="about-hero-title"
       className="relative flex min-h-[600px] flex-col items-center justify-center overflow-hidden px-4 pt-32 pb-28 sm:min-h-[820px] lg:min-h-screen"
     >
-      {/* Building backdrop, washed out in light blue and faded into the page gradient */}
-      <img
-        src={highBuilding}
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover object-top opacity-70 select-none [mask-image:linear-gradient(to_bottom,black_45%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_45%,transparent_100%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-[linear-gradient(180deg,rgb(214_226_255/0.75)_0%,rgb(140_175_250/0.55)_40%,rgb(92_130_245/0)_100%)]"
-      />
-
-      {/* Dice decorations */}
-      <img
-        src={dice}
-        alt=""
-        aria-hidden="true"
-        className="animate-float-slow pointer-events-none absolute top-[24%] -left-10 w-32 -rotate-12 drop-shadow-xl select-none sm:-left-12 sm:w-52 lg:w-64"
-      />
-      <img
-        src={dice}
-        alt=""
-        aria-hidden="true"
-        className="animate-float pointer-events-none absolute top-[52%] -right-10 w-32 rotate-12 drop-shadow-xl select-none sm:-right-12 sm:w-56 lg:w-72"
-      />
 
       <h1
         id="about-hero-title"

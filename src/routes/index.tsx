@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import MainLayout from '@/layout/MainLayout'
-import HomePage from '@/Pages/HomePage'
+import HomePageTemp from '@/Pages/HomepageTemp'
 import NotFoundPage from '@/Pages/NotFoundPage'
 import RegisterPage from '@/Pages/auth/RegisterPage'
 import LoginPage from '@/Pages/auth/LoginPage'
@@ -11,7 +11,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route element={<MainLayout />}>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePageTemp />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/register" element={<RegisterPage />} />

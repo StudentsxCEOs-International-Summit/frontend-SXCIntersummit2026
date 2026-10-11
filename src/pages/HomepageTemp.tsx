@@ -14,7 +14,7 @@ import {
   PartnersBackground,
 } from '@/Components/landing/Backgrounds'
 
-function HomePage() {
+function HomePageTemp() {
   return (
     <div className="bg-landing relative overflow-hidden">
       <HeroSection />
@@ -44,4 +44,4 @@ function HomePage() {
   )
 }
 
-export default HomePage
+export default HomePageTemp

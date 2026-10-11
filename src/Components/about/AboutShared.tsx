@@ -10,7 +10,7 @@ import visionRight from '@/assets/About/ic-visionRight.svg'
  */
 
 const strokeStyle = (width: number): CSSProperties => ({
-  backgroundImage: 'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 110%)',
+  backgroundImage: 'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 150%)',
   WebkitBackgroundClip: 'text',
   backgroundClip: 'text',
   WebkitTextFillColor: 'transparent',
@@ -62,7 +62,7 @@ export function AboutPill({
       >
         <OutlinedText
           stroke={6}
-          className="font-heading text-xl leading-tight font-extrabold tracking-tight italic md:text-[1.75rem]"
+          className="font-heading text-xl leading-tight font-extrabold tracking-tight italic md:text-[1.75rem] px-2"
         >
           {children}
         </OutlinedText>

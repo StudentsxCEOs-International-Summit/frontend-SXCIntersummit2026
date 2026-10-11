@@ -23,7 +23,7 @@ export function SectionTitle({ children, id, className }: { children: ReactNode;
             aria-hidden="true"
             className="absolute inset-0 px-2 text-xl md:text-3xl font-extrabold italic tracking-tight select-none pointer-events-none"
             style={{
-              backgroundImage: 'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 110%)',
+              backgroundImage: 'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 150%)',
               WebkitBackgroundClip: 'text',
               backgroundClip: 'text',
               WebkitTextFillColor: 'transparent',

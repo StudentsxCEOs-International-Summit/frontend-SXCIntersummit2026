@@ -172,14 +172,7 @@
   }
 
   .bg-landing {
-    background-image: linear-gradient(
-      180deg,
-      #5b8cf6 0%,
-      #3d7cf5 14%,
-      #2f74f6 30%,
-      #1868f6 55%,
-      #1266f5 100%
-    );
+    background-color: #0262f4;
   }
 }
 

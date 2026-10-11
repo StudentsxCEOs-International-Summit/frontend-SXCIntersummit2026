@@ -40,7 +40,7 @@ function HeroSection() {
               className="absolute inset-0 px-5 text-3xl md:text-6xl lg:text-7xl font-bold tracking-tight select-none pointer-events-none"
               style={{
                 backgroundImage:
-                  'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 110%)',
+                  'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 150%)',
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -64,7 +64,7 @@ function HeroSection() {
               className="absolute inset-0 px-5 text-3xl md:text-6xl lg:text-7xl font-extrabold italic tracking-tight select-none pointer-events-none"
               style={{
                 backgroundImage:
-                  'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 120%)',
+                  'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 150%)',
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -89,7 +89,7 @@ function HeroSection() {
               className="absolute inset-0 px-5 text-xl md:text-3xl lg:text-4xl tracking-tight select-none pointer-events-none"
               style={{
                 backgroundImage:
-                  'linear-gradient(90deg, #003F9E 0%, #0262F4 75%, #FFFFFF 120%)',
+                  'linear-gradient(90deg, #003F9E 0%, #0262F4 75%, #FFFFFF 150%)',
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',

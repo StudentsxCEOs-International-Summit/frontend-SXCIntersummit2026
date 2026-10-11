@@ -18,7 +18,7 @@ function TabBanner({ children, className = '' }: { children: string; className?:
           className="absolute inset-0 px-5 select-none pointer-events-none"
           style={{
             backgroundImage:
-              'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 110%)',
+              'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 150%)',
             WebkitBackgroundClip: 'text',
             backgroundClip: 'text',
             WebkitTextFillColor: 'transparent',

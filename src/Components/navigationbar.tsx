@@ -9,6 +9,8 @@ export interface NavigationBarProps {
   activeItem?: string
   /** Callback when Sign In is clicked */
   onSignIn?: () => void
+  /** Target link for Sign In button, defaults to '/login' */
+  signInHref?: string
   /** Optional custom navigation items */
   items?: Array<{
     label: string
@@ -24,6 +26,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   logoSrc = defaultLogo,
   activeItem = 'Home',
   onSignIn,
+  signInHref = '/login',
   items,
   position = 'fixed',
 }) => {
@@ -33,7 +36,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   const defaultNavItems: NonNullable<NavigationBarProps['items']> = [
     { label: 'Home', href: '/' },
     { label: 'About', href: '/about' },
-    { label: 'IBCC', href: '/#competitions' },
+    { label: 'IBCC', href: '/ibcc' },
     // TODO: point to the merchandise page once it exists.
     { label: 'Merchandise', href: '/#merchandise' },
   ]
@@ -152,8 +155,9 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
 
         {/* Right: Sign In Button with golden gloss gradient and blue text */}
         <div className="hidden md:flex items-center">
-          <button
-            type="button"
+          <Link
+            to={signInHref}
+            role="button"
             onClick={onSignIn}
             className="group relative h-[44px] sm:h-[48px] px-8 sm:px-10 rounded-full font-semibold text-[16px] sm:text-[17px] tracking-wide text-[#1c55d2] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer select-none flex items-center justify-center"
             style={{
@@ -164,7 +168,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
             }}
           >
             <span>Sign In</span>
-          </button>
+          </Link>
         </div>
 
         {/* Mobile Hamburger Button */}
@@ -230,13 +234,14 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
           </ul>
 
           <div className="pt-2 flex justify-center">
-            <button
-              type="button"
+            <Link
+              to={signInHref}
+              role="button"
               onClick={() => {
                 setIsMobileMenuOpen(false)
                 onSignIn?.()
               }}
-              className="w-full py-2.5 rounded-full font-semibold text-[16px] text-[#1c55d2] transition-transform active:scale-95"
+              className="w-full py-2.5 rounded-full font-semibold text-[16px] text-[#1c55d2] transition-transform active:scale-95 flex items-center justify-center"
               style={{
                 background: 'linear-gradient(180deg, #fff7dc 0%, #fbd558 46%, #f59e0b 100%)',
                 border: '1.5px solid rgba(255, 255, 255, 0.95)',
@@ -245,7 +250,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
               }}
             >
               <span>Sign In</span>
-            </button>
+            </Link>
           </div>
         </div>
       )}

@@ -42,7 +42,15 @@ const panel =
 const panelNoBorder =
   'bg-glass-blue shadow-[0_12px_32px_rgb(10_63_184/0.35)] overflow-hidden'
 
-function AboutSection() {
+export interface AboutSectionProps {
+  prizeText?: string
+  joinHref?: string
+}
+
+function AboutSection({
+  prizeText = 'Rp.20.000.000',
+  joinHref = '#competitions',
+}: AboutSectionProps = {}) {
   return (
     <section
       id="about"
@@ -74,7 +82,7 @@ function AboutSection() {
                   undergraduate university students from all universities across Indonesia.
                 </strong>
               </p>
-              <GoldButton href="#competitions" className="mt-8 sm:min-w-[320px]">
+              <GoldButton href={joinHref} className="mt-8 sm:min-w-[320px]">
                 Join Now <ArrowIcon />
               </GoldButton>
             </div>
@@ -201,10 +209,10 @@ function AboutSection() {
                         'drop-shadow(0 0 12px rgba(2, 98, 244, 0.5)) drop-shadow(0 4px 10px rgba(0, 63, 158, 0.6))',
                     }}
                   >
-                    Rp.20.000.000
+                    {prizeText}
                   </span>
                   <span className="relative block font-heading text-3xl font-extrabold sm:text-5xl text-white">
-                    Rp.20.000.000
+                    {prizeText}
                   </span>
                 </div>
               </div>

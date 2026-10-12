@@ -1,15 +1,19 @@
 import { useState } from 'react'
-import { faqs } from '@/data/landing'
+import { faqs, type FaqItem } from '@/data/landing'
 import { SectionTitle } from './ui'
 
-function FaqSection() {
+export interface FaqSectionProps {
+  items?: FaqItem[]
+}
+
+function FaqSection({ items = faqs }: FaqSectionProps = {}) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
     <section id="faq" className="w-full mx-auto max-w-[1200px] scroll-mt-28 px-4 sm:px-6">
       <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Frequently Asked Questions</SectionTitle>
       <ul className="mt-12 flex flex-col gap-5">
-        {faqs.map((faq, i) => {
+        {items.map((faq, i) => {
           const open = openIndex === i
           return (
             <li

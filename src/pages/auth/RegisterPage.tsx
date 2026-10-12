@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
-import { User, Mail, Eye, EyeOff, ArrowRight, Check } from 'lucide-react'
+import { User, Mail, Eye, EyeOff, ArrowRight, Check, ArrowLeft } from 'lucide-react'
 import type { RegisterFormState } from '@/types/register'
 import { PASSWORD_REQUIREMENTS, validateRegisterForm } from '@/utils/validation/registerValidation'
 import { FormField, PasswordChecklist, Dot } from '@/components/ui'
@@ -72,7 +72,15 @@ export default function RegisterPage() {
         <RegisterHeroPanel />
 
         {/* Compact brand header, mobile/tablet only */}
-        <div className="flex items-center justify-center gap-3 px-6 pt-8 lg:hidden">
+        <div className="relative flex items-center justify-center gap-3 px-6 pt-6 sm:pt-8 lg:hidden">
+          <Link
+            to="/"
+            className="absolute left-6 inline-flex items-center gap-1.5 rounded-full border border-brand-blue-200/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-brand-blue-700 shadow-sm backdrop-blur-md transition-all hover:bg-white active:scale-95"
+            aria-label="Back to Home"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Back</span>
+          </Link>
           <img src={logo} alt="StudentsxCEOs" className="h-10 w-10 sm:h-12 sm:w-12" />
           <div className="leading-tight">
             <p className="font-heading text-sm font-bold text-brand-blue-700">StudentsxCEOs</p>

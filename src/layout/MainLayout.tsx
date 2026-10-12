@@ -7,7 +7,7 @@ function MainLayout() {
   const [activeItem, setActiveItem] = useState('Home')
 
   useEffect(() => {
-    if (location.hash === '#competitions') {
+    if (location.pathname === '/ibcc' || location.hash === '#competitions') {
       setActiveItem('IBCC')
     } else if (location.hash === '#merchandise') {
       setActiveItem('Merchandise')

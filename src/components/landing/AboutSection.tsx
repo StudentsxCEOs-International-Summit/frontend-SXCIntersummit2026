@@ -2,8 +2,6 @@ import yellowChess from '@/assets/ic-yellowchess.svg'
 import blueChess from '@/assets/ic-chess.svg'
 import caseStudyBook from '@/assets/ic-book.svg'
 import goldKey from '@/assets/ic-key.svg'
-import dice from '@/assets/ic-dice.svg'
-import star from '@/assets/ic-star.svg'
 import starYellowGlow from '@/assets/ic-star_yellowglow.svg'
 import { ArrowIcon, GoldButton } from './ui'
 
@@ -18,7 +16,7 @@ function TabBanner({ children, className = '' }: { children: string; className?:
           className="absolute inset-0 px-5 select-none pointer-events-none"
           style={{
             backgroundImage:
-              'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 150%)',
+              'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 110%)',
             WebkitBackgroundClip: 'text',
             backgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
@@ -35,9 +33,6 @@ function TabBanner({ children, className = '' }: { children: string; className?:
     </div>
   )
 }
-
-const panel =
-  'bg-glass-blue border-[3px] border-white/90 shadow-[0_12px_32px_rgb(10_63_184/0.35)] overflow-hidden'
 
 const panelNoBorder =
   'bg-glass-blue shadow-[0_12px_32px_rgb(10_63_184/0.35)] overflow-hidden'

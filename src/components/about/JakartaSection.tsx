@@ -1,6 +1,4 @@
 import containMainRight from '@/assets/About/ic-containMainRight.svg'
-import blueKey from '@/assets/About/ic-BlueKey.png'
-import goldKey from '@/assets/ic-key.svg'
 import jakartaLogo from '@/assets/ic-jakartaChapter.svg'
 import { CardLabel, cardText } from './AboutShared'
 

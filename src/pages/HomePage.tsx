@@ -1,4 +1,4 @@
-import { BlueColorFilter, BlueColorFilterDefs, getBlueFilterStyle } from '@/components'
+import { BlueColorFilterDefs } from '@/components'
 import building from '@/assets/ic-buildingus.svg'
 
 function HomePage() {

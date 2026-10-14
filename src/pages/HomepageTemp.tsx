@@ -1,18 +1,18 @@
-import HeroSection from '@/Components/landing/HeroSection'
-import AboutSection from '@/Components/landing/AboutSection'
-import TimelineSection from '@/Components/landing/TimelineSection'
-import { CompetitionsSection, EventsSection } from '@/Components/landing/ProgramsSection'
-import FaqSection from '@/Components/landing/FaqSection'
-import { CaseCollaboratorSection, MediaPartnerSection } from '@/Components/landing/PartnersSection'
-import ContactSection from '@/Components/landing/ContactSection'
-import Footer from '@/Components/landing/Footer'
+import HeroSection from '@/components/landing/HeroSection'
+import AboutSection from '@/components/landing/AboutSection'
+import TimelineSection from '@/components/landing/TimelineSection'
+import { CompetitionsSection, EventsSection } from '@/components/landing/ProgramsSection'
+import FaqSection from '@/components/landing/FaqSection'
+import { CaseCollaboratorSection, MediaPartnerSection } from '@/components/landing/PartnersSection'
+import ContactSection from '@/components/landing/ContactSection'
+import Footer from '@/components/landing/Footer'
 import {
   BackgroundSection,
   AboutBackground,
   TimelineBackground,
   ProgramsBackground,
   PartnersBackground,
-} from '@/Components/landing/Backgrounds'
+} from '@/components/landing/Backgrounds'
 
 function HomePage() {
   return (

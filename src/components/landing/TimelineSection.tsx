@@ -1,7 +1,6 @@
 import { useRef, useEffect } from 'react'
 import { timeline, type TimelineItem } from '@/data/landing'
 import { SectionTitle } from './ui'
-import './timelineScrollbar.css'
 
 function TimelineCard({ item, isActive }: { item: TimelineItem; isActive: boolean }) {
   const tone = isActive
@@ -119,7 +118,7 @@ function TimelineSection() {
         <div className="bg-blue-light/85 rounded-[calc(32px-3px)] shadow-[0_12px_32px_rgb(10_63_184/0.3)] overflow-hidden">
           <ol
             ref={trackRef}
-            className="grid auto-cols-[255px] grid-flow-col grid-rows-[auto_40px_auto] overflow-x-auto px-6 py-10 timeline-glass-scrollbar sm:px-12"
+            className="grid auto-cols-[255px] grid-flow-col grid-rows-[auto_40px_auto] overflow-x-auto px-6 py-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-12"
             aria-label="Event timeline"
           >
             {timeline.map((item, i) => {

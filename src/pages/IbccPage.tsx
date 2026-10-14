@@ -1,19 +1,19 @@
 import { usePageTitle } from '@/hooks/usePageTitle'
 import { BlueColorFilterDefs } from '@/components'
-import IbccHero from '@/Components/ibccLanding/IbccHero'
-import AboutSection from '@/Components/landing/AboutSection'
-import { CaseCollaboratorSection } from '@/Components/landing/PartnersSection'
-import TimelineSection from '@/Components/landing/TimelineSection'
-import IbccBenefitsSection from '@/Components/ibccLanding/IbccBenefitsSection'
-import IbccTestimonySection from '@/Components/ibccLanding/IbccTestimonySection'
-import FaqSection from '@/Components/landing/FaqSection'
-import Footer from '@/Components/landing/Footer'
+import IbccHero from '@/components/ibccLanding/IbccHero'
+import AboutSection from '@/components/landing/AboutSection'
+import { CaseCollaboratorSection } from '@/components/landing/PartnersSection'
+import TimelineSection from '@/components/landing/TimelineSection'
+import IbccBenefitsSection from '@/components/ibccLanding/IbccBenefitsSection'
+import IbccTestimonySection from '@/components/ibccLanding/IbccTestimonySection'
+import FaqSection from '@/components/landing/FaqSection'
+import Footer from '@/components/landing/Footer'
 import {
   BackgroundSection,
   AboutBackground,
   TimelineBackground,
   PartnersBackground,
-} from '@/Components/landing/Backgrounds'
+} from '@/components/landing/Backgrounds'
 import type { FaqItem } from '@/data/landing'
 
 const ibccFaqs: FaqItem[] = [

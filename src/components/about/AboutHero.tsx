@@ -1,6 +1,3 @@
-import highBuilding from '@/assets/ic-highbuilding.svg'
-import dice from '@/assets/ic-dice.svg'
-import wave from '@/assets/About/ic-wave.svg'
 import { OutlinedText } from './AboutShared'
 
 function AboutHero() {

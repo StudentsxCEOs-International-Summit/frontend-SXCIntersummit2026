@@ -1,5 +1,4 @@
 import containMainLeft from '@/assets/About/ic-containMainleft.svg'
-import blueKey from '@/assets/About/ic-BlueKey.png'
 import summitLogo from '@/assets/ic-iconinternasional.svg'
 import { CardLabel, cardText } from './AboutShared'
 

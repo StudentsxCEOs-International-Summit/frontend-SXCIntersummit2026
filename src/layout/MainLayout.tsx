@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom'
-import NavigationBar from '@/Components/navigationbar'
+import NavigationBar from '@/components/navigationbar'
 import { useEffect, useState } from 'react'
 
 function MainLayout() {

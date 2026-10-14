@@ -395,7 +395,7 @@ export interface BlueColorFilterProps extends React.HTMLAttributes<HTMLDivElemen
  * Usage:
  * ```tsx
  * import Building from '@/assets/building.jpg'
- * import { BlueColorFilter } from '@/Components/BlueColorFilter'
+ * import { BlueColorFilter } from '@/components/BlueColorFilter'
  *
  * // Basic usage as background
  * <BlueColorFilter img={Building} />

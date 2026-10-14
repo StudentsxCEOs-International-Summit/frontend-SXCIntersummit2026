@@ -3,8 +3,8 @@ import {
   BlueColorFilter,
   BlueColorFilterDefs,
   BLUE_COLOR_FILTER_ID,
-} from '@/Components/BlueColorFilter'
-import Building from '@/assets/building.jpg'
+} from '@/components/BlueColorFilter'
+import Building from '@/assets/images/building.jpg'
 
 describe('BlueColorFilter', () => {
   it('renders image with duotone SVG filter applied via inline style', () => {

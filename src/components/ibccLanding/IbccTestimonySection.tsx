@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { SectionTitle } from '@/Components/landing/ui'
+import { SectionTitle } from '@/components/landing/ui'
 import winnerPhoto from '@/assets/images/ibcc-winner-team.jpg'
 
 interface Testimony {

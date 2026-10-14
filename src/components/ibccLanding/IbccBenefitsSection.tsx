@@ -1,4 +1,4 @@
-import { SectionTitle } from '@/Components/landing/ui'
+import { SectionTitle } from '@/components/landing/ui'
 import certIcon from '@/assets/ic-certificate-yellow.svg'
 import moneyIcon from '@/assets/ic-money-yellow.svg'
 import teamIcon from '@/assets/ic-team-yellow.svg'

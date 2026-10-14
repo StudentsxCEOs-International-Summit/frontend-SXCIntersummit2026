@@ -1,7 +1,7 @@
 import building from '@/assets/ic-buildingus.svg'
 import starYellowGlow from '@/assets/ic-star_yellowglow.svg'
 import cursor from '@/assets/ic-cursor.svg'
-import { GoldButton } from '@/Components/landing/ui'
+import { GoldButton } from '@/components/landing/ui'
 
 export function IbccHero() {
   return (

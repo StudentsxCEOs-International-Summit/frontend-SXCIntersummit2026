@@ -1,5 +1,5 @@
 import building from '@/assets/ic-buildingus.svg'
-import starYellowGlow from '@/assets/ic-star_yellowglow.svg'
+import starYellowGlow from '@/assets/ic-star-yellow-glow.svg'
 import cursor from '@/assets/ic-cursor.svg'
 import { GoldButton } from '@/components/landing/ui'
 
@@ -80,8 +80,7 @@ export function IbccHero() {
               aria-hidden="true"
               className="absolute inset-0 px-5 text-3xl md:text-6xl lg:text-7xl font-bold tracking-tight select-none pointer-events-none"
               style={{
-                backgroundImage:
-                  'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 150%)',
+                backgroundImage: 'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 150%)',
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -104,8 +103,7 @@ export function IbccHero() {
               aria-hidden="true"
               className="absolute inset-0 px-5 text-3xl md:text-6xl lg:text-7xl font-extrabold italic tracking-tight select-none pointer-events-none"
               style={{
-                backgroundImage:
-                  'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 150%)',
+                backgroundImage: 'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 150%)',
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -135,11 +133,7 @@ export function IbccHero() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full border-2 border-white/90 bg-white/20 backdrop-blur-md px-8 py-3 font-heading text-base sm:text-lg font-bold text-white shadow-[0_4px_16px_rgba(2,98,244,0.3)] transition-transform duration-200 hover:scale-[1.03] active:scale-95"
           >
-            <svg
-              className="w-5 h-5 text-white fill-current"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
+            <svg className="w-5 h-5 text-white fill-current" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M19 2H6c-1.2 0-2 .8-2 2v16c0 1.2.8 2 2 2h13c.6 0 1-.4 1-1V3c0-.6-.4-1-1-1zm-1 18H6c-.6 0-1-.4-1-1V5c0-.6.4-1 1-1h12v16z" />
               <path d="M8 7h8v2H8zm0 4h8v2H8zm0 4h5v2H8z" />
             </svg>

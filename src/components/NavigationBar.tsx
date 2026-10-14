@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import defaultLogo from '@/assets/ic-iconinternasional.svg'
+import defaultLogo from '@/assets/ic-icon-internasional.svg'
 
 export interface NavigationBarProps {
   /** Optional custom logo image source, defaults to summit logo */

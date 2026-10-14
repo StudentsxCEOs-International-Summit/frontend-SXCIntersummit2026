@@ -1,6 +1,6 @@
-import lowshotBuilding from '@/assets/About/ic-lowshotbuilding.svg'
+import lowshotBuilding from '@/assets/about/ic-lowshot-building.svg'
 import dice from '@/assets/ic-dice.svg'
-import wave from '@/assets/About/ic-wave.svg'
+import wave from '@/assets/about/ic-wave.svg'
 
 export default function HeroDecoration() {
   return (

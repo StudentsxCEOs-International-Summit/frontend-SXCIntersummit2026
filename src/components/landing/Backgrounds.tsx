@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react'
-import wave from '@/assets/About/ic-wave.svg'
-import loopCurveLine from '@/assets/ic-loopcurveline.svg'
-import blueDiamonds from '@/assets/ic-bluediamonds.svg'
-import starYellowGlow from '@/assets/ic-star_yellowglow.svg'
+import wave from '@/assets/about/ic-wave.svg'
+import loopCurveLine from '@/assets/ic-loop-curveline.svg'
+import blueDiamonds from '@/assets/ic-blue-diamonds.svg'
+import starYellowGlow from '@/assets/ic-star-yellow-glow.svg'
 import key from '@/assets/ic-key.svg'
-import yellowChess from '@/assets/ic-yellowchess.svg'
+import yellowChess from '@/assets/ic-yellow-chess.svg'
 
 /** Shared classes for every decorative image (static – no animation). */
 const deco = 'pointer-events-none absolute select-none max-w-none'

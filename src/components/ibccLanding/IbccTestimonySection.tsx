@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { SectionTitle } from '@/components/landing/ui'
-import winnerPhoto from '@/assets/images/ibcc-winner-team.jpg'
+import winnerPhoto from '@/assets/images/img-ibcc-winner-team.jpg'
 
 interface Testimony {
   teamName: string

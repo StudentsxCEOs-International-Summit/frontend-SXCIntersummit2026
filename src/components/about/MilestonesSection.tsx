@@ -1,6 +1,6 @@
-import starLeaders from '@/assets/About/ic-starLeaders.svg'
-import uniStudents from '@/assets/About/ic-unistudents.svg'
-import highSchool from '@/assets/About/ic-highschool.svg'
+import starLeaders from '@/assets/about/ic-star-leaders.svg'
+import uniStudents from '@/assets/about/ic-uni-students.svg'
+import highSchool from '@/assets/about/ic-highschool.svg'
 import { AboutPill } from './AboutShared'
 
 /** Each SVG is the full Figma card (container + icon + figure + caption). */

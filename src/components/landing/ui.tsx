@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import diamonds from '@/assets/ic-diamonds.svg'
-import wave from '@/assets/About/ic-wave.svg'
+import wave from '@/assets/about/ic-wave.svg'
 import type { ProgramCard as ProgramCardData } from '@/data/landing'
 
 export function SectionTitle({ children, id, className }: { children: ReactNode; id?: string; className?: string }) {

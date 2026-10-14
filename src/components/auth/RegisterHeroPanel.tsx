@@ -1,5 +1,5 @@
-import logo from '@/assets/ic-iconinternasional.svg'
-import blueStarIcon from '@/assets/ic-bluestar.svg'
+import logo from '@/assets/ic-icon-internasional.svg'
+import blueStarIcon from '@/assets/ic-blue-star.svg'
 import yellowStarIcon from '@/assets/ic-star.svg'
 import { PanelBackground } from '@/components/auth/decorative'
 import { Dot } from '@/components/ui'

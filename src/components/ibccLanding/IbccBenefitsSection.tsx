@@ -5,7 +5,7 @@ import teamIcon from '@/assets/ic-team-yellow.svg'
 import industryIcon from '@/assets/ic-industry-yellow.svg'
 import internationalIcon from '@/assets/ic-international-yellow.svg'
 import dice from '@/assets/ic-dice.svg'
-import blueDice from '@/assets/ic-bluedice.svg'
+import blueDice from '@/assets/ic-blue-dice.svg'
 
 interface BenefitItem {
   title: string

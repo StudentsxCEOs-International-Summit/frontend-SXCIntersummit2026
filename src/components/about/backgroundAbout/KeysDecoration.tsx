@@ -1,5 +1,5 @@
 import goldKey from '@/assets/ic-key.svg'
-import blueKey from '@/assets/About/ic-BlueKey.png'
+import blueKey from '@/assets/about/ic-blue-key.png'
 
 export default function KeysDecoration() {
   return (

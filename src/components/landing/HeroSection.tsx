@@ -1,6 +1,6 @@
 import building from '@/assets/ic-buildingus.svg'
 import diamonds from '@/assets/ic-diamonds.svg'
-import starGlow from '@/assets/ic-star_glow.svg'
+import starGlow from '@/assets/ic-star-glow.svg'
 import cursor from '@/assets/ic-cursor.svg'
 import { ArrowIcon, GoldButton } from './ui'
 
@@ -30,8 +30,7 @@ function HeroSection() {
       />
       <img src={starGlow} alt="" className="absolute -bottom-10 -left-24 w-56 -rotate-12 sm:w-80" />
 
-      <div
-        className="relative z-10 flex h-full justify-center text-center items-center align-middle flex-col">
+      <div className="relative z-10 flex h-full justify-center text-center items-center align-middle flex-col">
         <h1 className="flex flex-col items-center justify-center leading-tight select-none ">
           {/* Line 1: StudentsxCEOs */}
           <div className="relative inline-block">
@@ -39,8 +38,7 @@ function HeroSection() {
               aria-hidden="true"
               className="absolute inset-0 px-5 text-3xl md:text-6xl lg:text-7xl font-bold tracking-tight select-none pointer-events-none"
               style={{
-                backgroundImage:
-                  'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 110%)',
+                backgroundImage: 'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 110%)',
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -63,8 +61,7 @@ function HeroSection() {
               aria-hidden="true"
               className="absolute inset-0 px-5 text-3xl md:text-6xl lg:text-7xl font-extrabold italic tracking-tight select-none pointer-events-none"
               style={{
-                backgroundImage:
-                  'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 120%)',
+                backgroundImage: 'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 120%)',
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -81,15 +78,13 @@ function HeroSection() {
             </span>
           </div>
         </h1>
-        <h3
-          className="text-xl p-5 md:text-3xl text-white font-medium tracking-wide">
+        <h3 className="text-xl p-5 md:text-3xl text-white font-medium tracking-wide">
           <div className="relative inline-block">
             <span
               aria-hidden="true"
               className="absolute inset-0 px-5 text-xl md:text-3xl lg:text-4xl tracking-tight select-none pointer-events-none"
               style={{
-                backgroundImage:
-                  'linear-gradient(90deg, #003F9E 0%, #0262F4 75%, #FFFFFF 120%)',
+                backgroundImage: 'linear-gradient(90deg, #003F9E 0%, #0262F4 75%, #FFFFFF 120%)',
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',

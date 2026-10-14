@@ -1,7 +1,7 @@
 import { SectionTitle } from './ui'
-import adInLogo from '@/assets/media-partners/55-ADINS.svg'
+import adInLogo from '@/assets/media-partners/55-adins.svg'
 
-// File names follow `<order>_<L|M|S>_<name>.<ext>`; the tier sets the logo size.
+// File names follow `<order>-<tier>-<name>.<ext>`; the tier sets the logo size.
 const logoModules = import.meta.glob<string>('@/assets/media-partners/*.{png,jpg,jpeg,svg}', {
   eager: true,
   import: 'default',
@@ -12,21 +12,12 @@ type Tier = 'L' | 'M' | 'S'
 const mediaPartners = Object.entries(logoModules)
   .map(([path, src]) => {
     const file = path.split('/').pop()!.replace(/\.(png|jpg|jpeg|svg)$/i, '')
-    const parts = file.split('_')
-    
-    let order = 999
-    let tier: Tier = 'S'
-    let name = file
-
-    if (!isNaN(Number(parts[0]))) {
-      order = Number(parts[0])
-      if (['L', 'M', 'S'].includes(parts[1])) {
-        tier = parts[1] as Tier
-        name = parts.slice(2).join(' ')
-      } else {
-        name = parts.slice(1).join(' ')
-      }
-    }
+    const match = file.match(/^(\d+)-(?:(l|m|s)-)?(.+)$/i)
+    const order = match ? Number(match[1]) : 999
+    const tier: Tier = match?.[2] ? (match[2].toUpperCase() as Tier) : 'S'
+    const name = (match?.[3] ?? file)
+      .replaceAll('-', ' ')
+      .replace(/\b\w/g, (character) => character.toUpperCase())
 
     return { src, order, tier, name }
   })

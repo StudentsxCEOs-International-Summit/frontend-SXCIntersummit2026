@@ -1,5 +1,5 @@
 import { Fragment } from 'react'
-import logo from '@/assets/ic-iconinternasional.svg'
+import logo from '@/assets/ic-icon-internasional.svg'
 import waves from '@/assets/ic-line-wave.svg'
 import rectangle from '@/assets/ic-rectangle-asbtract.svg'
 

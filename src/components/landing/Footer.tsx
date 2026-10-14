@@ -1,7 +1,7 @@
-import town from '@/assets/landing/town.webp'
+import town from '@/assets/landing/img-town.webp'
 
-import buildings from '@/assets/landing/footer-buildings.webp'
-import summitLogo from '@/assets/ic-iconsummit.svg'
+import buildings from '@/assets/landing/img-footer-buildings.webp'
+import summitLogo from '@/assets/ic-icon-summit.svg'
 import instagram from '@/assets/ic-instagram.svg'
 import linkedin from '@/assets/ic-linkedin.svg'
 import tiktok from '@/assets/ic-tiktok.svg'
@@ -60,37 +60,37 @@ function Footer() {
 
           <div className="relative mx-auto grid max-w-[1300px] gap-10 px-6 py-14 sm:px-12 md:grid-cols-[1.1fr_1fr_1.2fr]">
             <div>
-            <img
-              src={summitLogo}
-              alt="StudentsxCEOs International Summit"
-              className="h-20 w-auto"
-            />
-            <p className="mt-6 max-w-sm font-heading text-lg text-white">
-              StudentsxCEOs Intersummit brings students together worldwide to learn, collaborate,
-              and get inspired
-            </p>
-            <div className="mt-8 flex gap-6">
-              {[
-                { icon: instagram, label: 'Instagram', href: socials.instagram },
-                { icon: linkedin, label: 'LinkedIn', href: socials.linkedin },
-                { icon: tiktok, label: 'TikTok', href: socials.tiktok },
-              ].map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  aria-label={s.label}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="transition-transform hover:scale-110"
-                >
-                  <img src={s.icon} alt="" className="h-11 w-11" />
-                </a>
-              ))}
+              <img
+                src={summitLogo}
+                alt="StudentsxCEOs International Summit"
+                className="h-20 w-auto"
+              />
+              <p className="mt-6 max-w-sm font-heading text-lg text-white">
+                StudentsxCEOs Intersummit brings students together worldwide to learn, collaborate,
+                and get inspired
+              </p>
+              <div className="mt-8 flex gap-6">
+                {[
+                  { icon: instagram, label: 'Instagram', href: socials.instagram },
+                  { icon: linkedin, label: 'LinkedIn', href: socials.linkedin },
+                  { icon: tiktok, label: 'TikTok', href: socials.tiktok },
+                ].map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    aria-label={s.label}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="transition-transform hover:scale-110"
+                  >
+                    <img src={s.icon} alt="" className="h-11 w-11" />
+                  </a>
+                ))}
+              </div>
             </div>
+            <FooterLinks title="Events" items={footerEvents} href="#events" />
+            <FooterLinks title="Competition" items={footerCompetitions} href="#competitions" />
           </div>
-          <FooterLinks title="Events" items={footerEvents} href="#events" />
-          <FooterLinks title="Competition" items={footerCompetitions} href="#competitions" />
-        </div>
         </div>
       </div>
     </footer>

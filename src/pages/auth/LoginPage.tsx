@@ -5,7 +5,7 @@ import type { LoginFormState } from '@/types/login'
 import { validateLoginForm } from '@/utils/validation/loginValidation'
 import { FormField, Dot } from '@/components/ui'
 import { RegisterHeroPanel, GradientOrb, CurveBackground } from '@/components/auth'
-import logo from '@/assets/ic-iconinternasional.svg'
+import logo from '@/assets/ic-icon-internasional.svg'
 import lockIcon from '@/assets/ic-lock.svg'
 import { usePageTitle } from '@/hooks/usePageTitle'
 

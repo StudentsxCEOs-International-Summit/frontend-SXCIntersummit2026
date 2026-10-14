@@ -5,7 +5,7 @@ import type { RegisterFormState } from '@/types/register'
 import { PASSWORD_REQUIREMENTS, validateRegisterForm } from '@/utils/validation/registerValidation'
 import { FormField, PasswordChecklist, Dot } from '@/components/ui'
 import { RegisterHeroPanel, GradientOrb, CurveBackground } from '@/components/auth'
-import logo from '@/assets/ic-iconinternasional.svg'
+import logo from '@/assets/ic-icon-internasional.svg'
 import lockIcon from '@/assets/ic-lock.svg'
 import { usePageTitle } from '@/hooks/usePageTitle'
 

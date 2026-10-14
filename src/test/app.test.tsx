@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import HomePage from '@/pages/HomepageTemp'
 import AppRoutes from '@/routes'
-import NavigationBar from '@/components/navigationbar'
+import NavigationBar from '@/components/NavigationBar'
 
 describe('HomePage', () => {
   it('renders the landing page sections', () => {

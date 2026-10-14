@@ -1,8 +1,8 @@
 import type { CSSProperties, ReactNode } from 'react'
-import titleLeft from '@/assets/About/ic-containTitleLeft.svg'
-import titleRight from '@/assets/About/ic-containTitleRight.svg'
-import visionLeft from '@/assets/About/ic-visionLeft.svg'
-import visionRight from '@/assets/About/ic-visionRight.svg'
+import titleLeft from '@/assets/about/ic-contain-title-left.svg'
+import titleRight from '@/assets/about/ic-contain-title-right.svg'
+import visionLeft from '@/assets/about/ic-vision-left.svg'
+import visionRight from '@/assets/about/ic-vision-right.svg'
 
 /**
  * Small building blocks shared by the About page sections.

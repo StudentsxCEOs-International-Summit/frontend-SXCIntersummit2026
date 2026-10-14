@@ -1,4 +1,4 @@
-export { default as NavigationBar } from './navigationbar'
+export { default as NavigationBar } from './NavigationBar'
 export {
   BlueColorFilter,
   BlueColorFilterDefs,

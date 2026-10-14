@@ -1,5 +1,5 @@
-import containMainRight from '@/assets/About/ic-containMainRight.svg'
-import jakartaLogo from '@/assets/ic-jakartaChapter.svg'
+import containMainRight from '@/assets/about/ic-contain-mainright.svg'
+import jakartaLogo from '@/assets/ic-jakarta-chapter.svg'
 import { CardLabel, cardText } from './AboutShared'
 
 function JakartaSection() {

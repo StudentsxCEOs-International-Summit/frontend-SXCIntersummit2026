@@ -1,6 +1,6 @@
-import yellowChess from '@/assets/ic-yellowchess.svg'
-import blueDiamonds from '@/assets/ic-bluediamonds.svg'
-import loopCurveLine from '@/assets/ic-loopcurveline.svg'
+import yellowChess from '@/assets/ic-yellow-chess.svg'
+import blueDiamonds from '@/assets/ic-blue-diamonds.svg'
+import loopCurveLine from '@/assets/ic-loop-curveline.svg'
 
 export default function GeometricDecoration() {
   return (

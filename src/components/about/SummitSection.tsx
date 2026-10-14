@@ -1,5 +1,5 @@
-import containMainLeft from '@/assets/About/ic-containMainleft.svg'
-import summitLogo from '@/assets/ic-iconinternasional.svg'
+import containMainLeft from '@/assets/about/ic-contain-main-left.svg'
+import summitLogo from '@/assets/ic-icon-internasional.svg'
 import { CardLabel, cardText } from './AboutShared'
 
 function SummitSection() {

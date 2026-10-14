@@ -1,8 +1,8 @@
-import yellowChess from '@/assets/ic-yellowchess.svg'
+import yellowChess from '@/assets/ic-yellow-chess.svg'
 import blueChess from '@/assets/ic-chess.svg'
 import caseStudyBook from '@/assets/ic-book.svg'
 import goldKey from '@/assets/ic-key.svg'
-import starYellowGlow from '@/assets/ic-star_yellowglow.svg'
+import starYellowGlow from '@/assets/ic-star-yellow-glow.svg'
 import { ArrowIcon, GoldButton } from './ui'
 
 function TabBanner({ children, className = '' }: { children: string; className?: string }) {
@@ -15,12 +15,12 @@ function TabBanner({ children, className = '' }: { children: string; className?:
           aria-hidden="true"
           className="absolute inset-0 px-5 select-none pointer-events-none"
           style={{
-            backgroundImage:
-              'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 110%)',
+            backgroundImage: 'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 110%)',
             WebkitBackgroundClip: 'text',
             backgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            WebkitTextStroke: '6px transparent', /* Scaled down from 10px for the smaller text size */
+            WebkitTextStroke:
+              '6px transparent' /* Scaled down from 10px for the smaller text size */,
             paintOrder: 'stroke fill',
             filter:
               'drop-shadow(0 0 12px rgba(2, 98, 244, 0.5)) drop-shadow(0 4px 10px rgba(0, 63, 158, 0.6))',
@@ -34,8 +34,7 @@ function TabBanner({ children, className = '' }: { children: string; className?:
   )
 }
 
-const panelNoBorder =
-  'bg-glass-blue shadow-[0_12px_32px_rgb(10_63_184/0.35)] overflow-hidden'
+const panelNoBorder = 'bg-glass-blue shadow-[0_12px_32px_rgb(10_63_184/0.35)] overflow-hidden'
 
 export interface AboutSectionProps {
   prizeText?: string
@@ -57,7 +56,9 @@ function AboutSection({
           <TabBanner className="absolute top-0 left-6 z-10 sm:left-10">Get to Know IBCC</TabBanner>
           {/* Gradient border wrapper */}
           <div className="relative bg-gradient-to-br from-white/90 to-transparent rounded-3xl p-1 lg:[clip-path:polygon(0_0,100%_0,88%_100%,25%_100%,15%_93%,0_93%)]">
-            <div className={`${panelNoBorder} rounded-[calc(1.5rem-3px)] px-6 pt-10 pb-20 sm:px-12 lg:[clip-path:polygon(0_0,100%_0,88%_100%,25%_100%,15%_93%,0_93%)]`}>
+            <div
+              className={`${panelNoBorder} rounded-[calc(1.5rem-3px)] px-6 pt-10 pb-20 sm:px-12 lg:[clip-path:polygon(0_0,100%_0,88%_100%,25%_100%,15%_93%,0_93%)]`}
+            >
               <h3 className="font-heading text-xl font-bold text-orange-light">What is IBCC?</h3>
               <p className="mt-2 font-heading text-base leading-relaxed text-white sm:text-lg">
                 <strong className="font-bold">
@@ -65,8 +66,8 @@ function AboutSection({
                 </strong>{' '}
                 is the core event of the International Summit where participants are challenged to
                 solve real-world business problems through professional collaboration. Through this
-                year&apos;s theme, we aim to harness the potential of growing technology to thrive on
-                the modern age of business.
+                year&apos;s theme, we aim to harness the potential of growing technology to thrive
+                on the modern age of business.
               </p>
               <h3 className="mt-7 font-heading text-xl font-bold text-orange-light">
                 Who can Participate?
@@ -152,10 +153,7 @@ function AboutSection({
         </div>
 
         {/* Stars card – skewed */}
-        <div
-          className="relative hidden h-[220px] -skew-x-[20deg] sm:block"
-          aria-hidden="true"
-        >
+        <div className="relative hidden h-[220px] -skew-x-[20deg] sm:block" aria-hidden="true">
           {/* Gradient border wrapper */}
           <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/90 to-transparent p-[3px]">
             <div

@@ -23,13 +23,13 @@ const footerCompetitions = [
 function FooterLinks({ title, items, href }: { title: string; items: string[]; href: string }) {
   return (
     <div>
-      <h3 className="font-heading text-xl font-bold text-white">{title}</h3>
-      <ul className="mt-4 flex flex-col gap-3">
+      <h3 className="font-heading text-lg font-bold text-white">{title}</h3>
+      <ul className="mt-3 flex flex-col gap-2">
         {items.map((item) => (
           <li key={item}>
             <a
               href={href}
-              className="font-heading text-base text-white/95 hover:underline sm:text-lg"
+              className="font-heading text-sm text-white/95 hover:underline sm:text-base"
             >
               {item}
             </a>
@@ -42,34 +42,33 @@ function FooterLinks({ title, items, href }: { title: string; items: string[]; h
 
 function Footer() {
   return (
-    <footer className="relative mt-24 overflow-hidden">
+    <footer className="relative mt-16 overflow-hidden">
+      {/* Skyline tiles horizontally at a fixed height so it doesn't grow with screen width. */}
       <div
-        className="pointer-events-none relative flex items-end justify-center w-full"
+        className="pointer-events-none h-[110px] w-full bg-repeat-x bg-bottom [background-size:auto_100%] sm:h-[150px] lg:h-[180px]"
+        style={{ backgroundImage: `url(${town})` }}
         aria-hidden="true"
-      >
-        <img src={town} alt="" className="w-1/2 object-cover" />
-        <img src={town} alt="" className="w-1/2 object-cover" />
-      </div>
+      />
 
       {/* Gradient border wrapper */}
-      <div className="relative -mt-3 sm:-mt-24 pt-1 px-1 rounded-t-[36px] bg-[linear-gradient(90deg,#003F9E_0%,#0262F4_65%,#FFFFFF_110%)]">
+      <div className="relative -mt-3 sm:-mt-8 pt-1 px-1 rounded-t-[36px] bg-[linear-gradient(90deg,#003F9E_0%,#0262F4_65%,#FFFFFF_110%)]">
         {/* Inner container */}
         <div className="relative overflow-hidden rounded-t-[34px] w-full h-full">
           <img src={buildings} alt="" className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-[linear-gradient(135deg,rgb(62_136_245/0.88)_0%,rgb(134_177_238/0.85)_100%)]" />
 
-          <div className="relative mx-auto grid max-w-[1300px] gap-10 px-6 py-14 sm:px-12 md:grid-cols-[1.1fr_1fr_1.2fr]">
-            <div>
+          <div className="relative mx-auto grid max-w-[1300px] grid-cols-2 gap-x-5 gap-y-7 px-6 py-9 sm:px-12 md:grid-cols-[1.1fr_1fr_1.2fr] md:gap-8">
+            <div className="col-span-2 md:col-span-1">
               <img
                 src={summitLogo}
                 alt="StudentsxCEOs International Summit"
-                className="h-20 w-auto"
+                className="h-14 w-auto"
               />
-              <p className="mt-6 max-w-sm font-heading text-lg text-white">
+              <p className="mt-4 max-w-sm font-heading text-base text-white">
                 StudentsxCEOs Intersummit brings students together worldwide to learn, collaborate,
                 and get inspired
               </p>
-              <div className="mt-8 flex gap-6">
+              <div className="mt-5 flex gap-4">
                 {[
                   { icon: instagram, label: 'Instagram', href: socials.instagram },
                   { icon: linkedin, label: 'LinkedIn', href: socials.linkedin },
@@ -83,7 +82,7 @@ function Footer() {
                     rel="noreferrer"
                     className="transition-transform hover:scale-110"
                   >
-                    <img src={s.icon} alt="" className="h-11 w-11" />
+                    <img src={s.icon} alt="" className="h-9 w-9" />
                   </a>
                 ))}
               </div>

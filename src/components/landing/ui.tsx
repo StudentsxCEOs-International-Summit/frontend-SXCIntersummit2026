@@ -7,12 +7,12 @@ export function SectionTitle({ children, id, className }: { children: ReactNode;
   const isCustom = !!className && className !== "bg-glass-blue";
   
   const outerClass = isCustom 
-    ? `${className} rounded-2xl p-[3px] shadow-[0_0_30px_rgba(2,98,244,0.6)] sm:min-w-[380px]`
-    : `bg-glass-blue rounded-2xl border-2 border-white/90 shadow-[0_0_30px_rgba(2,98,244,0.6)] sm:min-w-[380px]`;
+    ? `${className} rounded-2xl p-[3px] shadow-[0_0_30px_rgba(2,98,244,0.6)] sm:min-w-[300px]`
+    : `bg-glass-blue rounded-2xl border-2 border-white/90 shadow-[0_0_30px_rgba(2,98,244,0.6)] sm:min-w-[300px]`;
     
   const innerClass = isCustom
-    ? "h-full w-full rounded-[calc(1rem-2px)] bg-glass-blue px-10 py-4 text-center"
-    : "h-full w-full rounded-[calc(1rem-2px)] px-10 py-4 text-center";
+    ? "h-full w-full rounded-[calc(1rem-2px)] bg-glass-blue px-8 py-3 text-center"
+    : "h-full w-full rounded-[calc(1rem-2px)] px-8 py-3 text-center";
 
   return (
     <div className="flex justify-center mb-10">
@@ -21,7 +21,7 @@ export function SectionTitle({ children, id, className }: { children: ReactNode;
           <div className="relative inline-block">
           <span
             aria-hidden="true"
-            className="absolute inset-0 px-2 text-xl md:text-3xl font-extrabold italic tracking-tight select-none pointer-events-none"
+            className="absolute inset-0 px-2 text-xl md:text-2xl font-extrabold italic tracking-tight select-none pointer-events-none"
             style={{
               backgroundImage: 'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 110%)',
               WebkitBackgroundClip: 'text',
@@ -34,7 +34,7 @@ export function SectionTitle({ children, id, className }: { children: ReactNode;
           >
             {children}
           </span>
-          <span className="relative block px-2 text-xl md:text-3xl font-extrabold italic tracking-tight text-white">
+          <span className="relative block px-2 text-xl md:text-2xl font-extrabold italic tracking-tight text-white">
             {children}
           </span>
         </div>

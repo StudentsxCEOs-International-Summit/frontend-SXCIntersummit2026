@@ -240,3 +240,33 @@
     animation: float 9s ease-in-out infinite;
   }
 }
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-marquee {
+    animation: marquee var(--marquee-duration, 40s) linear infinite;
+  }
+
+  .animate-marquee-reverse {
+    animation: marquee var(--marquee-duration, 40s) linear infinite reverse;
+  }
+
+  .marquee:hover .animate-marquee,
+  .marquee:hover .animate-marquee-reverse {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow-x: auto;
+  }
+}

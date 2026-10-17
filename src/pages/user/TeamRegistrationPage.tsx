@@ -67,8 +67,9 @@ export default function TeamRegistrationPage() {
             </dl>
           )}
           <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-slate-500">
-            A confirmation email is on its way, and your teammates will receive an invitation to
-            activate their accounts.
+            A confirmation email is on its way. Your teammates have been added to the team; they
+            can set their own password with &quot;Forgot password&quot; using the email address you
+            entered.
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <Link

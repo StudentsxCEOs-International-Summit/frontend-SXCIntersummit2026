@@ -26,6 +26,12 @@ export interface MyTeam {
   status: string
   isLeader: boolean
   competitionStage: 'REGISTRATION' | 'PREELIM' | 'SEMIFINAL'
+  payment: {
+    status: 'NOT_SUBMITTED' | 'PENDING_VERIFICATION' | 'PAID' | 'REJECTED'
+    isUploaded: boolean
+    fileUrl: string | null
+    submittedAt: string | null
+  }
   selectionResult: {
     isAnnounced: boolean
     isQualified: boolean
@@ -35,18 +41,11 @@ export interface MyTeam {
   members: TeamMemberInfo[]
   submissions: {
     requirementsCompleted: boolean
+    paymentSubmitted: boolean
+    paymentSubmittedAt: string | null
     preliminaryOutputSubmitted: boolean
     preliminarySubmittedAt: string | null
   }
-}
-
-export interface MemberInvitation {
-  teamId: number
-  teamName: string
-  leaderName: string
-  memberName: string
-  memberEmail: string
-  isAlreadyRegisteredUser: boolean
 }
 
 /** One function per existing route in back-end/src/features/ibcc/ibcc.route.ts. */
@@ -56,17 +55,6 @@ export const ibccService = {
 
   /** GET /ibcc/my-team -> 404 ("No registered team found") when the user has no team yet. */
   getMyTeam: () => api.get<MyTeam>('/ibcc/my-team'),
-
-  /** GET /ibcc/members/verify-token?token=... (public: used by the invitation email link). */
-  verifyMemberToken: (token: string) =>
-    api.get<MemberInvitation>(`/ibcc/members/verify-token?token=${encodeURIComponent(token)}`),
-
-  /** POST /ibcc/members/claim-account sets the invited member's password. */
-  claimMemberAccount: (input: { token: string; password: string }) =>
-    api.post<{ accessToken: string; user: { id: number; name: string; email: string } }>(
-      '/ibcc/members/claim-account',
-      input,
-    ),
 
   /** POST /ibcc/submission/preliminary (multipart, field name `slideDeck`). */
   submitPreliminary: (file: File, teamId?: number) => {

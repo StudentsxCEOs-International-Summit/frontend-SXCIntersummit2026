@@ -195,6 +195,15 @@ export default function MyTeamPage() {
                     <Step done={state.team.submissions.requirementsCompleted}>
                       Registration requirements
                     </Step>
+                    <Step done={state.team.payment.status === 'PAID'}>
+                      {state.team.payment.status === 'PAID'
+                        ? 'Payment verified'
+                        : state.team.payment.status === 'PENDING_VERIFICATION'
+                          ? 'Payment proof submitted (awaiting verification)'
+                          : state.team.payment.status === 'REJECTED'
+                            ? 'Payment proof rejected'
+                            : 'Payment proof not submitted'}
+                    </Step>
                     <Step done={state.team.submissions.preliminaryOutputSubmitted}>
                       Preliminary slide deck
                     </Step>

@@ -7,37 +7,23 @@ export function SectionTitle({ children, id, className }: { children: ReactNode;
   const isCustom = !!className && className !== "bg-glass-blue";
   
   const outerClass = isCustom 
-    ? `${className} rounded-2xl p-[3px] shadow-[0_0_30px_rgba(2,98,244,0.6)] sm:min-w-[300px]`
-    : `bg-glass-blue rounded-2xl border-2 border-white/90 shadow-[0_0_30px_rgba(2,98,244,0.6)] sm:min-w-[300px]`;
-    
+    ? `${className} rounded-2xl p-[3px] shadow-[0_0_24px_rgba(2,98,244,0.6)] sm:min-w-[240px]`
+    : `bg-glass-blue rounded-2xl border-2 border-white/90 shadow-[0_0_24px_rgba(2,98,244,0.6)] sm:min-w-[240px]`;
+
   const innerClass = isCustom
-    ? "h-full w-full rounded-[calc(1rem-2px)] bg-glass-blue px-8 py-3 text-center"
-    : "h-full w-full rounded-[calc(1rem-2px)] px-8 py-3 text-center";
+    ? "h-full w-full rounded-[calc(1rem-2px)] bg-glass-blue px-6 py-2 text-center"
+    : "h-full w-full rounded-[calc(1rem-2px)] px-6 py-2 text-center";
 
   return (
-    <div className="flex justify-center mb-10">
+    <div className="flex justify-center mb-6">
       <h2 id={id} className={outerClass}>
         <div className={innerClass}>
-          <div className="relative inline-block">
           <span
-            aria-hidden="true"
-            className="absolute inset-0 px-2 text-xl md:text-2xl font-extrabold italic tracking-tight select-none pointer-events-none"
-            style={{
-              backgroundImage: 'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 110%)',
-              WebkitBackgroundClip: 'text',
-              backgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              WebkitTextStroke: '6px transparent',
-              paintOrder: 'stroke fill',
-              filter: 'drop-shadow(0 0 8px rgba(2, 98, 244, 0.5)) drop-shadow(0 4px 8px rgba(0, 63, 158, 0.6))',
-            }}
+            className="block px-2 text-base md:text-xl font-extrabold italic tracking-tight text-white"
+            style={{ textShadow: '0 2px 0 #003F9E, 0 0 10px rgba(0, 63, 158, 0.7)' }}
           >
             {children}
           </span>
-          <span className="relative block px-2 text-xl md:text-2xl font-extrabold italic tracking-tight text-white">
-            {children}
-          </span>
-        </div>
         </div>
       </h2>
     </div>
@@ -82,7 +68,7 @@ export function GoldButton({ href, children, className = '' }: GoldButtonProps) 
 export function CardTab({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
     <div
-      className={`bg-gradient-to-b from-[#f8ba48] to-[#f4a300] rounded-t-2xl rounded-br-2xl border-2 border-white/90 px-5 py-2.5 text-center font-body text-lg font-medium text-white shadow-[0_4px_12px_rgb(244_163_0/0.4)] sm:text-xl ${className}`}
+      className={`bg-gradient-to-b from-[#f8ba48] to-[#f4a300] rounded-t-2xl rounded-br-2xl border-2 border-white/90 px-4 py-1.5 text-center font-body text-base font-medium text-white shadow-[0_4px_12px_rgb(244_163_0/0.4)] sm:text-lg ${className}`}
     >
       {children}
     </div>
@@ -106,7 +92,7 @@ export function ProgramThumbnail({ title }: { title: string }) {
         className="absolute -bottom-10 -left-6 w-28 -rotate-12 opacity-95"
         aria-hidden="true"
       />
-      <p className="text-outline-blue relative px-3 text-center font-heading text-xl leading-tight font-extrabold italic sm:text-2xl">
+      <p className="text-outline-blue relative px-3 text-center font-heading text-lg leading-tight font-extrabold italic sm:text-xl">
         {title}
       </p>
     </div>
@@ -117,14 +103,14 @@ export function ProgramCard({ card }: { card: ProgramCardData }) {
   return (
     <article className="flex h-full flex-col">
       <CardTab className="relative z-10 mx-4">{card.tab}</CardTab>
-      <div className="bg-glass-blue -mt-4 flex flex-1 flex-col gap-4 rounded-3xl border-[3px] border-white/90 px-6 pt-8 pb-6 shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(255,255,255,0.6)]">
+      <div className="bg-glass-blue -mt-4 flex flex-1 flex-col gap-3 rounded-3xl border-[3px] border-white/90 px-5 pt-7 pb-5 shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(255,255,255,0.6)]">
         <ProgramThumbnail title={card.title} />
         <div className="flex-1">
-          <p className="line-clamp-3 text-justify font-body text-sm text-white">
+          <p className="line-clamp-3 text-left font-body text-[13px] text-white sm:text-justify sm:text-sm">
             {card.description}
           </p>
         </div>
-        <GoldButton href={card.href} className="w-full">
+        <GoldButton href={card.href} className="w-full py-2!">
           Read More <ArrowIcon />
         </GoldButton>
       </div>

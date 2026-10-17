@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Poppins:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:wght@200;300;400;500;600;700&display=swap');
 @import 'tailwindcss';
 
 @theme inline {
@@ -241,6 +241,54 @@
   }
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(4px, -8px);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-sway {
+    animation: sway 10s ease-in-out infinite;
+  }
+
+  .animate-sway-slow {
+    animation: sway 14s ease-in-out infinite reverse;
+  }
+
+  .animate-twinkle {
+    animation: twinkle 8s ease-in-out infinite;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .animate-key-gold {
+    animation: float 7s ease-in-out infinite;
+  }
+
+  .animate-key-blue {
+    animation: float 8s ease-in-out infinite reverse;
+  }
+}
 @keyframes marquee {
   from {
     transform: translateX(0);

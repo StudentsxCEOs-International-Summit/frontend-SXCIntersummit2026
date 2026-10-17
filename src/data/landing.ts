@@ -125,8 +125,8 @@ export interface ContactPerson {
 
 // TODO: placeholder contacts from the mockup.
 export const contactPersons: ContactPerson[] = [
-  { name: 'Rafki', phone: '0812 3456 7890' },
-  { name: 'Rafki', phone: '0812 3456 7890' },
+  { name: 'Rafki', phone: '+62 8123 4567 8910' },
+  { name: 'Rafki', phone: '+62 8123 4567 8910' },
 ]
 
 // TODO: fill in the official social media URLs.

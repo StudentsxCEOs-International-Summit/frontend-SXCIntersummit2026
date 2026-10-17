@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from 'react'
+import { SectionTitle } from '@/components/landing/ui'
 import titleLeft from '@/assets/about/ic-contain-title-left.svg'
 import titleRight from '@/assets/about/ic-contain-title-right.svg'
 import visionLeft from '@/assets/about/ic-vision-left.svg'
@@ -9,18 +10,11 @@ import visionRight from '@/assets/about/ic-vision-right.svg'
  * Kept inside `components/about` so the About page stays self-contained.
  */
 
-const strokeStyle = (width: number): CSSProperties => ({
-  backgroundImage: 'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 110%)',
-  WebkitBackgroundClip: 'text',
-  backgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  WebkitTextStroke: `${width}px transparent`,
-  paintOrder: 'stroke fill',
-  filter:
-    'drop-shadow(0 0 10px rgba(2, 98, 244, 0.45)) drop-shadow(0 3px 8px rgba(0, 63, 158, 0.55))',
-})
-
-/** White text with the blue gradient outline + glow used across the design. */
+/**
+ * White text with a blue outline + soft glow used across the design.
+ * Single layer on purpose: the old two-layer gradient-stroke trick drifted out of
+ * alignment and left blocky dark patches behind the letters.
+ */
 export function OutlinedText({
   children,
   className = '',
@@ -30,21 +24,108 @@ export function OutlinedText({
   className?: string
   stroke?: number
 }) {
+  // Outline built from ring of text-shadows: unlike -webkit-text-stroke it never
+  // produces mitred spikes or jagged inner contours on overlapping glyph paths.
+  const radius = Math.max(1, stroke * 0.3)
+  const ring = Array.from({ length: 16 }, (_, i) => {
+    const angle = (i / 16) * Math.PI * 2
+    const x = (Math.cos(angle) * radius).toFixed(2)
+    const y = (Math.sin(angle) * radius).toFixed(2)
+    return `${x}px ${y}px 0 #0a4fd1`
+  })
+  const style: CSSProperties = {
+    color: '#ffffff',
+    textShadow: [...ring, '0 3px 8px rgba(0, 63, 158, 0.55)', '0 0 14px rgba(2, 98, 244, 0.45)'].join(', '),
+  }
   return (
-    <span className={`relative inline-block ${className}`}>
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 select-none"
-        style={strokeStyle(stroke)}
-      >
-        {children}
-      </span>
-      <span className="relative text-white">{children}</span>
+    <span className={`inline-block ${className}`} style={style}>
+      {children}
     </span>
   )
 }
+/**
+ * The Figma "container" card outlines, redrawn as inline SVG. They stretch to any
+ * width/height (preserveAspectRatio="none") while the 5px edge keeps its thickness
+ * (non-scaling-stroke), so the card can be wide without growing tall.
+ * Paths and gradients are copied from ic-contain-mainright.svg / ic-contain-main-left.svg.
+ */
+const containShapes = {
+  right: {
+    viewBox: '0 0 1202 344',
+    fillPath:
+      'M5.45117 300.622C5.45117 308.907 12.1669 315.622 20.4512 315.622H334.06C337.019 315.622 339.912 316.498 342.375 318.138L363.915 332.484C366.378 334.125 369.271 335 372.23 335H1113.1C1120.05 335 1126.09 330.226 1127.69 323.463L1200.07 18.4634C1202.31 9.04057 1195.16 0 1185.48 0H20.4512C12.1669 0 5.45117 6.71571 5.45117 15V300.622Z',
+    strokePath:
+      'M372.229 332.5H1113.1C1118.89 332.5 1123.92 328.521 1125.26 322.886L1197.64 17.8857C1199.5 10.0336 1193.54 2.5 1185.47 2.5H20.4512C13.5476 2.5 7.95117 8.09644 7.95117 15V300.622C7.95117 307.526 13.5476 313.122 20.4512 313.122H334.06C337.512 313.122 340.887 314.144 343.761 316.058L365.301 330.403C367.353 331.77 369.764 332.5 372.229 332.5Z',
+    fill: { x1: 150.521, y1: 690.5, x2: 511.521, y2: 150, from: '#8BB9F4', to: '#FFFFFF' },
+    stroke: { x1: 594.424, y1: 335, x2: 827.03, y2: -61.0354 },
+  },
+  left: {
+    viewBox: '0 0 1199 356',
+    fillPath:
+      'M1197.27 55.2187C1197.27 46.9344 1190.55 40.2187 1182.27 40.2187H869.933C867.031 40.2187 864.191 39.3768 861.758 37.7951L840.24 23.8074C837.807 22.2256 834.967 21.3838 832.065 21.3838H334.907C332.557 21.3838 330.24 20.8317 328.143 19.7721L292.197 1.61166C290.1 0.552051 287.783 0 285.433 0H20.4544C11.3347 0 4.32524 8.07047 5.6022 17.1003L50.4307 334.1C51.477 341.5 57.8101 347 65.2829 347H1182.27C1190.55 347 1197.27 340.284 1197.27 332V55.2187Z',
+    strokePath:
+      'M285.433 2.5H20.4541C12.8546 2.50018 7.01325 9.22535 8.07715 16.75L52.9062 333.75C53.7782 339.916 59.0559 344.5 65.2832 344.5H1182.27C1189.17 344.5 1194.77 338.904 1194.77 332V55.2188C1194.77 48.3152 1189.17 42.7188 1182.27 42.7188H869.934C866.548 42.7188 863.234 41.7368 860.396 39.8916L838.878 25.9033C836.85 24.5852 834.483 23.8838 832.064 23.8838H334.906C332.165 23.8837 329.462 23.2399 327.016 22.0039L291.069 3.84277C289.322 2.95987 287.391 2.5 285.433 2.5Z',
+    fill: { x1: 600.225, y1: 21.3838, x2: 1012.46, y2: 799.812, from: '#FFFFFF', to: '#8BB9F4' },
+    stroke: { x1: 610.709, y1: 0, x2: 365.261, y2: 401.794 },
+  },
+} as const
 
-/** Blue glass pill used for section titles ("Our Values", "Our Milestones", ...). */
+export function ContainShape({
+  variant,
+  className = '',
+}: {
+  variant: keyof typeof containShapes
+  className?: string
+}) {
+  const s = containShapes[variant]
+  const id = `about-contain-${variant}`
+  return (
+    <svg
+      viewBox={s.viewBox}
+      preserveAspectRatio="none"
+      fill="none"
+      aria-hidden="true"
+      className={`pointer-events-none absolute inset-0 h-full w-full overflow-visible drop-shadow-[-2px_5px_3px_rgba(0,0,0,0.25)] ${className}`}
+    >
+      <defs>
+        <linearGradient
+          id={`${id}-fill`}
+          gradientUnits="userSpaceOnUse"
+          x1={s.fill.x1}
+          y1={s.fill.y1}
+          x2={s.fill.x2}
+          y2={s.fill.y2}
+        >
+          <stop stopColor={s.fill.from} />
+          <stop offset="1" stopColor={s.fill.to} />
+        </linearGradient>
+        <linearGradient
+          id={`${id}-stroke`}
+          gradientUnits="userSpaceOnUse"
+          x1={s.stroke.x1}
+          y1={s.stroke.y1}
+          x2={s.stroke.x2}
+          y2={s.stroke.y2}
+        >
+          <stop stopColor="#FFFFFF" />
+          <stop offset="0.5" stopColor="#0262F4" stopOpacity="0" />
+          <stop offset="1" stopColor="#003F9E" />
+        </linearGradient>
+      </defs>
+      <path d={s.fillPath} fill={`url(#${id}-fill)`} />
+      <path
+        d={s.strokePath}
+        stroke={`url(#${id}-stroke)`}
+        strokeWidth={5}
+        vectorEffect="non-scaling-stroke"
+      />
+    </svg>
+  )
+}
+/**
+ * Section title pill ("Our Values", "Our Milestones", ...). Reuses the Home page's
+ * SectionTitle so the size, outline and centering match Home exactly.
+ */
 export function AboutPill({
   children,
   id,
@@ -55,28 +136,22 @@ export function AboutPill({
   className?: string
 }) {
   return (
-    <div className={`flex justify-center ${className}`}>
-      <h2
+    <div className={`-mb-6 pb-6 ${className}`}>
+      <SectionTitle
         id={id}
-        className="bg-glass-blue rounded-2xl border-2 border-white/90 px-8 py-2.5 text-center shadow-[0_0_30px_rgba(2,98,244,0.6)] sm:min-w-[300px] sm:px-12"
+        className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]"
       >
-        <OutlinedText
-          stroke={6}
-          className="font-heading text-xl leading-tight font-extrabold tracking-tight italic md:text-[1.75rem]"
-        >
-          {children}
-        </OutlinedText>
-      </h2>
+        {children}
+      </SectionTitle>
     </div>
   )
 }
-
 /** Orange trapezoid label that sits on top of a card (uses the Figma-exported SVG shapes). */
 export function CardLabel({
   side,
   children,
   className = '',
-  textClassName = 'text-sm sm:text-lg',
+  textClassName = 'text-xs sm:text-base',
 }: {
   side: 'left' | 'right'
   children: ReactNode
@@ -142,6 +217,12 @@ export function AngledPanel({
     </div>
   )
 }
-
+/**
+ * Gradient edge for the tilted glass cards (Our Values, Benefits): navy on the top/right,
+ * white on the bottom/left, so the 3D lean reads clearly. Drawn with a masked ::before so
+ * the card keeps its translucent fill.
+ */
+export const glassCardEdge =
+  "relative before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:p-[2px] before:content-[''] before:bg-[linear-gradient(215deg,#0a3a8a_0%,#0b4aa8_28%,#ffffff_62%,#ffffff_100%)] before:[mask-image:linear-gradient(#000_0_0),linear-gradient(#000_0_0)] before:[mask-clip:content-box,border-box] before:[mask-composite:exclude] before:[-webkit-mask-image:linear-gradient(#000_0_0),linear-gradient(#000_0_0)] before:[-webkit-mask-clip:content-box,border-box] before:[-webkit-mask-composite:xor]"
 /** Shared body copy colour on the light cards. */
 export const cardText = 'text-[#0b3d91]'

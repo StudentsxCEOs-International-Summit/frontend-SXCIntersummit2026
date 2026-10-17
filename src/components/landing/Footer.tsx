@@ -23,13 +23,13 @@ const footerCompetitions = [
 function FooterLinks({ title, items, href }: { title: string; items: string[]; href: string }) {
   return (
     <div>
-      <h3 className="font-heading text-lg font-bold text-white">{title}</h3>
-      <ul className="mt-3 flex flex-col gap-2">
+      <h3 className="font-heading text-base font-bold text-white sm:text-lg">{title}</h3>
+      <ul className="mt-2 flex flex-col gap-1.5 sm:mt-3 sm:gap-2">
         {items.map((item) => (
           <li key={item}>
             <a
               href={href}
-              className="font-heading text-sm text-white/95 hover:underline sm:text-base"
+              className="font-heading text-xs text-white/95 hover:underline sm:text-base"
             >
               {item}
             </a>
@@ -51,20 +51,20 @@ function Footer() {
       />
 
       {/* Gradient border wrapper */}
-      <div className="relative -mt-3 sm:-mt-8 pt-1 px-1 rounded-t-[36px] bg-[linear-gradient(90deg,#003F9E_0%,#0262F4_65%,#FFFFFF_110%)]">
+      <div className="relative -mt-7 sm:-mt-8 pt-1 px-1 rounded-t-[28px] sm:rounded-t-[36px] bg-[linear-gradient(90deg,#003F9E_0%,#0262F4_65%,#FFFFFF_110%)]">
         {/* Inner container */}
-        <div className="relative overflow-hidden rounded-t-[34px] w-full h-full">
+        <div className="relative overflow-hidden rounded-t-[26px] sm:rounded-t-[34px] w-full h-full">
           <img src={buildings} alt="" className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-[linear-gradient(135deg,rgb(62_136_245/0.88)_0%,rgb(134_177_238/0.85)_100%)]" />
 
-          <div className="relative mx-auto grid max-w-[1300px] grid-cols-2 gap-x-5 gap-y-7 px-6 py-9 sm:px-12 md:grid-cols-[1.1fr_1fr_1.2fr] md:gap-8">
+          <div className="relative mx-auto grid max-w-[1300px] grid-cols-2 gap-x-4 gap-y-5 px-5 py-7 sm:gap-x-5 sm:gap-y-7 sm:px-12 sm:py-9 md:grid-cols-[1.1fr_1fr_1.2fr] md:gap-8">
             <div className="col-span-2 md:col-span-1">
               <img
                 src={summitLogo}
                 alt="StudentsxCEOs International Summit"
-                className="h-14 w-auto"
+                className="h-12 w-auto sm:h-14"
               />
-              <p className="mt-4 max-w-sm font-heading text-base text-white">
+              <p className="mt-3 max-w-sm font-heading text-sm text-white sm:mt-4 sm:text-base">
                 StudentsxCEOs Intersummit brings students together worldwide to learn, collaborate,
                 and get inspired
               </p>
@@ -82,7 +82,7 @@ function Footer() {
                     rel="noreferrer"
                     className="transition-transform hover:scale-110"
                   >
-                    <img src={s.icon} alt="" className="h-9 w-9" />
+                    <img src={s.icon} alt="" className="h-8 w-8 sm:h-9 sm:w-9" />
                   </a>
                 ))}
               </div>

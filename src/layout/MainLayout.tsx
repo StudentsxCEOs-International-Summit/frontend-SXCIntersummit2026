@@ -9,7 +9,7 @@ function MainLayout() {
   useEffect(() => {
     if (location.pathname === '/ibcc' || location.hash === '#competitions') {
       setActiveItem('IBCC')
-    } else if (location.hash === '#merchandise') {
+    } else if (location.pathname === '/merchandise') {
       setActiveItem('Merchandise')
     } else if (location.pathname === '/about') {
       setActiveItem('About')

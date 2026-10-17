@@ -37,15 +37,14 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     { label: 'Home', href: '/' },
     { label: 'About', href: '/about' },
     { label: 'IBCC', href: '/ibcc' },
-    // TODO: point to the merchandise page once it exists.
-    { label: 'Merchandise', href: '/#merchandise' },
+    { label: 'Merchandise', href: '/merchandise' },
   ]
 
   const navItems = items || defaultNavItems
 
   return (
     <header
-      className="inset-x-0 top-0 z-50 flex w-full justify-center px-4 py-3 sm:px-6 lg:px-8"
+      className="inset-x-0 top-0 z-50 flex w-full justify-center px-4 pt-5 pb-3 sm:px-8 lg:px-14"
       style={{ position }}
     >
       {/* Outer Pill Container */}

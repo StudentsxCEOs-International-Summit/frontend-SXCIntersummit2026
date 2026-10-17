@@ -1,7 +1,7 @@
 <svg width="387" height="206" viewBox="0 0 387 206" fill="none" xmlns="http://www.w3.org/2000/svg">
 <foreignObject x="-18.4564" y="-23.9076" width="427.815" height="244.815"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(11.95px);clip-path:url(#bgblur_0_482_1014_clip_path);height:100%;width:100%"></div></foreignObject><g filter="url(#filter0_d_482_1014)" data-figma-bg-blur-radius="23.9076">
-<rect x="5.45117" width="380" height="197" rx="15" fill="url(#paint0_linear_482_1014)" shape-rendering="crispEdges"/>
-<rect x="7.95117" y="2.5" width="375" height="192" rx="12.5" stroke="url(#paint1_linear_482_1014)" stroke-width="5" shape-rendering="crispEdges"/>
+<rect x="5.45117" width="380" height="197" rx="15" fill="url(#paint0_linear_482_1014)" shape-rendering="geometricPrecision"/>
+<rect x="7.95117" y="2.5" width="375" height="192" rx="12.5" stroke="url(#paint1_linear_482_1014)" stroke-width="5" shape-rendering="geometricPrecision"/>
 <g clip-path="url(#clip1_482_1014)">
 <path d="M59.1868 151.066C56.4366 152.465 53.3158 150.014 53.8716 146.885L59.7853 113.48L34.684 89.7779C32.3398 87.5603 33.5582 83.5064 36.7003 83.0686L71.5986 78.1531L87.1596 47.5936C88.5632 44.8392 92.3608 44.8392 93.7645 47.5936L109.325 78.1531L144.224 83.0686C147.366 83.5064 148.584 87.5603 146.233 89.7779L121.139 113.48L127.052 146.885C127.608 150.014 124.487 152.465 121.737 151.066L90.4513 135.133L59.1868 151.066Z" fill="url(#paint2_linear_482_1014)"/>
 </g>

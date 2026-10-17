@@ -57,10 +57,10 @@ function AboutSection({
           {/* Gradient border wrapper */}
           <div className="relative bg-gradient-to-br from-white/90 to-transparent rounded-3xl p-1 lg:[clip-path:polygon(0_0,100%_0,88%_100%,25%_100%,15%_93%,0_93%)]">
             <div
-              className={`${panelNoBorder} rounded-[calc(1.5rem-3px)] px-6 pt-10 pb-20 sm:px-12 lg:[clip-path:polygon(0_0,100%_0,88%_100%,25%_100%,15%_93%,0_93%)]`}
+              className={`${panelNoBorder} relative rounded-[calc(1.5rem-3px)] px-6 pt-8 pb-14 sm:px-10 lg:[clip-path:polygon(0_0,100%_0,88%_100%,25%_100%,15%_93%,0_93%)]`}
             >
-              <h3 className="font-heading text-xl font-bold text-orange-light">What is IBCC?</h3>
-              <p className="mt-2 font-heading text-base leading-relaxed text-white sm:text-lg">
+              <h3 className="font-heading text-lg font-bold text-orange-light">What is IBCC?</h3>
+              <p className="mt-1.5 font-heading text-sm leading-relaxed text-white sm:text-base">
                 <strong className="font-bold">
                   The International Business Case Competition (IBCC)
                 </strong>{' '}
@@ -69,16 +69,31 @@ function AboutSection({
                 year&apos;s theme, we aim to harness the potential of growing technology to thrive
                 on the modern age of business.
               </p>
-              <h3 className="mt-7 font-heading text-xl font-bold text-orange-light">
+              <h3 className="mt-5 font-heading text-lg font-bold text-orange-light">
                 Who can Participate?
               </h3>
-              <p className="mt-2 font-heading text-base leading-relaxed text-white sm:text-lg">
+              <p className="mt-1.5 font-heading text-sm leading-relaxed text-white sm:text-base">
                 IBCC is exclusively open to{' '}
                 <strong className="font-bold">
                   undergraduate university students from all universities across Indonesia.
                 </strong>
               </p>
-              <GoldButton href={joinHref} className="mt-8 sm:min-w-[320px]">
+              {/* Mobile-only decorations (the illustration card is hidden below lg) */}
+              <img
+                src={yellowChess}
+                alt=""
+                className="animate-float pointer-events-none absolute -right-2 bottom-3 w-24 rotate-12 select-none drop-shadow-lg sm:w-28 lg:hidden"
+              />
+              <img
+                src={goldKey}
+                alt=""
+                className="animate-float-slow pointer-events-none absolute right-[5.5rem] -bottom-3 w-16 rotate-[25deg] select-none drop-shadow-lg sm:right-32 sm:w-20 lg:hidden"
+              />
+              <img
+                src={starYellowGlow}
+                alt=""
+                className="animate-float pointer-events-none absolute top-4 right-3 w-10 rotate-12 select-none lg:hidden"
+              />              <GoldButton href={joinHref} className="relative mt-5 sm:min-w-[240px]">
                 Join Now <ArrowIcon />
               </GoldButton>
             </div>
@@ -93,40 +108,40 @@ function AboutSection({
           </div>
 
           {/* Content Layer (Unclipped) */}
-          <div className="w-full h-full relative min-h-[400px]">
+          <div className="w-full h-full relative min-h-[300px]">
             {/* Yellow chess pawn – large, center-left */}
             <img
               src={yellowChess}
               alt=""
-              className="pointer-events-none absolute left-[30%] top-[15%] w-44 select-none drop-shadow-xl sm:w-52 rotate-345"
+              className="pointer-events-none absolute left-[30%] top-[15%] w-36 select-none drop-shadow-xl sm:w-40 rotate-345"
             />
 
             {/* Blue chess pawn – upper right, smaller */}
             <img
               src={blueChess}
               alt=""
-              className="pointer-events-none absolute right-8 top-[8%] w-20 select-none drop-shadow-md sm:w-24 rotate-25"
+              className="pointer-events-none absolute right-8 top-[8%] w-16 select-none drop-shadow-md sm:w-20 rotate-25"
             />
 
             {/* Case Study Book – bottom center-left */}
             <img
               src={caseStudyBook}
               alt=""
-              className="pointer-events-none absolute -bottom-2 left-[15%] w-48 select-none drop-shadow-2xl sm:w-90"
+              className="pointer-events-none absolute -bottom-2 left-[15%] w-40 select-none drop-shadow-2xl sm:w-64"
             />
 
             {/* Golden Key – bottom right, slightly rotated */}
             <img
               src={goldKey}
               alt=""
-              className="pointer-events-none absolute -bottom-10 -right-32 w-32 rotate-25 select-none drop-shadow-xl sm:w-80 "
+              className="pointer-events-none absolute -bottom-8 -right-24 w-28 rotate-25 select-none drop-shadow-xl sm:w-60 "
             />
           </div>
         </div>
       </div>
 
       {/* ── Bottom row: Chess card + Stars card + Prize card ── */}
-      <div className="mt-8 grid items-end gap-4 sm:grid-cols-[1fr_0.4fr] lg:grid-cols-[1.2fr_0.5fr_2.05fr]">
+      <div className="mt-5 grid items-end gap-4 sm:grid-cols-[1fr_0.4fr] lg:grid-cols-[1.2fr_0.5fr_2.05fr]">
         {/* Chess pieces card */}
         <div className="relative hidden h-[220px] lg:block" aria-hidden="true">
           {/* Gradient border wrapper */}
@@ -184,8 +199,18 @@ function AboutSection({
             {/* Gradient border wrapper */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-transparent rounded-3xl p-[3px] sm:[clip-path:polygon(14%_0,100%_0,100%_100%,0_100%)]">
               <div
-                className={`${panelNoBorder} flex w-full h-full text-center items-center justify-center rounded-[calc(1.5rem-3px)] pt-8 sm:[clip-path:polygon(14%_0,100%_0,100%_100%,0_100%)]`}
+                className={`${panelNoBorder} relative flex w-full h-full text-center items-center justify-center rounded-[calc(1.5rem-3px)] pt-8 sm:[clip-path:polygon(14%_0,100%_0,100%_100%,0_100%)]`}
               >
+                <img
+                  src={starYellowGlow}
+                  alt=""
+                  className="animate-float pointer-events-none absolute top-8 left-3 w-10 -rotate-12 select-none sm:hidden"
+                />
+                <img
+                  src={starYellowGlow}
+                  alt=""
+                  className="animate-float-slow pointer-events-none absolute right-3 bottom-3 w-12 rotate-12 select-none sm:hidden"
+                />
                 <div className="relative inline-block pb-7 px-2">
                   <span
                     aria-hidden="true"

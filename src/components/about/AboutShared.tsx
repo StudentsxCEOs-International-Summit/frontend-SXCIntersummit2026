@@ -68,7 +68,15 @@ const containShapes = {
     fill: { x1: 600.225, y1: 21.3838, x2: 1012.46, y2: 799.812, from: '#FFFFFF', to: '#8BB9F4' },
     stroke: { x1: 610.709, y1: 0, x2: 365.261, y2: 401.794 },
   },
-} as const
+  modal: {
+    viewBox: '0 0 520 280',
+    fillPath:
+      'M20 0H500A20 20 0 0 1 520 20V260A20 20 0 0 1 500 280H165L145 262H20A20 20 0 0 1 0 242V20A20 20 0 0 1 20 0Z',
+    strokePath:
+      'M20 2.5H500A17.5 17.5 0 0 1 517.5 20V260A17.5 17.5 0 0 1 500 277.5H166L146 259.5H20A17.5 17.5 0 0 1 2.5 242V20A17.5 17.5 0 0 1 20 2.5Z',
+    fill: { x1: 520, y1: 0, x2: 150, y2: 230, from: '#C3D9FA', to: '#FFFFFF' },
+    stroke: { x1: 260, y1: 0, x2: 260, y2: 280 },
+  },} as const
 
 export function ContainShape({
   variant,

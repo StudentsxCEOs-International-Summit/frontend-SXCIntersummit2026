@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react'
 import RegistrationNavbar from '@/components/ibcc/RegistrationNavbar'
 import RegistrationBackground from '@/components/ibcc/RegistrationBackground'
@@ -9,16 +10,23 @@ import Button from '@/components/ui/Button'
 import { REGISTRATION_STEPS } from '@/data/ibccRegistration'
 import { usePageTitle } from '@/hooks/usePageTitle'
 import { useIbccRegistration } from '@/hooks/useIbccRegistration'
+import { useAuth } from '@/context/AuthContext'
 import type { ParticipantKey } from '@/types/ibccRegistration'
 
 export default function TeamRegistrationPage() {
   usePageTitle('IBCC Team Registration')
+
+  const { user } = useAuth()
+  const leaderDefaults = user ? { fullName: user.name, email: user.email } : undefined
 
   const {
     form,
     step,
     errors,
     submitted,
+    result,
+    submitting,
+    submitError,
     updateTeamName,
     updateMemberArrangement,
     updateParticipant,
@@ -29,7 +37,7 @@ export default function TeamRegistrationPage() {
     updateParticipationConfirmation,
     continueStep,
     previousStep,
-  } = useIbccRegistration()
+  } = useIbccRegistration({ leaderDefaults })
 
   const renderStep = () => {
     if (submitted) {
@@ -42,14 +50,47 @@ export default function TeamRegistrationPage() {
           <p className="mt-2 text-slate-600">
             International Business Case Competition - SxC International Summit 2026
           </p>
+          {result && (
+            <dl className="mx-auto mt-6 grid max-w-sm gap-2 rounded-2xl border border-[#E1EAF5] bg-[#F9FBFE] p-4 text-left text-sm">
+              <div className="flex justify-between gap-4">
+                <dt className="text-slate-500">Team</dt>
+                <dd className="font-semibold text-slate-900">{result.teamName}</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-slate-500">Team code</dt>
+                <dd className="font-semibold text-[#0b4fd1]">{result.teamCode}</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-slate-500">Members</dt>
+                <dd className="font-semibold text-slate-900">{result.memberCount}</dd>
+              </div>
+            </dl>
+          )}
           <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-slate-500">
-            Your registration details are ready. This page currently keeps the form data in this
-            browser session; it is not connected to a submission service yet.
+            A confirmation email is on its way, and your teammates will receive an invitation to
+            activate their accounts.
           </p>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              to="/my-team"
+              className="inline-flex h-11 items-center rounded-lg bg-gradient-to-r from-[#0A60F5] to-[#0F7CFF] px-6 text-sm font-semibold text-white shadow-[0_6px_16px_rgba(10,96,245,0.25)]"
+            >
+              View My Team
+            </Link>
+            {result?.waGroupLink && (
+              <a
+                href={result.waGroupLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-11 items-center rounded-lg border border-[#D8E1EE] bg-white px-5 text-sm font-semibold text-[#1D6FEA]"
+              >
+                Join WhatsApp Group
+              </a>
+            )}
+          </div>
         </div>
       )
     }
-
     if (step === 0) {
       return (
         <div className="py-10 text-center sm:py-16">
@@ -91,6 +132,7 @@ export default function TeamRegistrationPage() {
           participant={form[participantKey]}
           errors={errors}
           onChange={(field, value) => updateParticipant(participantKey, field, value)}
+          readOnlyFields={participantKey === 'leader' ? ['fullName', 'email'] : []}
         />
       )
     }
@@ -167,6 +209,12 @@ export default function TeamRegistrationPage() {
 
           {renderStep()}
 
+          {!submitted && submitError && (
+            <p role="alert" className="mt-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+              {submitError}
+            </p>
+          )}
+
           {!submitted && (
             <footer className="mt-8 flex flex-col-reverse items-center justify-between gap-4 border-t border-[#E8EEF6] pt-5 sm:flex-row">
               <Button
@@ -177,8 +225,12 @@ export default function TeamRegistrationPage() {
               >
                 <ArrowLeft className="h-4 w-4" /> Back
               </Button>
-              <Button onClick={continueStep}>
-                {step === REGISTRATION_STEPS.length - 1 ? 'Submit Registration' : 'Continue'}
+              <Button onClick={continueStep} disabled={submitting}>
+                {step === REGISTRATION_STEPS.length - 1
+                  ? submitting
+                    ? 'Submitting…'
+                    : 'Submit Registration'
+                  : 'Continue'}
                 {step < REGISTRATION_STEPS.length - 1 && <ArrowRight className="h-4 w-4" />}
               </Button>
             </footer>

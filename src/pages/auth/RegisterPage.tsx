@@ -1,13 +1,17 @@
 import { useState, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { User, Mail, Eye, EyeOff, ArrowRight, Check, ArrowLeft } from 'lucide-react'
 import type { RegisterFormState } from '@/types/register'
 import { PASSWORD_REQUIREMENTS, validateRegisterForm } from '@/utils/validation/registerValidation'
 import { FormField, PasswordChecklist, Dot } from '@/components/ui'
-import { RegisterHeroPanel, GradientOrb, CurveBackground } from '@/components/auth'
+import { RegisterHeroPanel, CurveBackground } from '@/components/auth'
+import diamonds from '@/assets/ic-diamonds.svg'
+import starGlow from '@/assets/ic-star-glow.svg'
 import logo from '@/assets/ic-icon-internasional.svg'
 import lockIcon from '@/assets/ic-lock.svg'
 import { usePageTitle } from '@/hooks/usePageTitle'
+import { authService } from '@/services/auth'
+import { ApiError } from '@/lib/api'
 
 const initialFormState: RegisterFormState = {
   fullName: '',
@@ -25,6 +29,7 @@ export default function RegisterPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [formError, setFormError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const navigate = useNavigate()
 
   const updateField =
     <K extends keyof RegisterFormState>(key: K) =>
@@ -43,9 +48,17 @@ export default function RegisterPage() {
 
     try {
       setIsSubmitting(true)
-      await new Promise((resolve) => setTimeout(resolve, 800))
-    } catch {
-      setFormError('Something went wrong. Please try again.')
+      const email = form.email.trim()
+      await authService.register({ name: form.fullName.trim(), email, password: form.password })
+      navigate('/verify-otp', { state: { email, purpose: 'register' } })
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setFormError(error.message)
+        const { name, email, password } = error.fieldErrors
+        setErrors((prev) => ({ ...prev, fullName: name ?? prev.fullName, email: email ?? prev.email, password: password ?? prev.password }))
+      } else {
+        setFormError('Something went wrong. Please try again.')
+      }
     } finally {
       setIsSubmitting(false)
     }
@@ -63,9 +76,9 @@ export default function RegisterPage() {
         }
       `}</style>
 
-      <GradientOrb className="pointer-events-none absolute -right-20 top-8 z-[2] h-42 w-42 sm:-right-20 sm:top-20 sm:h-52 sm:w-52" />
+      <img src={diamonds} alt="" aria-hidden="true" className="animate-sway pointer-events-none absolute -top-6 -right-14 z-[2] w-40 rotate-45 select-none sm:-right-16 sm:w-56" />
       <div className="pointer-events-none absolute -right-12 top-0 z-[2] h-42 w-42 -translate-y-1/3 translate-x-1/3 rounded-full bg-gradient-to-br from-brand-gold/60 via-cream/40 to-transparent blur-3xl sm:h-80 sm:w-80" />
-      <GradientOrb className="pointer-events-none absolute -bottom-20 -right-25 z-[2] h-52 w-52 sm:-right-30 sm:-bottom-30 sm:h-72 sm:w-72" />
+      <img src={starGlow} alt="" aria-hidden="true" className="animate-twinkle pointer-events-none absolute -right-16 -bottom-10 z-[2] w-40 rotate-12 select-none sm:w-60" />
       <CurveBackground className="pointer-events-none absolute inset-y-0 right-0 z-[1] hidden h-full w-[57%] lg:block" />
 
       <div className="relative flex h-full w-full flex-col lg:flex-row">
@@ -215,7 +228,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="mt-1 inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-brand-blue-700 to-brand-blue-300 text-sm font-semibold text-white shadow-ds-md transition-all hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
+                className="bg-gold-gloss text-outline-sm font-heading mt-1 inline-flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-full border-2 border-white/90 text-sm font-bold shadow-[0_4px_16px_rgb(245_158_11/0.45)] transition-transform duration-200 hover:scale-[1.02] focus-visible:ring-4 focus-visible:ring-[#f4a300]/40 focus-visible:outline-none active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSubmitting ? (
                   'Creating account'

@@ -289,6 +289,35 @@
     animation: float 8s ease-in-out infinite reverse;
   }
 }
+@keyframes modal-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-pop {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-modal-fade {
+    animation: modal-fade 0.25s ease-out both;
+  }
+
+  .animate-modal-pop {
+    animation: modal-pop 0.32s ease-out both;
+  }
+}
 @keyframes marquee {
   from {
     transform: translateX(0);

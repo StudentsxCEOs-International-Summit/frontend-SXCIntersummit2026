@@ -3,6 +3,19 @@ import { MemoryRouter } from 'react-router-dom'
 import HomePage from '@/pages/HomepageTemp'
 import AppRoutes from '@/routes'
 import NavigationBar from '@/components/NavigationBar'
+import { AuthProvider } from '@/context/AuthContext'
+
+// The app asks the backend who is signed in on load; answer "signed out" without a network.
+beforeEach(() => {
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async () => new Response(JSON.stringify({ success: false, message: 'Unauthorized' }), { status: 401 })),
+  )
+})
+
+afterEach(() => {
+  vi.unstubAllGlobals()
+})
 
 describe('HomePage', () => {
   it('renders the landing page sections', () => {
@@ -36,7 +49,9 @@ describe('HomePage', () => {
   it('renders the not-found page for unknown routes', () => {
     render(
       <MemoryRouter initialEntries={['/missing-page']}>
-        <AppRoutes />
+        <AuthProvider>
+          <AppRoutes />
+        </AuthProvider>
       </MemoryRouter>,
     )
 
@@ -48,7 +63,9 @@ describe('NavigationBar', () => {
   it('renders logo image and navigation items', () => {
     render(
       <MemoryRouter>
-        <NavigationBar />
+        <AuthProvider>
+          <NavigationBar />
+        </AuthProvider>
       </MemoryRouter>,
     )
 

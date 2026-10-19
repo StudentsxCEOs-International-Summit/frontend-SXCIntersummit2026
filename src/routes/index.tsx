@@ -7,6 +7,8 @@ import LoginPage from '@/pages/auth/LoginPage'
 import TeamRegistrationPage from '@/pages/user/TeamRegistrationPage'
 import AboutPage from '@/pages/AboutPage'
 import IbccPage from '@/pages/IbccPage'
+import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage'
+import TermsOfServicePage from '@/pages/TermsOfServicePage'
 
 function AppRoutes() {
   return (
@@ -15,6 +17,8 @@ function AppRoutes() {
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/ibcc" element={<IbccPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/terms-of-service" element={<TermsOfServicePage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
       <Route path="/register" element={<RegisterPage />} />

@@ -41,7 +41,7 @@ jobs:
 
       - name: Build production frontend
         env:
-          VITE_API_URL: https://api.sayyid.biz.id/api
+          VITE_API_URL: https://api.sxcinternationalsummit.com/api
         run: npm run build
 
       - name: Validate build result
@@ -126,7 +126,7 @@ jobs:
           if ! curl -fsS \
             --retry 5 \
             --retry-delay 3 \
-            https://sayyid.biz.id/ >/dev/null; then
+            https://sxcinternationalsummit.com/ >/dev/null; then
 
             echo "Frontend smoke test failed."
 

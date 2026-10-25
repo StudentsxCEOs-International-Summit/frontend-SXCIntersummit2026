@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { Mail, Eye, EyeOff, ArrowRight, Check, ArrowLeft } from 'lucide-react'
 import type { LoginFormState } from '@/types/login'
 import { validateLoginForm } from '@/utils/validation/loginValidation'
@@ -29,8 +29,11 @@ export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
-  const { setUser } = useAuth()
+  const { setUser, user, loading } = useAuth()
   const routeState = location.state as { from?: string; notice?: string } | null
+
+  // Already signed in: there is nothing to do here (this also covers the moment right after login).
+  if (!loading && user) return <Navigate to={routeState?.from ?? '/'} replace />
 
   const updateField =
     <K extends keyof LoginFormState>(key: K) =>

@@ -56,11 +56,23 @@ export const ibccService = {
   /** GET /ibcc/my-team -> 404 ("No registered team found") when the user has no team yet. */
   getMyTeam: () => api.get<MyTeam>('/ibcc/my-team'),
 
-  /** POST /ibcc/submission/preliminary (multipart, field name `slideDeck`). */
-  submitPreliminary: (file: File, teamId?: number) => {
-    const form = new FormData()
-    form.append('slideDeck', file)
-    if (teamId !== undefined) form.append('teamId', String(teamId))
-    return api.post<unknown>('/ibcc/submission/preliminary', form)
-  },
+  /** POST /ibcc/submission/preliminary (multipart, field `file`; PDF/PPT/PPTX/image, max 20 MB). */
+  submitPreliminary: (file: File, teamId?: number) =>
+    api.post<unknown>('/ibcc/submission/preliminary', uploadForm(file, teamId)),
+
+  /** POST /ibcc/submission/semifinal (multipart, field `file`; PDF/PPT/PPTX/image, max 20 MB). */
+  submitSemifinal: (file: File, teamId?: number) =>
+    api.post<unknown>('/ibcc/submission/semifinal', uploadForm(file, teamId)),
+
+  /** POST /ibcc/submission/payment (multipart, field `file`; images only, max 5 MB). */
+  submitPayment: (file: File, teamId?: number) =>
+    api.post<unknown>('/ibcc/submission/payment', uploadForm(file, teamId)),
+}
+
+/** All three submission endpoints take the same body: `file` plus an optional `teamId`. */
+function uploadForm(file: File, teamId?: number) {
+  const form = new FormData()
+  form.append('file', file)
+  if (teamId !== undefined) form.append('teamId', String(teamId))
+  return form
 }

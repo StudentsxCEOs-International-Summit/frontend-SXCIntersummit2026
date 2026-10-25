@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { CheckCircle2, Circle } from 'lucide-react'
 import { usePageTitle } from '@/hooks/usePageTitle'
 import { ApiError } from '@/lib/api'
 import { ibccService, type MyTeam, type TeamMemberInfo } from '@/services/ibcc'
 import Footer from '@/components/landing/Footer'
+import UploadCard from '@/components/ibcc/UploadCard'
 
 type Load =
   | { kind: 'loading' }
@@ -75,9 +76,104 @@ function Step({ done, children }: { done: boolean; children: string }) {
   )
 }
 
+const DECK_EXTENSIONS = ['pdf', 'ppt', 'pptx']
+const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'gif']
+
+function InfoCard({ title, children }: { title: string; children: string }) {
+  return (
+    <div className="rounded-2xl border border-[#E1EAF5] bg-white p-4 shadow-sm">
+      <h3 className="font-heading text-base font-bold text-slate-900">{title}</h3>
+      <p className="mt-1 text-sm text-slate-500">{children}</p>
+    </div>
+  )
+}
+
+/**
+ * The upload endpoints (POST /ibcc/submission/*) only check that the caller leads a team, so the
+ * page decides which uploads make sense from the data GET /ibcc/my-team returns.
+ */
+function SubmissionCards({ team, onUploaded }: { team: MyTeam; onUploaded: () => void }) {
+  const cards: ReactNode[] = []
+
+  const paymentStatus = team.payment.status
+  if (paymentStatus === 'NOT_SUBMITTED' || paymentStatus === 'REJECTED') {
+    cards.push(
+      <UploadCard
+        key="payment"
+        title="Payment proof"
+        description={
+          paymentStatus === 'REJECTED'
+            ? 'Your last payment proof was rejected. Please upload a new, clear proof of payment.'
+            : 'Upload a screenshot or photo of your registration payment.'
+        }
+        extensions={IMAGE_EXTENSIONS}
+        maxMB={5}
+        buttonLabel="Send payment proof"
+        onUpload={async (file) => {
+          await ibccService.submitPayment(file, team.id)
+          onUploaded()
+        }}
+      />,
+    )
+  } else if (paymentStatus === 'PENDING_VERIFICATION') {
+    cards.push(
+      <InfoCard key="payment" title="Payment proof">
+        Received. The committee is verifying your payment.
+      </InfoCard>,
+    )
+  }
+
+  if (!team.submissions.preliminaryOutputSubmitted) {
+    cards.push(
+      <UploadCard
+        key="preliminary"
+        title="Preliminary slide deck"
+        description="Upload your preliminary round deck as a PDF or PowerPoint file."
+        extensions={DECK_EXTENSIONS}
+        maxMB={20}
+        buttonLabel="Send slide deck"
+        onUpload={async (file) => {
+          await ibccService.submitPreliminary(file, team.id)
+          onUploaded()
+        }}
+      />,
+    )
+  }
+
+  if (team.selectionResult.isQualified) {
+    cards.push(
+      <UploadCard
+        key="semifinal"
+        title="Semifinal slide deck"
+        description="Your team qualified. Upload your semifinal deck as a PDF or PowerPoint file."
+        extensions={DECK_EXTENSIONS}
+        maxMB={20}
+        buttonLabel="Send semifinal deck"
+        onUpload={async (file) => {
+          await ibccService.submitSemifinal(file, team.id)
+          onUploaded()
+        }}
+      />,
+    )
+  }
+
+  if (cards.length === 0) {
+    return (
+      <p className="rounded-2xl bg-white/95 px-5 py-4 text-sm text-slate-600">
+        Nothing to upload right now.
+      </p>
+    )
+  }
+
+  return <div className="grid gap-4 md:grid-cols-2">{cards}</div>
+}
+
 export default function MyTeamPage() {
   usePageTitle('My Team')
   const [state, setState] = useState<Load>({ kind: 'loading' })
+  // Bumped after an upload so the page re-reads GET /ibcc/my-team without flashing a spinner.
+  const [reloadKey, setReloadKey] = useState(0)
+  const reload = () => setReloadKey((key) => key + 1)
 
   useEffect(() => {
     let cancelled = false
@@ -98,7 +194,7 @@ export default function MyTeamPage() {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [reloadKey])
 
   return (
     <div className="bg-landing relative overflow-hidden">
@@ -217,6 +313,19 @@ export default function MyTeamPage() {
                 </div>
               </aside>
             </div>
+
+            <section className="mt-10" aria-labelledby="submissions-heading">
+              <h2 id="submissions-heading" className="font-heading mb-3 text-lg font-extrabold text-white">
+                Submissions
+              </h2>
+              {!state.team.isLeader ? (
+                <p className="rounded-2xl bg-white/95 px-5 py-4 text-sm text-slate-600">
+                  Only the team leader can upload files for the team.
+                </p>
+              ) : (
+                <SubmissionCards team={state.team} onUploaded={reload} />
+              )}
+            </section>
           </>
         )}
       </section>

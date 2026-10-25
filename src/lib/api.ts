@@ -42,6 +42,18 @@ function toFieldErrors(errors: unknown): Record<string, string> {
   return result
 }
 
+type UnauthorizedHandler = () => void
+let unauthorizedHandler: UnauthorizedHandler | null = null
+
+/**
+ * Called when an API call (outside /auth/*) comes back 401, i.e. the session cookie is
+ * missing or the JWT has expired. The auth provider uses it to sign the user out.
+ * /auth/* is excluded on purpose: a 401 there is an expected "wrong credentials" answer.
+ */
+export function setUnauthorizedHandler(handler: UnauthorizedHandler | null) {
+  unauthorizedHandler = handler
+}
+
 interface RequestOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
   /** Plain object -> JSON, FormData -> multipart (the browser sets the boundary). */
@@ -78,6 +90,10 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
     payload = (await response.json()) as ApiEnvelope<T>
   } catch {
     throw new ApiError('The server returned an unexpected response.', response.status)
+  }
+
+  if (response.status === 401 && !path.startsWith('/auth/')) {
+    unauthorizedHandler?.()
   }
 
   if (!response.ok || !payload.success) {

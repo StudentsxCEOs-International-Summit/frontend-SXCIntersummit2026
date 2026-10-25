@@ -131,7 +131,7 @@ export const contactPersons: ContactPerson[] = [
 
 // TODO: fill in the official social media URLs.
 export const socials = {
-  instagram: '#',
-  linkedin: '#',
-  tiktok: '#',
+  instagram: 'https://www.instagram.com/sxcintersummit/',
+  linkedin: 'https://www.linkedin.com/company/sxcintersummit/posts/',
+  tiktok: 'https://www.tiktok.com/@studentsxceosjkt',
 }

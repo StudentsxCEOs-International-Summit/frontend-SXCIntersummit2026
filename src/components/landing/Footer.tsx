@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import town from '@/assets/landing/img-town.webp'
 
 import buildings from '@/assets/landing/img-footer-buildings.webp'
-import summitLogo from '@/assets/ic-icon-summit.svg'
+import summitLogo from '@/assets/ic-icon-internasional.svg'
 import instagram from '@/assets/ic-instagram.svg'
 import linkedin from '@/assets/ic-linkedin.svg'
 import tiktok from '@/assets/ic-tiktok.svg'

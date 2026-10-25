@@ -9,3 +9,4 @@ export { BlueColorFilter, BlueColorFilterDefs, BLUE_COLOR_FILTER_ID, BLUE_COLOR_
 export type { BlueColorFilterProps, DuotonePalette }
 
 export default BlueColorFilter
+

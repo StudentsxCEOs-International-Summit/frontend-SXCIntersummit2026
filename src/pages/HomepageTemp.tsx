@@ -6,6 +6,7 @@ import FaqSection from '@/components/landing/FaqSection'
 import { CaseCollaboratorSection, MediaPartnerSection } from '@/components/landing/PartnersSection'
 import ContactSection from '@/components/landing/ContactSection'
 import Footer from '@/components/landing/Footer'
+import Popup from '@/components/Popup'
 import {
   BackgroundSection,
   AboutBackground,
@@ -17,6 +18,7 @@ import {
 function HomePage() {
   return (
     <div className="bg-landing relative overflow-hidden">
+      <Popup />
       <HeroSection />
       <div className="relative flex flex-col pt-8 sm:pt-16">
         <BackgroundSection background={<AboutBackground />}>

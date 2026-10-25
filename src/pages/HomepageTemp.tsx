@@ -6,7 +6,7 @@ import FaqSection from '@/components/landing/FaqSection'
 import { CaseCollaboratorSection, MediaPartnerSection } from '@/components/landing/PartnersSection'
 import ContactSection from '@/components/landing/ContactSection'
 import Footer from '@/components/landing/Footer'
-import Popup from '@/components/Popup'
+
 import {
   BackgroundSection,
   AboutBackground,

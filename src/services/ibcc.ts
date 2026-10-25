@@ -4,8 +4,9 @@ export interface RegisteredTeam {
   teamId: number
   teamName: string
   teamCode: string
-  driveFolderId: string
-  driveFolderUrl: string
+  /** Null: the Drive folder is created in the background after the registration is accepted. */
+  driveFolderId: string | null
+  driveFolderUrl: string | null
   status: string
   memberCount: number
   waGroupLink?: string | null
@@ -30,6 +31,8 @@ export interface MyTeam {
     status: 'NOT_SUBMITTED' | 'PENDING_VERIFICATION' | 'PAID' | 'REJECTED'
     isUploaded: boolean
     fileUrl: string | null
+    /** True while the proof is still being copied to Google Drive. */
+    isProcessing?: boolean
     submittedAt: string | null
   }
   selectionResult: {
@@ -45,6 +48,9 @@ export interface MyTeam {
     paymentSubmittedAt: string | null
     preliminaryOutputSubmitted: boolean
     preliminarySubmittedAt: string | null
+    /** True while any uploaded file is still being copied to Google Drive. */
+    filesProcessing?: boolean
+    pendingFileCount?: number
   }
 }
 

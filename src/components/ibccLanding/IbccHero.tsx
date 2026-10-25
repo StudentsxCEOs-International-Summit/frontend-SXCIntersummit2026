@@ -3,12 +3,15 @@ import diamonds from '@/assets/ic-diamonds.svg'
 import starGlow from '@/assets/ic-star-glow.svg'
 import cursor from '@/assets/ic-cursor.svg'
 import { GoldButton } from '@/components/landing/ui'
+import { useRegisterHref } from '@/hooks/useRegisterHref'
 
 /**
  * Mirrors the Home hero (same size, backdrop, decorations and title treatment)
  * so the two pages feel like one site.
  */
 export function IbccHero() {
+  const registerHref = useRegisterHref()
+
   return (
     <section
       id="ibcc-hero"
@@ -94,7 +97,7 @@ export function IbccHero() {
         {/* Buttons, with the same animated cursor as the Home hero */}
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <div className="relative">
-            <GoldButton href="/register">Register Now</GoldButton>
+            <GoldButton href={registerHref}>Register Now</GoldButton>
             <img
               src={cursor}
               alt=""

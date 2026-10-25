@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 import diamonds from '@/assets/ic-diamonds.svg'
 import wave from '@/assets/about/ic-wave.svg'
 import type { ProgramCard as ProgramCardData } from '@/data/landing'
@@ -54,11 +55,20 @@ interface GoldButtonProps {
 }
 
 export function GoldButton({ href, children, className = '' }: GoldButtonProps) {
+  const classes = `bg-gold-gloss text-outline-sm inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/90 px-8 py-2.5 font-heading text-body-base font-bold shadow-[0_4px_16px_rgb(245_158_11/0.45)] transition-transform duration-200 hover:scale-[1.03] focus-visible:ring-4 focus-visible:ring-white/60 focus-visible:outline-none active:scale-95 ${className}`
+
+  // In-app paths go through the router (no full reload, so the session isn't re-fetched);
+  // anchors like "#about" and external URLs stay plain links.
+  if (href.startsWith('/')) {
+    return (
+      <Link to={href} className={classes}>
+        {children}
+      </Link>
+    )
+  }
+
   return (
-    <a
-      href={href}
-      className={`bg-gold-gloss text-outline-sm inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/90 px-8 py-2.5 font-heading text-body-base font-bold shadow-[0_4px_16px_rgb(245_158_11/0.45)] transition-transform duration-200 hover:scale-[1.03] focus-visible:ring-4 focus-visible:ring-white/60 focus-visible:outline-none active:scale-95 ${className}`}
-    >
+    <a href={href} className={classes}>
       {children}
     </a>
   )

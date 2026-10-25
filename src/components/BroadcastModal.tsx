@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CardLabel, ContainShape } from '@/components/about/AboutShared'
+import { useAuth } from '@/context/AuthContext'
 
 /**
  * First-visit announcement. Edit this object to change what everyone sees; bump `id`
@@ -15,6 +16,8 @@ export const broadcast = {
     'Gather your team and get ready to take on real-world business cases at the International Business Case Competition 2026.',
   primaryLabel: 'Register Now',
   primaryHref: '/register',
+  /** Where the button goes for someone who is already signed in. */
+  primaryHrefSignedIn: '/team-register',
   secondaryLabel: 'Later',
 }
 
@@ -37,6 +40,8 @@ function markSeen() {
 }
 
 function BroadcastModal() {
+  const { user } = useAuth()
+  const primaryHref = user ? broadcast.primaryHrefSignedIn : broadcast.primaryHref
   const [open, setOpen] = useState(false)
   const laterRef = useRef<HTMLButtonElement>(null)
 
@@ -133,7 +138,7 @@ function BroadcastModal() {
                 {broadcast.secondaryLabel}
               </button>
               <Link
-                to={broadcast.primaryHref}
+                to={primaryHref}
                 onClick={close}
                 className="bg-gold-gloss text-outline-sm font-heading inline-flex min-w-32 items-center justify-center rounded-full border border-white/90 px-6 py-2 text-sm font-bold shadow-[0_4px_14px_rgb(245_158_11/0.45)] transition-transform hover:scale-[1.03] focus-visible:ring-4 focus-visible:ring-[#f4a300]/40 focus-visible:outline-none active:scale-95"
               >

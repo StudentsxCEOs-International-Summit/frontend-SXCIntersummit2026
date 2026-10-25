@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react'
 import RegistrationNavbar from '@/components/ibcc/RegistrationNavbar'
 import RegistrationBackground from '@/components/ibcc/RegistrationBackground'
@@ -11,9 +11,63 @@ import { REGISTRATION_STEPS } from '@/data/ibccRegistration'
 import { usePageTitle } from '@/hooks/usePageTitle'
 import { useIbccRegistration } from '@/hooks/useIbccRegistration'
 import { useAuth } from '@/context/AuthContext'
+import { useRegistrationGate } from '@/hooks/useRegistrationGate'
 import type { ParticipantKey } from '@/types/ibccRegistration'
 
+/**
+ * Checks first (GET /ibcc/my-team and GET /config), then shows either the form, My Team
+ * (when this account already has a team) or a "registration closed" notice.
+ */
 export default function TeamRegistrationPage() {
+  const gate = useRegistrationGate()
+
+  if (gate.status === 'checking') {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#F6FAFF]" role="status">
+        <span className="h-10 w-10 animate-spin rounded-full border-4 border-[#0262F4]/20 border-t-[#0262F4]" />
+        <span className="sr-only">Loading…</span>
+      </div>
+    )
+  }
+
+  if (gate.status === 'hasTeam') return <Navigate to="/my-team" replace />
+  if (gate.status === 'closed') return <RegistrationClosed deadline={gate.deadline} />
+
+  return <TeamRegistrationForm />
+}
+
+function RegistrationClosed({ deadline }: { deadline: string | null }) {
+  usePageTitle('IBCC Registration Closed')
+  const date = deadline ? new Date(deadline) : null
+  const formatted =
+    date && !Number.isNaN(date.getTime())
+      ? date.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' })
+      : null
+
+  return (
+    <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-[#EDF4FF] via-[#F6FAFF] to-white">
+      <RegistrationBackground />
+      <RegistrationNavbar />
+      <main className="relative z-10 mx-auto max-w-xl px-4 py-16 text-center sm:py-24">
+        <div className="rounded-3xl border border-white bg-white/95 p-8 shadow-[0_16px_45px_rgba(30,64,175,0.10)]">
+          <h1 className="font-heading text-2xl font-extrabold text-primary">Registration Closed</h1>
+          <p className="mt-3 text-sm leading-6 text-slate-600">
+            Team registration for IBCC 2026 is no longer open.
+            {formatted && <> The deadline was {formatted}.</>}
+          </p>
+          <Link
+            to="/"
+            className="mt-6 inline-flex h-11 items-center rounded-lg bg-gradient-to-r from-[#0A60F5] to-[#0F7CFF] px-6 text-sm font-semibold text-white shadow-[0_6px_16px_rgba(10,96,245,0.25)]"
+          >
+            Back to Home
+          </Link>
+        </div>
+      </main>
+    </div>
+  )
+}
+
+function TeamRegistrationForm() {
   usePageTitle('IBCC Team Registration')
 
   const { user } = useAuth()

@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { User, Mail, Eye, EyeOff, ArrowRight, Check, ArrowLeft } from 'lucide-react'
 import type { RegisterFormState } from '@/types/register'
 import { PASSWORD_REQUIREMENTS, validateRegisterForm } from '@/utils/validation/registerValidation'
@@ -12,6 +12,7 @@ import lockIcon from '@/assets/ic-lock.svg'
 import { usePageTitle } from '@/hooks/usePageTitle'
 import { authService } from '@/services/auth'
 import { ApiError } from '@/lib/api'
+import { useAuth } from '@/context/AuthContext'
 
 const initialFormState: RegisterFormState = {
   fullName: '',
@@ -30,6 +31,10 @@ export default function RegisterPage() {
   const [formError, setFormError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
+  const { user, loading } = useAuth()
+
+  // Already signed in: skip account creation and go straight to the team registration.
+  if (!loading && user) return <Navigate to="/team-register" replace />
 
   const updateField =
     <K extends keyof RegisterFormState>(key: K) =>

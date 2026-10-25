@@ -64,7 +64,8 @@ export default function VerifyOtpPage() {
         navigate('/reset-password', { replace: true, state: { resetToken: data.resetToken } })
       } else if (data.user) {
         setUser(data.user)
-        navigate(state?.next ?? '/', { replace: true })
+        // A fresh sign-up came here to register a team, so continue to that form.
+        navigate(state?.next ?? '/team-register', { replace: true })
       } else {
         setError('Verification finished, but the server did not start a session. Please log in.')
       }

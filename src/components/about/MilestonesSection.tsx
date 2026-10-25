@@ -18,7 +18,7 @@ function MilestonesSection() {
       className="relative mx-auto w-full max-w-[1200px] px-4 sm:px-6"
     >
       <AboutPill id="about-milestones-title">Our Milestones</AboutPill>
-      <ul className="mx-auto mt-12 grid max-w-md gap-6 sm:max-w-none sm:grid-cols-3 lg:gap-8">
+      <ul className="mx-auto grid max-w-sm gap-5 sm:max-w-[1000px] sm:grid-cols-3">
         {milestones.map((m) => (
           <li key={m.label} className="transition-transform duration-300 hover:-translate-y-1">
             <img src={m.src} alt={m.label} className="aspect-[387/206] w-full" />

@@ -1,4 +1,5 @@
 import { usePageTitle } from '@/hooks/usePageTitle'
+import { useRegisterHref } from '@/hooks/useRegisterHref'
 import { BlueColorFilterDefs } from '@/components'
 import IbccHero from '@/components/ibccLanding/IbccHero'
 import AboutSection from '@/components/landing/AboutSection'
@@ -36,6 +37,7 @@ const ibccFaqs: FaqItem[] = [
 
 export default function IbccPage() {
   usePageTitle('IBCC | SxC International Summit 2026')
+  const registerHref = useRegisterHref()
 
   return (
     <div className="bg-landing relative overflow-hidden">
@@ -48,7 +50,7 @@ export default function IbccPage() {
       <div className="relative flex flex-col pt-8 sm:pt-16">
         {/* Band 1: Get to Know IBCC, Total Prize & Case Collaborator */}
         <BackgroundSection background={<AboutBackground />}>
-          <AboutSection prizeText="13.500.000+" joinHref="/register" />
+          <AboutSection prizeText="13.500.000+" joinHref={registerHref} />
           <CaseCollaboratorSection />
         </BackgroundSection>
 

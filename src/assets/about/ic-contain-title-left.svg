@@ -1,7 +1,7 @@
 <svg width="477" height="83" viewBox="0 0 477 83" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_465_956)">
-<path d="M462.334 6.07422H12.1878L61.8972 59.1028L438.4 70.0742L462.334 6.07422Z" fill="url(#paint0_linear_465_956)" shape-rendering="crispEdges"/>
-<path d="M6.7959 3.73828L10.4834 7.67188L60.1924 60.7002L60.8574 61.4102L61.8291 61.4385L438.332 72.4092L440.003 72.458L440.588 70.8926L464.522 6.89258L465.702 3.73828H6.7959Z" stroke="url(#paint1_linear_465_956)" stroke-width="4.67249" shape-rendering="crispEdges"/>
+<path d="M462.334 6.07422H12.1878L61.8972 59.1028L438.4 70.0742L462.334 6.07422Z" fill="url(#paint0_linear_465_956)" shape-rendering="geometricPrecision"/>
+<path d="M6.7959 3.73828L10.4834 7.67188L60.1924 60.7002L60.8574 61.4102L61.8291 61.4385L438.332 72.4092L440.003 72.458L440.588 70.8926L464.522 6.89258L465.702 3.73828H6.7959Z" stroke="url(#paint1_linear_465_956)" stroke-width="4.67249" shape-rendering="geometricPrecision"/>
 </g>
 <defs>
 <filter id="filter0_d_465_956" x="0.000597477" y="-1.28746e-05" width="476.701" height="82.4738" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">

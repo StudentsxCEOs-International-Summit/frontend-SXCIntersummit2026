@@ -6,12 +6,12 @@ function GlobalReachSection() {
     <section
       id="about-global-reach"
       aria-labelledby="about-global-reach-title"
-      className="relative mx-auto w-full max-w-[1240px] px-4 sm:px-6"
+      className="relative mx-auto w-full max-w-[1100px] px-4 sm:px-6"
     >
       <AboutPill id="about-global-reach-title">See Where the Summit Has Reached!</AboutPill>
 
       {/* Map (includes the institution callouts, flags and logos from Figma) */}
-      <div className="relative mx-auto mt-10 aspect-[1191/614] w-full sm:mt-14">
+      <div className="relative mx-auto aspect-[1191/614] w-full">
         <div
           aria-hidden="true"
           className="absolute inset-[10%] rounded-full bg-white/20 blur-[90px]"

@@ -1,13 +1,18 @@
 import { useState, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { Mail, Eye, EyeOff, ArrowRight, Check, ArrowLeft } from 'lucide-react'
 import type { LoginFormState } from '@/types/login'
 import { validateLoginForm } from '@/utils/validation/loginValidation'
 import { FormField, Dot } from '@/components/ui'
-import { RegisterHeroPanel, GradientOrb, CurveBackground } from '@/components/auth'
+import { RegisterHeroPanel, CurveBackground } from '@/components/auth'
+import diamonds from '@/assets/ic-diamonds.svg'
+import starGlow from '@/assets/ic-star-glow.svg'
 import logo from '@/assets/ic-icon-internasional.svg'
 import lockIcon from '@/assets/ic-lock.svg'
 import { usePageTitle } from '@/hooks/usePageTitle'
+import { authService } from '@/services/auth'
+import { ApiError } from '@/lib/api'
+import { useAuth } from '@/context/AuthContext'
 
 const initialFormState: LoginFormState = {
   email: '',
@@ -22,6 +27,13 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [formError, setFormError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { setUser, user, loading } = useAuth()
+  const routeState = location.state as { from?: string; notice?: string } | null
+
+  // Already signed in: there is nothing to do here (this also covers the moment right after login).
+  if (!loading && user) return <Navigate to={routeState?.from ?? '/'} replace />
 
   const updateField =
     <K extends keyof LoginFormState>(key: K) =>
@@ -40,9 +52,16 @@ export default function LoginPage() {
 
     try {
       setIsSubmitting(true)
-      await new Promise((resolve) => setTimeout(resolve, 800))
-    } catch {
-      setFormError('Invalid email or password. Please try again.')
+      const { user } = await authService.login({ email: form.email.trim(), password: form.password })
+      setUser(user)
+      navigate(routeState?.from ?? '/', { replace: true })
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setFormError(error.message)
+        if (error.fieldErrors.email) setErrors((prev) => ({ ...prev, email: error.fieldErrors.email }))
+      } else {
+        setFormError('Something went wrong. Please try again.')
+      }
     } finally {
       setIsSubmitting(false)
     }
@@ -60,9 +79,9 @@ export default function LoginPage() {
         }
       `}</style>
 
-      <GradientOrb className="pointer-events-none absolute -right-20 top-8 z-[2] h-42 w-42 sm:-right-20 sm:top-20 sm:h-52 sm:w-52" />
+      <img src={diamonds} alt="" aria-hidden="true" className="animate-sway pointer-events-none absolute -top-6 -right-14 z-[2] w-40 rotate-45 select-none sm:-right-16 sm:w-56" />
       <div className="pointer-events-none absolute -right-12 top-0 z-[2] h-42 w-42 -translate-y-1/3 translate-x-1/3 rounded-full bg-gradient-to-br from-brand-gold/60 via-cream/40 to-transparent blur-3xl sm:h-80 sm:w-80" />
-      <GradientOrb className="pointer-events-none absolute -bottom-20 -right-25 z-[2] h-52 w-52 sm:-right-30 sm:-bottom-30 sm:h-72 sm:w-72" />
+      <img src={starGlow} alt="" aria-hidden="true" className="animate-twinkle pointer-events-none absolute -right-16 -bottom-10 z-[2] w-40 rotate-12 select-none sm:w-60" />
       <CurveBackground className="pointer-events-none absolute inset-y-0 right-0 z-[1] hidden h-full w-[57%] lg:block" />
 
       <div className="relative flex h-full w-full flex-col lg:flex-row">
@@ -103,6 +122,12 @@ export default function LoginPage() {
             <p className="mt-1 text-sm text-brand-blue-muted sm:text-base">
               Login to continue your journey
             </p>
+
+            {routeState?.notice && (
+              <div className="mt-5 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                {routeState.notice}
+              </div>
+            )}
 
             {formError && (
               <div className="mt-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
@@ -171,7 +196,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="mt-1 inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-brand-blue-700 to-brand-blue-300 text-sm font-semibold text-white shadow-ds-md transition-all hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
+                className="bg-gold-gloss text-outline-sm font-heading mt-1 inline-flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-full border-2 border-white/90 text-sm font-bold shadow-[0_4px_16px_rgb(245_158_11/0.45)] transition-transform duration-200 hover:scale-[1.02] focus-visible:ring-4 focus-visible:ring-[#f4a300]/40 focus-visible:outline-none active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSubmitting ? (
                   'Logging in'

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Poppins:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:wght@200;300;400;500;600;700&display=swap');
 @import 'tailwindcss';
 
 @theme inline {
@@ -238,5 +238,112 @@
 
   .animate-float-slow {
     animation: float 9s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(4px, -8px);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-sway {
+    animation: sway 10s ease-in-out infinite;
+  }
+
+  .animate-sway-slow {
+    animation: sway 14s ease-in-out infinite reverse;
+  }
+
+  .animate-twinkle {
+    animation: twinkle 8s ease-in-out infinite;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .animate-key-gold {
+    animation: float 7s ease-in-out infinite;
+  }
+
+  .animate-key-blue {
+    animation: float 8s ease-in-out infinite reverse;
+  }
+}
+@keyframes modal-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-pop {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-modal-fade {
+    animation: modal-fade 0.25s ease-out both;
+  }
+
+  .animate-modal-pop {
+    animation: modal-pop 0.32s ease-out both;
+  }
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-marquee {
+    animation: marquee var(--marquee-duration, 40s) linear infinite;
+  }
+
+  .animate-marquee-reverse {
+    animation: marquee var(--marquee-duration, 40s) linear infinite reverse;
+  }
+
+  .marquee:hover .animate-marquee,
+  .marquee:hover .animate-marquee-reverse {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow-x: auto;
   }
 }

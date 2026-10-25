@@ -12,6 +12,8 @@ interface ParticipantInformationStepProps {
   participant: ParticipantInformation
   errors: RegistrationErrors
   onChange: (field: keyof ParticipantInformation, value: string) => void
+  /** Fields shown but not editable (the leader's name/email come from the account). */
+  readOnlyFields?: (keyof ParticipantInformation)[]
 }
 
 const PARTICIPANT_FIELDS: {
@@ -35,6 +37,7 @@ export default function ParticipantInformationStep({
   participant,
   errors,
   onChange,
+  readOnlyFields = [],
 }: ParticipantInformationStepProps) {
   return (
     <div className="space-y-5">
@@ -51,7 +54,10 @@ export default function ParticipantInformationStep({
               value={participant[key]}
               placeholder={placeholder}
               aria-invalid={!!error}
-              className={REGISTRATION_INPUT_CLASS}
+              readOnly={readOnlyFields.includes(key)}
+              className={`${REGISTRATION_INPUT_CLASS}${
+                readOnlyFields.includes(key) ? ' cursor-not-allowed bg-slate-50 text-slate-500' : ''
+              }`}
               onChange={(event) => onChange(key, event.target.value)}
             />
           </FormField>

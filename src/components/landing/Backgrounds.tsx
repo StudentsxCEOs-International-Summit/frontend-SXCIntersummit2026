@@ -26,7 +26,7 @@ export function BackgroundSection({
 }) {
   return (
     <section
-      className={`min-h-screen flex relative flex-col gap-12 sm:gap-32 py-12 sm:py-16 ${className}`}
+      className={`flex relative flex-col gap-10 sm:gap-20 py-8 sm:py-10 ${className}`}
     >
       <div
         aria-hidden="true"

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '@/context/AuthContext'
 import defaultLogo from '@/assets/ic-icon-internasional.svg'
 
 export interface NavigationBarProps {
@@ -32,26 +33,35 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isProgramDropdownOpen, setIsProgramDropdownOpen] = useState(false)
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
+  const firstName = user?.name?.split(' ')[0] ?? ''
+
+  const handleLogout = async () => {
+    setIsMobileMenuOpen(false)
+    await logout()
+    navigate('/')
+  }
 
   const defaultNavItems: NonNullable<NavigationBarProps['items']> = [
     { label: 'Home', href: '/' },
     { label: 'About', href: '/about' },
     { label: 'IBCC', href: '/ibcc' },
-    // TODO: point to the merchandise page once it exists.
-    { label: 'Merchandise', href: '/#merchandise' },
+    { label: 'Merchandise', href: '/merchandise' },
+    { label: 'Gallery', href: '/gallery' },
   ]
 
   const navItems = items || defaultNavItems
 
   return (
     <header
-      className="inset-x-0 top-0 z-50 flex w-full justify-center px-4 py-5 sm:px-6 lg:px-8"
+      className="inset-x-0 top-0 z-50 flex w-full justify-center px-4 pt-5 pb-3 sm:px-8 lg:px-14"
       style={{ position }}
     >
       {/* Outer Pill Container */}
       <nav
         aria-label="Main Navigation"
-        className="w-full max-w-[1240px] h-[70px] sm:h-[76px] rounded-full px-5 sm:px-8 flex items-center justify-between relative transition-all duration-300 font-['Poppins',sans-serif] pointer-events-auto"
+        className="w-full max-w-[1240px] h-[64px] sm:h-[68px] rounded-full px-5 sm:px-8 flex items-center justify-between relative transition-all duration-300 font-['Poppins',sans-serif] pointer-events-auto"
         style={{
           background:
             'linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.0) 50%), linear-gradient(90deg, #4282f6 0%, #3175f6 45%, #1e5fed 100%)',
@@ -70,7 +80,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
             <img
               src={logoSrc}
               alt="SxC International Summit"
-              className="h-12 sm:h-[52px] w-auto max-w-[160px] sm:max-w-[190px] object-contain select-none drop-shadow-sm transition-transform duration-200 hover:scale-105"
+              className="h-11 sm:h-[46px] w-auto max-w-[150px] sm:max-w-[175px] object-contain select-none drop-shadow-sm transition-transform duration-200 hover:scale-105"
               loading="eager"
             />
           </Link>
@@ -160,24 +170,48 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
           })}
         </ul>
 
-        {/* Right: Sign In Button with golden gloss gradient and blue text */}
-        <div className="hidden md:flex items-center">
-          <Link
-            to={signInHref}
-            role="button"
-            onClick={onSignIn}
-            className="group relative h-[44px] sm:h-[48px] px-8 sm:px-10 rounded-full font-semibold text-[16px] sm:text-[17px] tracking-wide text-[#1c55d2] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer select-none flex items-center justify-center"
-            style={{
-              background: 'linear-gradient(180deg, #fff9e6 0%, #fcd65b 45%, #f49e0b 100%)',
-              border: '2px solid rgba(255, 255, 255, 0.95)',
-              boxShadow:
-                '0 4px 16px rgba(245, 158, 11, 0.45), inset 0 1px 2px rgba(255, 255, 255, 1)',
-            }}
-          >
-            <span>Sign In</span>
-          </Link>
+        {/* Right: Sign In (or the account pill once signed in) */}
+        <div className="hidden md:flex items-center gap-3">
+          {user ? (
+            <>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="cursor-pointer text-[14px] font-semibold text-white/90 underline-offset-4 transition-colors hover:text-white hover:underline"
+              >
+                Logout
+              </button>
+              <Link
+                to="/my-team"
+                className="group relative flex h-[40px] max-w-[180px] items-center justify-center rounded-full px-6 text-[15px] font-semibold tracking-wide text-[#1c55d2] transition-all duration-200 hover:scale-105 active:scale-95 sm:h-[44px]"
+                style={{
+                  background: 'linear-gradient(180deg, #fff9e6 0%, #fcd65b 45%, #f49e0b 100%)',
+                  border: '2px solid rgba(255, 255, 255, 0.95)',
+                  boxShadow:
+                    '0 4px 16px rgba(245, 158, 11, 0.45), inset 0 1px 2px rgba(255, 255, 255, 1)',
+                }}
+                title="My Team"
+              >
+                <span className="truncate">{firstName || 'My Team'}</span>
+              </Link>
+            </>
+          ) : (
+            <Link
+              to={signInHref}
+              role="button"
+              onClick={onSignIn}
+              className="group relative h-[40px] sm:h-[44px] px-7 sm:px-9 rounded-full font-semibold text-[15px] sm:text-[16px] tracking-wide text-[#1c55d2] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer select-none flex items-center justify-center"
+              style={{
+                background: 'linear-gradient(180deg, #fff9e6 0%, #fcd65b 45%, #f49e0b 100%)',
+                border: '2px solid rgba(255, 255, 255, 0.95)',
+                boxShadow:
+                  '0 4px 16px rgba(245, 158, 11, 0.45), inset 0 1px 2px rgba(255, 255, 255, 1)',
+              }}
+            >
+              <span>Sign In</span>
+            </Link>
+          )}
         </div>
-
         {/* Mobile Hamburger Button */}
         <div className="flex md:hidden items-center">
           <button
@@ -241,24 +275,49 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
             })}
           </ul>
 
-          <div className="pt-2 flex justify-center">
-            <Link
-              to={signInHref}
-              role="button"
-              onClick={() => {
-                setIsMobileMenuOpen(false)
-                onSignIn?.()
-              }}
-              className="w-full py-2.5 rounded-full font-semibold text-[16px] text-[#1c55d2] transition-transform active:scale-95"
-              style={{
-                background: 'linear-gradient(180deg, #fff7dc 0%, #fbd558 46%, #f59e0b 100%)',
-                border: '1.5px solid rgba(255, 255, 255, 0.95)',
-                boxShadow:
-                  '0 4px 14px rgba(245, 158, 11, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.95)',
-              }}
-            >
-              <span>Sign In</span>
-            </Link>
+          <div className="pt-2 flex flex-col items-center gap-3">
+            {user ? (
+              <>
+                <Link
+                  to="/my-team"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-full py-2.5 text-center rounded-full font-semibold text-[16px] text-[#1c55d2] transition-transform active:scale-95"
+                  style={{
+                    background: 'linear-gradient(180deg, #fff7dc 0%, #fbd558 46%, #f59e0b 100%)',
+                    border: '1.5px solid rgba(255, 255, 255, 0.95)',
+                    boxShadow:
+                      '0 4px 14px rgba(245, 158, 11, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.95)',
+                  }}
+                >
+                  <span>{firstName ? `${firstName} · My Team` : 'My Team'}</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="cursor-pointer text-[15px] font-semibold text-white/90 underline underline-offset-4"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <Link
+                to={signInHref}
+                role="button"
+                onClick={() => {
+                  setIsMobileMenuOpen(false)
+                  onSignIn?.()
+                }}
+                className="w-full py-2.5 text-center rounded-full font-semibold text-[16px] text-[#1c55d2] transition-transform active:scale-95"
+                style={{
+                  background: 'linear-gradient(180deg, #fff7dc 0%, #fbd558 46%, #f59e0b 100%)',
+                  border: '1.5px solid rgba(255, 255, 255, 0.95)',
+                  boxShadow:
+                    '0 4px 14px rgba(245, 158, 11, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.95)',
+                }}
+              >
+                <span>Sign In</span>
+              </Link>
+            )}
           </div>
         </div>
       )}

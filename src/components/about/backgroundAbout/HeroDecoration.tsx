@@ -1,4 +1,4 @@
-import lowshotBuilding from '@/assets/about/ic-lowshot-building.svg'
+import lowshotBuilding from '@/assets/about/ic-lowshot-building.webp'
 import dice from '@/assets/ic-dice.svg'
 import wave from '@/assets/about/ic-wave.svg'
 

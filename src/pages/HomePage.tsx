@@ -1,5 +1,5 @@
 import { BlueColorFilterDefs } from '@/components'
-import building from '@/assets/ic-buildingus.svg'
+import building from '@/assets/ic-buildingus.webp'
 
 function HomePage() {
   return (

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { usePageTitle } from '@/hooks/usePageTitle'
-import building from '@/assets/ic-buildingus.svg'
+import building from '@/assets/ic-buildingus.webp'
 import diamonds from '@/assets/ic-diamonds.svg'
 import starGlow from '@/assets/ic-star-glow.svg'
 import dice from '@/assets/ic-dice.svg'

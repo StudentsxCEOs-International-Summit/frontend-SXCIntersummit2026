@@ -1,6 +1,6 @@
-import judgeIcon from '@/assets/about/ic-judge.svg'
-import thunderIcon from '@/assets/about/ic-thunder.svg'
-import groupIcon from '@/assets/about/ic-group.svg'
+import judgeIcon from '@/assets/about/ic-judge.webp'
+import thunderIcon from '@/assets/about/ic-thunder.webp'
+import groupIcon from '@/assets/about/ic-group.webp'
 import { AboutPill, OutlinedText, glassCardEdge } from './AboutShared'
 
 const values = [

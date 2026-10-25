@@ -71,6 +71,25 @@ describe('My Team submissions', () => {
     expect(screen.queryByRole('heading', { name: 'Preliminary slide deck' })).not.toBeInTheDocument()
   })
 
+  it('shows a processing notice while files are still being copied to Drive', async () => {
+    renderWith(
+      team({
+        submissions: {
+          requirementsCompleted: true,
+          paymentSubmitted: false,
+          paymentSubmittedAt: null,
+          preliminaryOutputSubmitted: false,
+          preliminarySubmittedAt: null,
+          filesProcessing: true,
+          pendingFileCount: 5,
+        },
+      }),
+    )
+
+    expect(await screen.findByText(/received and are being processed/)).toBeInTheDocument()
+    expect(screen.getByText('Registration files (processing)')).toBeInTheDocument()
+  })
+
   it('tells members that only the leader can upload', async () => {
     renderWith(team({ isLeader: false }))
 

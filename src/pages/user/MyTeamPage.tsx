@@ -76,6 +76,7 @@ function Step({ done, children }: { done: boolean; children: string }) {
   )
 }
 
+const PROCESSING_POLL_MS = 6000
 const DECK_EXTENSIONS = ['pdf', 'ppt', 'pptx']
 const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'gif']
 
@@ -118,7 +119,9 @@ function SubmissionCards({ team, onUploaded }: { team: MyTeam; onUploaded: () =>
   } else if (paymentStatus === 'PENDING_VERIFICATION') {
     cards.push(
       <InfoCard key="payment" title="Payment proof">
-        Received. The committee is verifying your payment.
+        {team.payment.isProcessing
+          ? 'Received. Your proof is being processed, then the committee will verify it.'
+          : 'Received. The committee is verifying your payment.'}
       </InfoCard>,
     )
   }
@@ -174,6 +177,15 @@ export default function MyTeamPage() {
   // Bumped after an upload so the page re-reads GET /ibcc/my-team without flashing a spinner.
   const [reloadKey, setReloadKey] = useState(0)
   const reload = () => setReloadKey((key) => key + 1)
+
+  const filesProcessing = state.kind === 'ready' && Boolean(state.team.submissions.filesProcessing)
+
+  // While files are still being copied to Drive, quietly re-read the team until they finish.
+  useEffect(() => {
+    if (!filesProcessing) return
+    const timer = window.setTimeout(reload, PROCESSING_POLL_MS)
+    return () => window.clearTimeout(timer)
+  }, [filesProcessing, reloadKey])
 
   useEffect(() => {
     let cancelled = false
@@ -249,6 +261,20 @@ export default function MyTeamPage() {
               </div>
             </header>
 
+            {filesProcessing && (
+              <p
+                role="status"
+                className="mx-auto mt-6 flex max-w-2xl items-center justify-center gap-3 rounded-2xl bg-white px-5 py-4 text-center text-sm font-medium text-[#0b4fd1]"
+              >
+                <span
+                  aria-hidden="true"
+                  className="h-4 w-4 shrink-0 animate-spin rounded-full border-2 border-[#0b4fd1]/30 border-t-[#0b4fd1]"
+                />
+                Your files were received and are being processed. This page updates by itself, and your
+                submission time is already recorded.
+              </p>
+            )}
+
             {state.team.selectionResult.isAnnounced && state.team.selectionResult.announcementMessage && (
               <p
                 className={`mx-auto mt-6 max-w-2xl rounded-2xl px-5 py-4 text-center text-sm font-medium ${
@@ -288,8 +314,8 @@ export default function MyTeamPage() {
                 <h2 className="font-heading mb-3 text-lg font-extrabold text-white">Progress</h2>
                 <div className="rounded-2xl border border-[#E1EAF5] bg-white p-4 shadow-sm">
                   <ul className="grid gap-3">
-                    <Step done={state.team.submissions.requirementsCompleted}>
-                      Registration requirements
+                    <Step done={state.team.submissions.requirementsCompleted && !filesProcessing}>
+                      {filesProcessing ? 'Registration files (processing)' : 'Registration requirements'}
                     </Step>
                     <Step done={state.team.payment.status === 'PAID'}>
                       {state.team.payment.status === 'PAID'

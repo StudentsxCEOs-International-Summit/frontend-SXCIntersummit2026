@@ -17,6 +17,15 @@ import MerchandisePage from '@/pages/MerchandisePage'
 import GalleryPage from '@/pages/GalleryPage'
 import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage'
 import TermsOfServicePage from '@/pages/TermsOfServicePage'
+import RequireStaff from '@/components/RequireStaff'
+import AdminLayout from '@/layout/AdminLayout'
+import AdminLoginPage from '@/pages/admin/AdminLoginPage'
+import OverviewPage from '@/pages/admin/OverviewPage'
+import TeamsPage from '@/pages/admin/TeamsPage'
+import ParticipantsPage from '@/pages/admin/ParticipantsPage'
+import FilesPage from '@/pages/admin/FilesPage'
+import SemifinalPage from '@/pages/admin/SemifinalPage'
+import SettingsPage from '@/pages/admin/SettingsPage'
 
 function AppRoutes() {
   return (
@@ -40,6 +49,24 @@ function AppRoutes() {
             }
           />
           <Route path="*" element={<NotFoundPage />} />
+        </Route>
+
+        {/* Committee console (staff accounts only) */}
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route
+          path="/admin"
+          element={
+            <RequireStaff>
+              <AdminLayout />
+            </RequireStaff>
+          }
+        >
+          <Route index element={<OverviewPage />} />
+          <Route path="teams" element={<TeamsPage />} />
+          <Route path="participants" element={<ParticipantsPage />} />
+          <Route path="files" element={<FilesPage />} />
+          <Route path="semifinal" element={<SemifinalPage />} />
+          <Route path="settings" element={<SettingsPage />} />
         </Route>
 
         {/* Auth flow (standalone screens, no site navbar) */}

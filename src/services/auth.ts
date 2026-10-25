@@ -31,6 +31,15 @@ export const authService = {
   login: (input: { email: string; password: string }) =>
     api.post<SessionResponse>('/auth/login', input),
 
+  /** POST /auth/admin/login -> staff session (the JWT payload carries accountType 'staff'). */
+  adminLogin: (input: { email: string; password: string }) =>
+    api
+      .post<{ staff: { id: number; name: string; email: string; role: string } }>(
+        '/auth/admin/login',
+        input,
+      )
+      .then(({ staff }): AuthUser => ({ ...staff, accountType: 'staff' })),
+
   /** POST /auth/logout (needs the session cookie) */
   logout: () => api.post<null>('/auth/logout'),
 

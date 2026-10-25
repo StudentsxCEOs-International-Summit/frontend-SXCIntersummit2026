@@ -1,5 +1,4 @@
 import HeroDecoration from './HeroDecoration'
-import KeysDecoration from './KeysDecoration'
 import GeometricDecoration from './GeometricDecoration'
 
 export default function BackgroundAbout() {
@@ -10,7 +9,6 @@ export default function BackgroundAbout() {
 
       {/* Layered decorative components */}
       <HeroDecoration />
-      <KeysDecoration />
       <GeometricDecoration />
     </div>
   )

@@ -1,0 +1,172 @@
+name: Deploy Frontend Dev
+
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: frontend-production-dev
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and deploy frontend
+    runs-on: ubuntu-latest
+    environment: production-dev
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm run test -- --run
+
+      - name: Build production frontend
+        env:
+          VITE_API_URL: https://api.sxcinternationalsummit.com/api
+        run: npm run build
+
+      - name: Validate build result
+        run: |
+          set -Eeuo pipefail
+          test -f dist/index.html
+
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+        run: |
+          set -Eeuo pipefail
+
+          install -d -m 700 ~/.ssh
+
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Upload frontend release
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_PORT: ${{ secrets.VPS_PORT }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+        run: |
+          set -Eeuo pipefail
+
+          RELEASE_ID="${GITHUB_SHA}-${GITHUB_RUN_ID}"
+          RELEASE_DIR="/var/www/sxc/frontend/releases/${RELEASE_ID}"
+
+          ssh \
+            -p "$VPS_PORT" \
+            "$VPS_USER@$VPS_HOST" \
+            "mkdir -p '$RELEASE_DIR'"
+
+          rsync \
+            -az \
+            --delete \
+            -e "ssh -p $VPS_PORT" \
+            dist/ \
+            "$VPS_USER@$VPS_HOST:$RELEASE_DIR/"
+
+          ssh \
+            -p "$VPS_PORT" \
+            "$VPS_USER@$VPS_HOST" \
+            "test -f '$RELEASE_DIR/index.html'"
+
+      - name: Activate frontend release
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_PORT: ${{ secrets.VPS_PORT }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+        run: |
+          set -Eeuo pipefail
+
+          RELEASE_ID="${GITHUB_SHA}-${GITHUB_RUN_ID}"
+          RELEASE_DIR="/var/www/sxc/frontend/releases/${RELEASE_ID}"
+
+          ssh \
+            -p "$VPS_PORT" \
+            "$VPS_USER@$VPS_HOST" \
+            "RELEASE_DIR='$RELEASE_DIR' bash -s" <<'REMOTE'
+          set -Eeuo pipefail
+
+          BASE="/var/www/sxc/frontend"
+          CURRENT="$BASE/current"
+          PREVIOUS=""
+
+          test -d "$RELEASE_DIR"
+          test -f "$RELEASE_DIR/index.html"
+
+          if [ -L "$CURRENT" ]; then
+            PREVIOUS="$(readlink -f "$CURRENT")"
+          fi
+
+          ln -sfn "$RELEASE_DIR" "${CURRENT}.new"
+          mv -Tf "${CURRENT}.new" "$CURRENT"
+
+          if ! curl -fsS \
+            --retry 5 \
+            --retry-delay 3 \
+            https://sxcinternationalsummit.com/ >/dev/null; then
+
+            echo "Frontend smoke test failed."
+
+            if [ -n "$PREVIOUS" ] && [ -d "$PREVIOUS" ]; then
+              ln -sfn "$PREVIOUS" "${CURRENT}.rollback"
+              mv -Tf "${CURRENT}.rollback" "$CURRENT"
+              echo "Frontend rolled back."
+            fi
+
+            exit 1
+          fi
+          REMOTE
+
+      - name: Cleanup old frontend releases
+        if: success()
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_PORT: ${{ secrets.VPS_PORT }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+        run: |
+          ssh \
+            -p "$VPS_PORT" \
+            "$VPS_USER@$VPS_HOST" \
+            "bash -s" <<'REMOTE'
+          set -Eeuo pipefail
+
+          BASE="/var/www/sxc/frontend"
+          CURRENT="$(readlink -f "$BASE/current")"
+
+          find "$BASE/releases" \
+            -mindepth 1 \
+            -maxdepth 1 \
+            -type d \
+            -printf '%T@ %p\n' |
+          sort -nr |
+          tail -n +6 |
+          cut -d' ' -f2- |
+          while IFS= read -r release; do
+            if [ -n "$release" ] && [ "$release" != "$CURRENT" ]; then
+              rm -rf -- "$release"
+            fi
+          done
+          REMOTE

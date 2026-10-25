@@ -1,26 +1,29 @@
-import judgeIcon from '@/assets/about/ic-judge.svg'
-import thunderIcon from '@/assets/about/ic-thunder.svg'
-import groupIcon from '@/assets/about/ic-group.svg'
-import { AboutPill, OutlinedText } from './AboutShared'
+import judgeIcon from '@/assets/about/ic-judge.webp'
+import thunderIcon from '@/assets/about/ic-thunder.webp'
+import groupIcon from '@/assets/about/ic-group.webp'
+import { AboutPill, OutlinedText, glassCardEdge } from './AboutShared'
 
 const values = [
   {
     title: 'Ethic',
     icon: judgeIcon,
     ratio: 'aspect-[150/158]',
-    text: 'Providing SDGs and knowledge to create change',
+    text: 'Providing tools and knowledge to create change',
+    tilt: 15,
   },
   {
     title: 'Empowerment',
     icon: thunderIcon,
     ratio: 'aspect-[129/134]',
     text: 'Embracing diverse voices in every initiative',
+    tilt: 4,
   },
   {
     title: 'Inclusivity',
     icon: groupIcon,
     ratio: 'aspect-[128/134]',
     text: 'Practicing fairness, responsibility, and integrity',
+    tilt: -15,
   },
 ]
 
@@ -29,42 +32,38 @@ function ValuesSection() {
     <section
       id="about-values"
       aria-labelledby="about-values-title"
-      className="relative mx-auto w-full min-h-screen flex flex-col justify-center max-w-[1200px] px-4 sm:px-6 py-16"
+      className="relative mx-auto flex w-full max-w-[1200px] flex-col justify-center px-4 sm:px-6"
     >
       <AboutPill id="about-values-title">Our Values</AboutPill>
-      <p className="font-body mx-auto mt-5 max-w-3xl text-center text-sm font-medium text-white sm:text-lg">
-        They don&apos;t evolve over time, influence how we operate, and help us stay aligned with
-        our future goals.
+      <p className="font-body mx-auto text-center text-sm font-normal text-white sm:text-base lg:whitespace-nowrap">
+        They define who we are, influence how we operate, and help us stay aligned with our future
+        goals.
       </p>
 
-      <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+      <div className="mx-auto mt-6 grid w-full max-w-[1000px] gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
         {values.map((v) => (
           <article
             key={v.title}
-            className="group relative flex h-full min-h-[440px] flex-col items-center justify-between rounded-[32px] sm:rounded-[36px] border-2 border-white/75 bg-[linear-gradient(180deg,#b1d4ff_0%,#80b1f7_100%)] px-6 py-10 text-center shadow-[0_12px_28px_rgba(0,40,130,0.28)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_36px_rgba(0,40,130,0.38)]"
+            style={{ transform: `perspective(850px) rotateY(${v.tilt}deg)` }}
+            className={`group relative flex h-full min-h-[260px] flex-col items-center justify-between rounded-[14px] lg:aspect-[245/237] ${glassCardEdge} bg-[linear-gradient(180deg,rgba(255,255,255,0.74)_0%,rgba(196,220,255,0.62)_100%)] px-5 py-6 text-center shadow-[0_8px_24px_rgba(0,40,130,0.25)] transition-all duration-300 hover:-translate-y-1 hover:brightness-105`}
           >
             {/* Value Title */}
-            <div className="flex w-full justify-center">
-              <OutlinedText
-                stroke={4}
-                className="font-heading text-2xl font-bold tracking-wide sm:text-3xl"
-              >
-                <h3 className="px-1">{v.title}</h3>
-              </OutlinedText>
-            </div>
+            <h3 className="font-heading text-sm font-semibold sm:text-base lg:text-lg">
+              <OutlinedText stroke={3}>{v.title}</OutlinedText>
+            </h3>
 
             {/* Value Icon */}
-            <div className="my-6 flex items-center justify-center">
+            <div className="my-4 flex w-24 items-center justify-center sm:w-28 lg:w-[40%]">
               <img
                 src={v.icon}
                 alt=""
                 aria-hidden="true"
-                className={`w-30 sm:w-34 md:w-38 ${v.ratio} object-contain drop-shadow-[0_10px_20px_rgba(0,40,120,0.25)] transition-transform duration-300 group-hover:scale-105`}
+                className={`w-full ${v.ratio} object-contain drop-shadow-[0_8px_16px_rgba(0,40,120,0.25)] transition-transform duration-300 group-hover:scale-105`}
               />
             </div>
 
             {/* Value Description */}
-            <p className="font-heading max-w-[260px] text-xl font-bold leading-snug text-[#024fac] sm:text-[22px]">
+            <p className="font-heading max-w-[92%] text-sm leading-snug font-bold text-[#1e4fc4] sm:text-base lg:text-lg">
               {v.text}
             </p>
           </article>

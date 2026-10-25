@@ -1,4 +1,4 @@
-import building from '@/assets/ic-buildingus.svg'
+import building from '@/assets/ic-buildingus.webp'
 import diamonds from '@/assets/ic-diamonds.svg'
 import starGlow from '@/assets/ic-star-glow.svg'
 import cursor from '@/assets/ic-cursor.svg'
@@ -9,7 +9,7 @@ function HeroSection() {
   return (
     <section
       id="home"
-      className="relative flex  items-center justify-center px-4 pt-32 pb-40 sm:min-h-screen"
+      className="relative flex items-center justify-center min-h-[88svh] px-4 pt-32 pb-24 sm:min-h-screen sm:pt-52 sm:pb-32"
     >
       <img
         src={building}
@@ -18,17 +18,22 @@ function HeroSection() {
       />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(214_226_255/0.55)_0%,rgb(92_130_245/0.45)_40%,rgb(92_130_245/0)_100%)] [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)]" />
 
+      {/* Decorations drift very slowly; transform-only so it stays light. */}
       <img
         src={diamonds}
         alt=""
-        className="absolute -top-4 -left-24 w-56 sm:-left-28 sm:w-96 rotate-225"
+        className="animate-sway pointer-events-none absolute top-16 -left-12 w-44 sm:-top-4 sm:-left-28 sm:w-96 rotate-225"
       />
       <img
         src={diamonds}
         alt=""
-        className="absolute top-[45%] -right-24 w-56 sm:-right-24 sm:w-96 rotate-45 "
+        className="animate-sway-slow pointer-events-none absolute top-[78%] -right-12 w-40 sm:top-[45%] sm:-right-24 sm:w-96 rotate-45"
       />
-      <img src={starGlow} alt="" className="absolute -bottom-10 -left-24 w-56 -rotate-12 sm:w-80" />
+      <img
+        src={starGlow}
+        alt=""
+        className="animate-twinkle pointer-events-none absolute -bottom-6 -left-10 w-44 -rotate-12 sm:-bottom-10 sm:-left-24 sm:w-80"
+      />
 
       <div className="relative z-10 flex h-full justify-center text-center items-center align-middle flex-col">
         <h1 className="flex flex-col items-center justify-center leading-tight select-none ">
@@ -108,7 +113,7 @@ function HeroSection() {
           <img
             src={cursor}
             alt=""
-            className="animate-float absolute -right-24 top-12 hidden w-12 sm:block"
+            className="animate-float absolute -right-10 top-8 w-9 sm:-right-24 sm:top-12 sm:w-12"
           />
         </div>
       </div>

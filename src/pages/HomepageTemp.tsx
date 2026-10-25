@@ -18,7 +18,6 @@ import {
 function HomePage() {
   return (
     <div className="bg-landing relative overflow-hidden">
-      <Popup />
       <HeroSection />
       <div className="relative flex flex-col pt-8 sm:pt-16">
         <BackgroundSection background={<AboutBackground />}>

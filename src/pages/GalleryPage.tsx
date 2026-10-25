@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { usePageTitle } from '@/hooks/usePageTitle'
 import { OutlinedText } from '@/components/about/AboutShared'
 import Footer from '@/components/landing/Footer'
-import building from '@/assets/ic-buildingus.svg'
+import building from '@/assets/ic-buildingus.webp'
 import goldKey from '@/assets/ic-key.svg'
 import {
   galleryFilters,

@@ -4,7 +4,7 @@ import {
   BlueColorFilterDefs,
   BLUE_COLOR_FILTER_ID,
 } from '@/components/BlueColorFilter'
-import Building from '@/assets/images/img-building.jpg'
+import Building from '@/assets/images/img-building.webp'
 
 describe('BlueColorFilter', () => {
   it('renders image with duotone SVG filter applied via inline style', () => {

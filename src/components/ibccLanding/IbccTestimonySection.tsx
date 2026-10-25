@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { SectionTitle } from '@/components/landing/ui'
 import { OutlinedText } from '@/components/about/AboutShared'
-import winnerPhoto from '@/assets/images/img-ibcc-winner-team.jpg'
+import winnerPhoto from '@/assets/images/img-ibcc-winner-team.webp'
 
 interface Testimony {
   teamName: string

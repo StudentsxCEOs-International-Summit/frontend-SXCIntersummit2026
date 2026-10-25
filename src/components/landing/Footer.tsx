@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import town from '@/assets/landing/img-town.webp'
 
 import buildings from '@/assets/landing/img-footer-buildings.webp'
@@ -89,6 +90,27 @@ function Footer() {
             </div>
             <FooterLinks title="Events" items={footerEvents} href="#events" />
             <FooterLinks title="Competition" items={footerCompetitions} href="#competitions" />
+          </div>
+
+          {/* Legal links */}
+          <div className="relative border-t border-white/20 mx-6 sm:mx-12 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-white/50 text-sm">
+              © {new Date().getFullYear()} StudentsxCEOs International Summit. All rights reserved.
+            </p>
+            <div className="flex gap-6 text-sm">
+              <Link
+                to="/privacy-policy"
+                className="text-white/70 hover:text-white transition-colors font-medium"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                to="/terms-of-service"
+                className="text-white/70 hover:text-white transition-colors font-medium"
+              >
+                Terms of Service
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { SectionTitle } from './ui'
 import adInLogo from '@/assets/media-partners/55-adins.svg'
 
 // File names follow `<order>-<tier>-<name>.<ext>`; the tier sets the logo size.
-const logoModules = import.meta.glob<string>('@/assets/media-partners/*.{png,jpg,jpeg,svg}', {
+const logoModules = import.meta.glob<string>('@/assets/media-partners/*.{png,jpg,jpeg,webp,svg}', {
   eager: true,
   import: 'default',
 })
@@ -12,7 +12,7 @@ type Tier = 'L' | 'M' | 'S'
 
 const mediaPartners = Object.entries(logoModules)
   .map(([path, src]) => {
-    const file = path.split('/').pop()!.replace(/\.(png|jpg|jpeg|svg)$/i, '')
+    const file = path.split('/').pop()!.replace(/\.(png|jpg|jpeg|webp|svg)$/i, '')
     const match = file.match(/^(\d+)-(?:(l|m|s)-)?(.+)$/i)
     const order = match ? Number(match[1]) : 999
     const tier: Tier = match?.[2] ? (match[2].toUpperCase() as Tier) : 'S'

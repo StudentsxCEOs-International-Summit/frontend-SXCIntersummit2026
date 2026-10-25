@@ -1,4 +1,4 @@
-import building from '@/assets/ic-buildingus.svg'
+import building from '@/assets/ic-buildingus.webp'
 import diamonds from '@/assets/ic-diamonds.svg'
 import starGlow from '@/assets/ic-star-glow.svg'
 import cursor from '@/assets/ic-cursor.svg'

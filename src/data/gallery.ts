@@ -1,5 +1,5 @@
-import teamPhoto from '@/assets/images/img-ibcc-winner-team.jpg'
-import buildingPhoto from '@/assets/images/img-building.jpg'
+import teamPhoto from '@/assets/images/img-ibcc-winner-team.webp'
+import buildingPhoto from '@/assets/images/img-building.webp'
 
 export type GalleryCategory = 'IBCC' | 'Chambers'
 

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '@/assets/ic-icon-internasional.svg'
-import building from '@/assets/ic-buildingus.svg'
+import building from '@/assets/ic-buildingus.webp'
 import diamonds from '@/assets/ic-diamonds.svg'
 import starGlow from '@/assets/ic-star-glow.svg'
 

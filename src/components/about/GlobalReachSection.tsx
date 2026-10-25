@@ -1,4 +1,4 @@
-import worldMapUrl from '@/assets/about/img-world-map.png'
+import worldMapUrl from '@/assets/about/img-world-map.webp'
 import { AboutPill } from './AboutShared'
 
 function GlobalReachSection() {

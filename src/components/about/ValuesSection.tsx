@@ -11,6 +11,7 @@ const values = [
     ratio: 'aspect-[150/158]',
     text: 'Providing tools and knowledge to create change',
     tilt: 15,
+    restTilt: 6,
     tapTilt: 15,
   },
   {
@@ -19,6 +20,7 @@ const values = [
     ratio: 'aspect-[129/134]',
     text: 'Embracing diverse voices in every initiative',
     tilt: 4,
+    restTilt: 2,
     tapTilt: -12,
   },
   {
@@ -27,12 +29,14 @@ const values = [
     ratio: 'aspect-[128/134]',
     text: 'Practicing fairness, responsibility, and integrity',
     tilt: -15,
+    restTilt: -6,
     tapTilt: -15,
   },
 ]
 
 function ValuesSection() {
-  // Phones: cards are flat until tapped, then lean left or right like the desktop 3D tilt.
+  // Phones: the icons are drawn at an angle, so each card rests at a slight lean matching its icon
+  // and leans further when tapped, like the desktop 3D tilt.
   const [leaning, setLeaning] = useState<string | null>(null)
   const toggle = (title: string) => setLeaning((current) => (current === title ? null : title))
 
@@ -55,7 +59,7 @@ function ValuesSection() {
             style={
               {
                 '--tilt': `${v.tilt}deg`,
-                '--lean': leaning === v.title ? `${v.tapTilt}deg` : '0deg',
+                '--lean': `${leaning === v.title ? v.tapTilt : v.restTilt}deg`,
               } as CSSProperties
             }
             role="button"

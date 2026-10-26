@@ -1,4 +1,3 @@
-import { Eye, Sparkles } from 'lucide-react'
 import starYellowGlow from '@/assets/ic-star-yellow-glow.svg'
 import { AngledPanel, CardLabel } from './AboutShared'
 
@@ -33,22 +32,16 @@ function VisionMissionSection() {
               aria-hidden="true"
               className="animate-float pointer-events-none absolute -top-3 -right-2 w-9 rotate-12 select-none"
             />
-            <div className="flex items-start gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-[0_3px_10px_rgba(2,98,244,0.45)]">
-                <Eye className="h-5 w-5" aria-hidden="true" />
+            <p className="font-heading pr-8 text-left">
+              <span className="block text-[11px] font-bold tracking-[0.14em] text-primary uppercase">
+                Empowering Youth To Become
               </span>
-              <p className="font-heading min-w-0 text-left">
-                <span className="block text-[11px] font-bold tracking-[0.14em] text-primary uppercase">
-                  Empowering Youth To Become
-                </span>
-                <span className="mt-0.5 block bg-[linear-gradient(90deg,#003F9E_0%,#0262F4_100%)] bg-clip-text text-2xl leading-tight font-extrabold text-transparent italic">
-                  Ethical Innovators
-                </span>
-              </p>
-            </div>
+              <span className="mt-0.5 block bg-[linear-gradient(90deg,#003F9E_0%,#0262F4_100%)] bg-clip-text text-[1.7rem] leading-tight font-extrabold text-transparent italic">
+                Ethical Innovators
+              </span>
+            </p>
             <div className="my-3 h-px bg-[linear-gradient(90deg,rgba(2,98,244,0.45),rgba(2,98,244,0))]" />
-            <p className="font-heading flex items-start gap-2 text-left text-sm leading-snug font-semibold text-[#0b3d91]">
-              <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-[#F4A300]" aria-hidden="true" />
+            <p className="font-heading text-left text-sm leading-snug font-semibold text-[#0b3d91]">
               Navigating and Creating Sustainable Impact.
             </p>
           </div>

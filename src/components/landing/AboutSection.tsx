@@ -8,12 +8,12 @@ import { ArrowIcon, GoldButton } from './ui'
 function TabBanner({ children, className = '' }: { children: string; className?: string }) {
   return (
     <div
-      className={`bg-gold-gloss inline-block -skew-x-[20deg] rounded-lg border-2 border-white px-8 py-2 font-heading text-2xl font-extrabold shadow-[0_6px_16px_rgb(244_163_0/0.4)] sm:text-[1.75rem] ${className}`}
+      className={`bg-gold-gloss inline-block -skew-x-[20deg] rounded-lg border-2 border-white px-5 py-1.5 font-heading text-xl font-extrabold whitespace-nowrap italic shadow-[0_6px_16px_rgb(244_163_0/0.4)] sm:px-8 sm:py-2 sm:text-[1.75rem] sm:not-italic ${className}`}
     >
       <div className="relative inline-block skew-x-[20deg]">
         <span
           aria-hidden="true"
-          className="absolute inset-0 px-5 select-none pointer-events-none"
+          className="absolute inset-0 px-3 select-none pointer-events-none sm:px-5"
           style={{
             backgroundImage: 'linear-gradient(90deg, #003F9E 0%, #0262F4 65%, #FFFFFF 110%)',
             WebkitBackgroundClip: 'text',
@@ -28,7 +28,7 @@ function TabBanner({ children, className = '' }: { children: string; className?:
         >
           {children}
         </span>
-        <span className="relative block px-5 text-white">{children}</span>
+        <span className="relative block px-3 text-white sm:px-5">{children}</span>
       </div>
     </div>
   )
@@ -42,8 +42,8 @@ export interface AboutSectionProps {
 }
 
 function AboutSection({
-  prizeText = 'Rp.20.000.000',
-  joinHref = '#competitions',
+  prizeText = 'Rp.13.500.000+',
+  joinHref = '/ibcc',
 }: AboutSectionProps = {}) {
   return (
     <section
@@ -93,7 +93,8 @@ function AboutSection({
                 src={starYellowGlow}
                 alt=""
                 className="animate-float pointer-events-none absolute top-4 right-3 w-10 rotate-12 select-none lg:hidden"
-              />              <GoldButton href={joinHref} className="relative mt-5 sm:min-w-[240px]">
+              />
+              <GoldButton href={joinHref} className="relative mt-5 sm:min-w-[240px]">
                 Join Now <ArrowIcon />
               </GoldButton>
             </div>

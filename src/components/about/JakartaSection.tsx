@@ -12,8 +12,8 @@ function JakartaSection() {
 
 
       <div className="relative pt-8 lg:pt-10">
-        <div className="absolute top-0 left-0 z-10 w-1/2 sm:w-1/3 lg:left-[1%] lg:w-[28%]">
-          <CardLabel side="right" className="w-full" textClassName="text-sm sm:text-base lg:text-lg">
+        <div className="absolute top-0 left-0 z-10 w-[64%] sm:w-1/3 lg:left-[1%] lg:w-[28%]">
+          <CardLabel side="right" className="w-full" textClassName="text-[13px] sm:text-base lg:text-lg">
             <span id="sxc-jakarta-title">StudentsxCEOs Jakarta</span>
           </CardLabel>
         </div>

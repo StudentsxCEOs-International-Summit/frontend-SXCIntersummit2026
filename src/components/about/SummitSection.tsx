@@ -7,11 +7,11 @@ function SummitSection() {
     <section
       id="sxc-summit"
       aria-labelledby="sxc-summit-title"
-      className="relative mx-auto w-full lg:-mt-3 max-w-300 lg:max-w-[min(1400px,92vw)] px-4 sm:px-6"
+      className="relative mx-auto mt-8 w-full lg:-mt-3 max-w-300 lg:max-w-[min(1400px,92vw)] px-4 sm:px-6"
     >
       <div className="relative pt-8 lg:pt-10">
-        <div className="absolute top-0 right-0 z-10 w-3/4 sm:w-1/2 lg:top-7 lg:-right-[0.5%] lg:w-[31%]">
-          <CardLabel side="left" className="w-full" textClassName="text-sm sm:text-base lg:text-lg">
+        <div className="absolute top-0 right-0 z-10 w-[86%] sm:w-1/2 lg:top-7 lg:-right-[0.5%] lg:w-[31%]">
+          <CardLabel side="left" className="w-full" textClassName="text-[13px] sm:text-base lg:text-lg">
             <span id="sxc-summit-title">SxC International Summit 2026</span>
           </CardLabel>
         </div>

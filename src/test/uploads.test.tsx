@@ -42,13 +42,34 @@ const renderWith = (myTeam: MyTeam) => {
 afterEach(() => vi.unstubAllGlobals())
 
 describe('My Team submissions', () => {
-  it('offers payment and preliminary uploads to the leader', async () => {
+  it('offers only the preliminary deck during the free preliminary round', async () => {
     renderWith(team())
 
-    expect(await screen.findByRole('heading', { name: 'Payment proof' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Preliminary slide deck' })).toBeInTheDocument()
-    // Semifinal only opens once the team is qualified.
+    expect(await screen.findByRole('heading', { name: 'Preliminary slide deck' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Semifinal payment' })).not.toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: 'Semifinal slide deck' })).not.toBeInTheDocument()
+    expect(screen.getByText(/preliminary round is free/i)).toBeInTheDocument()
+  })
+
+  it('opens the Rp 180.000 payment and the semifinal deck once the team passed the preliminary', async () => {
+    renderWith(
+      team({
+        preliminaryResult: 'PASSED',
+        semifinal: { eligible: true, submitted: false, submittedAt: null },
+        submissions: {
+          requirementsCompleted: true,
+          paymentSubmitted: false,
+          paymentSubmittedAt: null,
+          preliminaryOutputSubmitted: true,
+          preliminarySubmittedAt: null,
+        },
+      }),
+    )
+
+    expect(await screen.findByRole('heading', { name: 'Semifinal payment' })).toBeInTheDocument()
+    expect(screen.getAllByText(/Rp 180.000/).length).toBeGreaterThan(0)
+    expect(screen.getByRole('heading', { name: 'Semifinal slide deck' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Preliminary slide deck' })).not.toBeInTheDocument()
   })
 
   it('opens the semifinal upload for a qualified team and hides finished ones', async () => {
@@ -67,7 +88,7 @@ describe('My Team submissions', () => {
     )
 
     expect(await screen.findByRole('heading', { name: 'Semifinal slide deck' })).toBeInTheDocument()
-    expect(screen.queryByRole('heading', { name: 'Payment proof' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Semifinal payment' })).not.toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: 'Preliminary slide deck' })).not.toBeInTheDocument()
   })
 
@@ -94,12 +115,14 @@ describe('My Team submissions', () => {
     renderWith(team({ isLeader: false }))
 
     expect(await screen.findByText(/Only the team leader can upload/)).toBeInTheDocument()
-    expect(screen.queryByRole('heading', { name: 'Payment proof' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Semifinal payment' })).not.toBeInTheDocument()
   })
 
   it('rejects a payment proof that is not an image before sending anything', async () => {
-    const { container } = renderWith(team())
-    await screen.findByRole('heading', { name: 'Payment proof' })
+    const { container } = renderWith(
+      team({ semifinal: { eligible: true, submitted: false, submittedAt: null } }),
+    )
+    await screen.findByRole('heading', { name: 'Semifinal payment' })
 
     const input = container.querySelector('input[type=file]') as HTMLInputElement
     fireEvent.change(input, {

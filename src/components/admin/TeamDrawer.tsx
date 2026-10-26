@@ -13,6 +13,7 @@ import {
   type AdminTeam,
 } from '@/services/admin'
 import { ApiError } from '@/lib/api'
+import { SEMIFINAL_FEE_TEXT, statusLabel } from '@/data/fees'
 import { Badge, Btn, Drawer, Notice, card, formatDate, inputClass, statusTone } from './ui'
 
 const waLink = (number: string) => `https://wa.me/${number.replace(/\D/g, '').replace(/^0/, '62')}`
@@ -135,7 +136,7 @@ export default function TeamDrawer({
     <Drawer open title={team.name} onClose={onClose}>
       <div className="flex flex-wrap items-center gap-2">
         <Badge tone="blue">Code {team.code}</Badge>
-        <Badge tone={statusTone(team.statuscode.code)}>{humanize(team.statuscode.code)}</Badge>
+        <Badge tone={statusTone(team.statuscode.code)}>{statusLabel(team.statuscode.code)}</Badge>
         {team.score !== null && <Badge tone="slate">Score {team.score}</Badge>}
       </div>
       <p className="mt-2 text-xs text-slate-500">
@@ -188,14 +189,14 @@ export default function TeamDrawer({
         )}
       </Section>
 
-      <Section title="Payment">
+      <Section title={`Semifinal payment (${SEMIFINAL_FEE_TEXT})`}>
         {!payment ? (
-          <p className="text-sm text-slate-500">No payment proof uploaded yet.</p>
+          <p className="text-sm text-slate-500">No payment proof yet. Payment only starts once the team passes the preliminary.</p>
         ) : (
           <div className={`${card} p-4`}>
             <p className="text-sm text-slate-600">
               Proof uploaded {formatDate(payment.submittedAt)}.{' '}
-              {paymentDone ? `Decision: ${humanize(team.statuscode.code)}.` : 'Waiting for a decision.'}
+              {paymentDone ? `Decision: ${statusLabel(team.statuscode.code)}.` : 'Waiting for a decision.'}
             </p>
             <label htmlFor="pay-notes" className="mt-3 block text-sm font-semibold text-slate-700">
               Note for the leader <span className="font-normal text-slate-400">(shown when rejecting)</span>

@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { SectionTitle } from '@/components/landing/ui'
 import { OutlinedText, glassCardEdge } from '@/components/about/AboutShared'
 import certIcon from '@/assets/ic-certificate-yellow.svg'
@@ -26,7 +27,8 @@ const benefits: BenefitItem[] = [
 /** Same glass-card language as the Our Values cards on the About page. */
 function BenefitCard({ item }: { item: BenefitItem }) {
   return (
-    <article style={{ transform: `perspective(850px) rotateY(${item.tilt}deg)` }} className={`group flex min-h-[190px] w-full flex-col items-center justify-center gap-4 rounded-[14px] lg:aspect-[150/118] ${glassCardEdge} bg-[linear-gradient(180deg,rgba(255,255,255,0.74)_0%,rgba(196,220,255,0.62)_100%)] px-5 py-6 text-center shadow-[0_8px_24px_rgba(0,40,130,0.25)] transition-all duration-300 hover:-translate-y-1 hover:brightness-105`}>
+    // Phones get a gentler lean (one column, full width); from sm up the cards use the full tilt.
+    <article style={{ '--tilt': `${item.tilt}deg`, '--rest': `${Math.round(item.tilt * 0.35)}deg` } as CSSProperties} className={`group [transform:perspective(850px)_rotateY(var(--rest))] sm:[transform:perspective(850px)_rotateY(var(--tilt))] flex min-h-[190px] w-full flex-col items-center justify-center gap-4 rounded-[14px] lg:aspect-[150/118] ${glassCardEdge} bg-[linear-gradient(180deg,rgba(255,255,255,0.74)_0%,rgba(196,220,255,0.62)_100%)] px-5 py-6 text-center shadow-[0_8px_24px_rgba(0,40,130,0.25)] transition-all duration-300 hover:-translate-y-1 hover:brightness-105`}>
       <h3 className="font-heading text-sm font-semibold sm:text-base lg:text-lg">
         <OutlinedText stroke={3}>{item.title}</OutlinedText>
       </h3>

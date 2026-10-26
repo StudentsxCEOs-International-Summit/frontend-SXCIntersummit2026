@@ -207,17 +207,20 @@ export function AngledPanel({
   tone?: 'light' | 'blue'
 }) {
   const isLeft = side === 'left'
+  // The angled SVG has a fixed shape, so on phones (where the copy wraps onto more lines) it is
+  // swapped for a plain card that grows with its content; md and up keep the Figma shape.
+  const aspect = isLeft ? 'md:aspect-[626/197]' : 'md:aspect-[621/193]'
   return (
-    <div
-      className={`relative w-full ${
-        isLeft ? 'aspect-[626/197]' : 'aspect-[621/193]'
-      } ${className}`}
-    >
+    <div className={`relative w-full ${aspect} ${className}`}>
       <img
         src={isLeft ? visionLeft : visionRight}
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 h-full w-full select-none"
+        className="pointer-events-none absolute inset-0 hidden h-full w-full select-none md:block"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 rounded-3xl border-[3px] border-white/90 bg-[linear-gradient(170deg,#ffffff_0%,#8BB9F4_100%)] shadow-[-2px_5px_3px_rgba(0,0,0,0.25)] md:hidden"
       />
       <div className={`relative flex h-full w-full items-center justify-center ${innerClassName}`}>
         {children}

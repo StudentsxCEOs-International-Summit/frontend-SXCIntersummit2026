@@ -22,7 +22,7 @@ function VisionMissionSection() {
             <h3 className="px-2">Vision</h3>
           </CardLabel>
         </div>
-        <AngledPanel side="right" className="h-full" innerClassName="px-8 pt-8 pb-6 md:px-12">
+        <AngledPanel side="right" className="h-full" innerClassName="px-6 pt-10 pb-6 md:px-12 md:pt-8">
           <p className="font-heading px-2 text-left text-base leading-snug sm:text-lg md:px-4">
             <span className="block font-bold text-[#0b3d91]">
               Empowering Youth To Become Ethical Innovators
@@ -41,8 +41,8 @@ function VisionMissionSection() {
             <h3 className="px-2">Mission</h3>
           </CardLabel>
         </div>
-        <AngledPanel side="left" className="h-full" innerClassName="pt-8 pb-6">
-          <ol className="font-heading flex w-full flex-col gap-2 pr-6 pl-[18%] text-sm font-medium text-[#0b3d91] sm:text-base">
+        <AngledPanel side="left" className="h-full" innerClassName="px-6 pt-10 pb-6 md:px-0 md:pt-8">
+          <ol className="font-heading flex w-full flex-col gap-3 text-sm font-medium text-[#0b3d91] sm:text-base md:gap-2 md:pr-6 md:pl-[18%]">
             {missions.map((m, i) => (
               <li key={m} className="flex items-center gap-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white shadow-[0_2px_6px_rgba(2,98,244,0.4)]">

@@ -2,7 +2,8 @@ import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Download, Search } from 'lucide-react'
 import { usePageTitle } from '@/hooks/usePageTitle'
-import { adminService, humanize, isPendingFile, paymentOf } from '@/services/admin'
+import { statusLabel } from '@/data/fees'
+import { adminService, isPendingFile, paymentOf } from '@/services/admin'
 import TeamDrawer from '@/components/admin/TeamDrawer'
 import {
   Badge,
@@ -50,7 +51,7 @@ export default function TeamsPage() {
       ...visible.map((t) => [
         t.code,
         t.name,
-        humanize(t.statuscode.code),
+        statusLabel(t.statuscode.code),
         t.leader.name,
         t.leader.email,
         t.leader.wa_number,
@@ -88,7 +89,7 @@ export default function TeamsPage() {
           <option value="ALL">All statuses</option>
           {statuses.map((code) => (
             <option key={code} value={code}>
-              {humanize(code)}
+              {statusLabel(code)}
             </option>
           ))}
         </select>
@@ -138,7 +139,7 @@ export default function TeamsPage() {
                       </td>
                       <td className="px-4 py-3 text-slate-700">{t.TeamMember.length}</td>
                       <td className="px-4 py-3">
-                        <Badge tone={statusTone(t.statuscode.code)}>{humanize(t.statuscode.code)}</Badge>
+                        <Badge tone={statusTone(t.statuscode.code)}>{statusLabel(t.statuscode.code)}</Badge>
                       </td>
                       <td className="px-4 py-3">
                         {paymentOf(t) ? <Badge tone="blue">Proof uploaded</Badge> : <Badge>None</Badge>}

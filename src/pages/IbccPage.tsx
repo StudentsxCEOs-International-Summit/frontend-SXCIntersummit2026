@@ -50,7 +50,7 @@ export default function IbccPage() {
       <div className="relative flex flex-col pt-8 sm:pt-16">
         {/* Band 1: Get to Know IBCC, Total Prize & Case Collaborator */}
         <BackgroundSection background={<AboutBackground />}>
-          <AboutSection prizeText="13.500.000+" joinHref={registerHref} />
+          <AboutSection joinHref={registerHref} />
           <CaseCollaboratorSection />
         </BackgroundSection>
 

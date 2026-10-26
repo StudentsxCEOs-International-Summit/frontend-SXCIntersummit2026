@@ -6,6 +6,7 @@ import { ApiError } from '@/lib/api'
 import { ibccService, type MyTeam, type TeamMemberInfo } from '@/services/ibcc'
 import Footer from '@/components/landing/Footer'
 import UploadCard from '@/components/ibcc/UploadCard'
+import { SEMIFINAL_FEE_TEXT, statusLabel } from '@/data/fees'
 
 type Load =
   | { kind: 'loading' }
@@ -13,12 +14,11 @@ type Load =
   | { kind: 'error'; message: string }
   | { kind: 'ready'; team: MyTeam }
 
-const humanize = (value: string) =>
-  value
-    .toLowerCase()
-    .split('_')
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ')
+/**
+ * Payment and the semifinal deck only open for teams that passed the preliminary. An older
+ * backend does not send `semifinal`, so fall back to the qualified flag it always had.
+ */
+const semifinalOpen = (team: MyTeam) => team.semifinal?.eligible ?? team.selectionResult.isQualified
 
 const STAGE_LABEL: Record<MyTeam['competitionStage'], string> = {
   REGISTRATION: 'Registration',
@@ -96,16 +96,20 @@ function InfoCard({ title, children }: { title: string; children: string }) {
 function SubmissionCards({ team, onUploaded }: { team: MyTeam; onUploaded: () => void }) {
   const cards: ReactNode[] = []
 
+  const eligible = semifinalOpen(team)
+
+  // The preliminary round is free, so there is no payment card before the semifinal.
   const paymentStatus = team.payment.status
-  if (paymentStatus === 'NOT_SUBMITTED' || paymentStatus === 'REJECTED') {
+  if (eligible && (paymentStatus === 'NOT_SUBMITTED' || paymentStatus === 'REJECTED')) {
     cards.push(
       <UploadCard
         key="payment"
-        title="Payment proof"
+        title="Semifinal payment"
+        badge={SEMIFINAL_FEE_TEXT}
         description={
           paymentStatus === 'REJECTED'
-            ? 'Your last payment proof was rejected. Please upload a new, clear proof of payment.'
-            : 'Upload a screenshot or photo of your registration payment.'
+            ? `Your last payment proof was rejected. Please transfer ${SEMIFINAL_FEE_TEXT} and upload a new, clear proof of payment.`
+            : `The semifinal fee is ${SEMIFINAL_FEE_TEXT}. Transfer it, then upload a screenshot or photo of the proof.`
         }
         extensions={IMAGE_EXTENSIONS}
         maxMB={5}
@@ -116,9 +120,9 @@ function SubmissionCards({ team, onUploaded }: { team: MyTeam; onUploaded: () =>
         }}
       />,
     )
-  } else if (paymentStatus === 'PENDING_VERIFICATION') {
+  } else if (eligible && paymentStatus === 'PENDING_VERIFICATION') {
     cards.push(
-      <InfoCard key="payment" title="Payment proof">
+      <InfoCard key="payment" title="Semifinal payment">
         {team.payment.isProcessing
           ? 'Received. Your proof is being processed, then the committee will verify it.'
           : 'Received. The committee is verifying your payment.'}
@@ -143,12 +147,12 @@ function SubmissionCards({ team, onUploaded }: { team: MyTeam; onUploaded: () =>
     )
   }
 
-  if (team.selectionResult.isQualified) {
+  if (eligible && !team.semifinal?.submitted) {
     cards.push(
       <UploadCard
         key="semifinal"
         title="Semifinal slide deck"
-        description="Your team qualified. Upload your semifinal deck as a PDF or PowerPoint file."
+        description="Your team advanced to the semifinal. Upload your semifinal deck as a PDF or PowerPoint file."
         extensions={DECK_EXTENSIONS}
         maxMB={20}
         buttonLabel="Send semifinal deck"
@@ -256,7 +260,7 @@ export default function MyTeamPage() {
                   Team code: {state.team.code}
                 </span>
                 <span className="rounded-full bg-[#FFF3D1] px-4 py-1 text-sm font-semibold text-[#B87400]">
-                  {humanize(state.team.status)}
+                  {statusLabel(state.team.status)}
                 </span>
               </div>
             </header>
@@ -272,6 +276,19 @@ export default function MyTeamPage() {
                 />
                 Your files were received and are being processed. This page updates by itself, and your
                 submission time is already recorded.
+              </p>
+            )}
+
+            {state.team.preliminaryResult === 'PASSED' && (
+              <p className="mx-auto mt-6 max-w-2xl rounded-2xl bg-emerald-50 px-5 py-4 text-center text-sm font-medium text-emerald-700">
+                Congratulations, your team passed the preliminary round! Next, pay the semifinal fee of{' '}
+                {SEMIFINAL_FEE_TEXT} and upload your semifinal deck below.
+              </p>
+            )}
+            {state.team.preliminaryResult === 'FAILED' && (
+              <p className="mx-auto mt-6 max-w-2xl rounded-2xl bg-white px-5 py-4 text-center text-sm font-medium text-slate-700">
+                Thank you for taking part in the preliminary round. Sadly, your team did not advance to the
+                semifinal this time.
               </p>
             )}
 
@@ -317,18 +334,23 @@ export default function MyTeamPage() {
                     <Step done={state.team.submissions.requirementsCompleted && !filesProcessing}>
                       {filesProcessing ? 'Registration files (processing)' : 'Registration requirements'}
                     </Step>
-                    <Step done={state.team.payment.status === 'PAID'}>
-                      {state.team.payment.status === 'PAID'
-                        ? 'Payment verified'
-                        : state.team.payment.status === 'PENDING_VERIFICATION'
-                          ? 'Payment proof submitted (awaiting verification)'
-                          : state.team.payment.status === 'REJECTED'
-                            ? 'Payment proof rejected'
-                            : 'Payment proof not submitted'}
-                    </Step>
                     <Step done={state.team.submissions.preliminaryOutputSubmitted}>
                       Preliminary slide deck
                     </Step>
+                    {semifinalOpen(state.team) && (
+                      <>
+                        <Step done={state.team.payment.status === 'PAID'}>
+                          {state.team.payment.status === 'PAID'
+                            ? 'Semifinal payment verified'
+                            : state.team.payment.status === 'PENDING_VERIFICATION'
+                              ? 'Semifinal payment submitted (awaiting verification)'
+                              : state.team.payment.status === 'REJECTED'
+                                ? 'Semifinal payment rejected'
+                                : `Semifinal payment (${SEMIFINAL_FEE_TEXT})`}
+                        </Step>
+                        <Step done={Boolean(state.team.semifinal?.submitted)}>Semifinal slide deck</Step>
+                      </>
+                    )}
                   </ul>
                   {state.team.submissions.preliminarySubmittedAt && (
                     <p className="mt-3 border-t border-[#E8EEF6] pt-3 text-xs text-slate-500">
@@ -349,7 +371,15 @@ export default function MyTeamPage() {
                   Only the team leader can upload files for the team.
                 </p>
               ) : (
-                <SubmissionCards team={state.team} onUploaded={reload} />
+                <>
+                  {!semifinalOpen(state.team) && (
+                    <p className="mb-3 text-sm text-white/90">
+                      The preliminary round is free. Payment ({SEMIFINAL_FEE_TEXT}) only opens if your team
+                      advances to the semifinal.
+                    </p>
+                  )}
+                  <SubmissionCards team={state.team} onUploaded={reload} />
+                </>
               )}
             </section>
           </>

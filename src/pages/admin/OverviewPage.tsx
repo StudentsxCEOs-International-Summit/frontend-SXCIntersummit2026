@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { usePageTitle } from '@/hooks/usePageTitle'
-import { adminService, humanize, isPendingFile, paymentOf, preliminaryOf, type AdminTeam } from '@/services/admin'
+import { statusLabel } from '@/data/fees'
+import { adminService, isPendingFile, paymentOf, preliminaryOf, type AdminTeam } from '@/services/admin'
 import { configService } from '@/services/config'
 import { Badge, ErrorBox, PageHeading, Spinner, card, formatDate, statusTone, useLoad } from '@/components/admin/ui'
 
@@ -107,7 +108,7 @@ export default function OverviewPage() {
               <ul className="mt-3 grid gap-2">
                 {byStatus.map(([code, count]) => (
                   <li key={code} className="flex items-center justify-between text-sm">
-                    <Badge tone={statusTone(code)}>{humanize(code)}</Badge>
+                    <Badge tone={statusTone(code)}>{statusLabel(code)}</Badge>
                     <span className="font-semibold text-slate-700">{count}</span>
                   </li>
                 ))}

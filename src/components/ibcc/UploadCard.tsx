@@ -10,6 +10,8 @@ interface UploadCardProps {
   /** The backend's size limit for this endpoint. */
   maxMB: number
   buttonLabel: string
+  /** Short highlight next to the title, e.g. the amount to pay. */
+  badge?: string
   /** Sends the file; throw an ApiError to show its message. Resolve to mark it as sent. */
   onUpload: (file: File) => Promise<void>
 }
@@ -24,6 +26,7 @@ export default function UploadCard({
   extensions,
   maxMB,
   buttonLabel,
+  badge,
   onUpload,
 }: UploadCardProps) {
   const inputId = useId()
@@ -77,7 +80,14 @@ export default function UploadCard({
 
   return (
     <div className="rounded-2xl border border-[#E1EAF5] bg-white p-4 shadow-sm">
-      <h3 className="font-heading text-base font-bold text-slate-900">{title}</h3>
+      <div className="flex items-start justify-between gap-3">
+        <h3 className="font-heading text-base font-bold text-slate-900">{title}</h3>
+        {badge && (
+          <span className="shrink-0 rounded-full bg-[#FFF3D1] px-3 py-0.5 text-sm font-bold whitespace-nowrap text-[#B87400]">
+            {badge}
+          </span>
+        )}
+      </div>
       <p className="mt-1 text-sm text-slate-500">{description}</p>
 
       <label

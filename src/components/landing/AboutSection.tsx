@@ -42,7 +42,7 @@ export interface AboutSectionProps {
 }
 
 function AboutSection({
-  prizeText = 'Rp.20.000.000',
+  prizeText = 'Rp.13.500.000+',
   joinHref = '#competitions',
 }: AboutSectionProps = {}) {
   return (

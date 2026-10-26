@@ -19,7 +19,7 @@ function VisionMissionSection() {
       <article className="relative pt-6 md:translate-x-7">
         <div className="absolute top-0 left-[8%] z-10 w-44 sm:w-52">
           <CardLabel side="right" className="w-full" textClassName="text-base sm:text-lg">
-            <h3 className="px-2">Vision</h3>
+            <h3 className="px-2 text-lg md:text-2xl">Vision</h3>
           </CardLabel>
         </div>
         <AngledPanel side="right" className="h-full" innerClassName="px-6 pt-10 pb-6 md:px-12 md:pt-8">
@@ -38,7 +38,7 @@ function VisionMissionSection() {
       <article className="relative pt-6 md:-translate-x-7">
         <div className="absolute top-0 right-[4%] z-10 w-44 sm:w-52">
           <CardLabel side="left" className="w-full" textClassName="text-base sm:text-lg">
-            <h3 className="px-2">Mission</h3>
+            <h3 className="px-2 text-lg md:text-2xl">Mission</h3>
           </CardLabel>
         </div>
         <AngledPanel side="left" className="h-full" innerClassName="px-6 pt-10 pb-6 md:px-0 md:pt-8">

@@ -1,6 +1,7 @@
 import judgeIcon from '@/assets/about/ic-judge.webp'
 import thunderIcon from '@/assets/about/ic-thunder.webp'
 import groupIcon from '@/assets/about/ic-group.webp'
+import type { CSSProperties } from 'react'
 import { AboutPill, OutlinedText, glassCardEdge } from './AboutShared'
 
 const values = [
@@ -44,8 +45,8 @@ function ValuesSection() {
         {values.map((v) => (
           <article
             key={v.title}
-            style={{ transform: `perspective(850px) rotateY(${v.tilt}deg)` }}
-            className={`group relative flex h-full min-h-[260px] flex-col items-center justify-between rounded-[14px] lg:aspect-[245/237] ${glassCardEdge} bg-[linear-gradient(180deg,rgba(255,255,255,0.74)_0%,rgba(196,220,255,0.62)_100%)] px-5 py-6 text-center shadow-[0_8px_24px_rgba(0,40,130,0.25)] transition-all duration-300 hover:-translate-y-1 hover:brightness-105`}
+            style={{ '--tilt': `${v.tilt}deg` } as CSSProperties}
+            className={`group relative flex h-full min-h-[260px] cursor-pointer touch-manipulation flex-col items-center justify-between rounded-[14px] select-none [-webkit-tap-highlight-color:transparent] lg:aspect-[245/237] lg:[transform:perspective(850px)_rotateY(var(--tilt))] ${glassCardEdge} bg-[linear-gradient(180deg,rgba(255,255,255,0.74)_0%,rgba(196,220,255,0.62)_100%)] px-5 py-6 text-center shadow-[0_8px_24px_rgba(0,40,130,0.25)] transition-all duration-300 hover:-translate-y-1 hover:brightness-105 active:scale-[0.96] active:brightness-110`}
           >
             {/* Value Title */}
             <h3 className="font-heading text-sm font-semibold sm:text-base lg:text-lg">
@@ -58,7 +59,7 @@ function ValuesSection() {
                 src={v.icon}
                 alt=""
                 aria-hidden="true"
-                className={`w-full ${v.ratio} object-contain drop-shadow-[0_8px_16px_rgba(0,40,120,0.25)] transition-transform duration-300 group-hover:scale-105`}
+                className={`w-full ${v.ratio} object-contain drop-shadow-[0_8px_16px_rgba(0,40,120,0.25)] transition-transform duration-300 group-hover:scale-105 group-active:-rotate-6 group-active:scale-110`}
               />
             </div>
 

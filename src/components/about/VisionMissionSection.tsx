@@ -1,3 +1,5 @@
+import { Eye, Sparkles } from 'lucide-react'
+import starYellowGlow from '@/assets/ic-star-yellow-glow.svg'
 import { AngledPanel, CardLabel } from './AboutShared'
 
 const missions = [
@@ -22,8 +24,36 @@ function VisionMissionSection() {
             <h3 className="px-2 text-lg md:text-2xl">Vision</h3>
           </CardLabel>
         </div>
-        <AngledPanel side="right" className="h-full" innerClassName="px-6 pt-10 pb-6 md:px-12 md:pt-8">
-          <p className="font-heading px-2 text-left text-base leading-snug sm:text-lg md:px-4">
+        <AngledPanel side="right" className="h-full" innerClassName="px-5 pt-8 pb-5 md:px-12 md:pt-8 md:pb-6">
+          {/* Phones: the statement is broken into a lead-in, a highlighted title and the goal. */}
+          <div className="relative w-full md:hidden">
+            <img
+              src={starYellowGlow}
+              alt=""
+              aria-hidden="true"
+              className="animate-float pointer-events-none absolute -top-3 -right-2 w-9 rotate-12 select-none"
+            />
+            <div className="flex items-start gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-[0_3px_10px_rgba(2,98,244,0.45)]">
+                <Eye className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <p className="font-heading min-w-0 text-left">
+                <span className="block text-[11px] font-bold tracking-[0.14em] text-primary uppercase">
+                  Empowering Youth To Become
+                </span>
+                <span className="mt-0.5 block bg-[linear-gradient(90deg,#003F9E_0%,#0262F4_100%)] bg-clip-text text-2xl leading-tight font-extrabold text-transparent italic">
+                  Ethical Innovators
+                </span>
+              </p>
+            </div>
+            <div className="my-3 h-px bg-[linear-gradient(90deg,rgba(2,98,244,0.45),rgba(2,98,244,0))]" />
+            <p className="font-heading flex items-start gap-2 text-left text-sm leading-snug font-semibold text-[#0b3d91]">
+              <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-[#F4A300]" aria-hidden="true" />
+              Navigating and Creating Sustainable Impact.
+            </p>
+          </div>
+
+          <p className="font-heading hidden px-2 text-left text-base leading-snug sm:text-lg md:block md:px-4">
             <span className="block font-bold text-[#0b3d91]">
               Empowering Youth To Become Ethical Innovators
             </span>
@@ -41,7 +71,7 @@ function VisionMissionSection() {
             <h3 className="px-2 text-lg md:text-2xl">Mission</h3>
           </CardLabel>
         </div>
-        <AngledPanel side="left" className="h-full" innerClassName="px-6 pt-10 pb-6 md:px-0 md:pt-8">
+        <AngledPanel side="left" className="h-full" innerClassName="px-6 pt-7 pb-6 md:px-0 md:pt-8">
           <ol className="font-heading flex w-full flex-col gap-3 text-sm font-medium text-[#0b3d91] sm:text-base md:gap-2 md:pr-6 md:pl-[18%]">
             {missions.map((m, i) => (
               <li key={m} className="flex items-center gap-3">

@@ -43,7 +43,7 @@ export interface AboutSectionProps {
 
 function AboutSection({
   prizeText = 'Rp.13.500.000+',
-  joinHref = '#competitions',
+  joinHref = '/ibcc',
 }: AboutSectionProps = {}) {
   return (
     <section
@@ -93,7 +93,8 @@ function AboutSection({
                 src={starYellowGlow}
                 alt=""
                 className="animate-float pointer-events-none absolute top-4 right-3 w-10 rotate-12 select-none lg:hidden"
-              />              <GoldButton href={joinHref} className="relative mt-5 sm:min-w-[240px]">
+              />
+              <GoldButton href={joinHref} className="relative mt-5 sm:min-w-[240px]">
                 Join Now <ArrowIcon />
               </GoldButton>
             </div>

@@ -12,6 +12,8 @@ function MainLayout() {
       setActiveItem('IBCC')
     } else if (location.pathname === '/gallery') {
       setActiveItem('Gallery')
+    } else if (location.pathname === '/contact') {
+      setActiveItem('Contact')
     } else if (location.pathname === '/merchandise') {
       setActiveItem('Merchandise')
     } else if (location.pathname === '/about') {

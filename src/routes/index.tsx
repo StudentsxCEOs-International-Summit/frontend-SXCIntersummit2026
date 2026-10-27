@@ -15,6 +15,7 @@ import AboutPage from '@/pages/AboutPage'
 import IbccPage from '@/pages/IbccPage'
 import MerchandisePage from '@/pages/MerchandisePage'
 import GalleryPage from '@/pages/GalleryPage'
+import ContactPage from '@/pages/ContactPage'
 import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage'
 import TermsOfServicePage from '@/pages/TermsOfServicePage'
 import RequireStaff from '@/components/RequireStaff'
@@ -38,6 +39,7 @@ function AppRoutes() {
           <Route path="/ibcc" element={<IbccPage />} />
           <Route path="/merchandise" element={<MerchandisePage />} />
           <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/terms-of-service" element={<TermsOfServicePage />} />
           <Route

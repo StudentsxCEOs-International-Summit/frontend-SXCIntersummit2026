@@ -49,6 +49,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     { label: 'IBCC', href: '/ibcc' },
     { label: 'Merchandise', href: '/merchandise' },
     { label: 'Gallery', href: '/gallery' },
+    { label: 'Contact', href: '/contact' },
   ]
 
   const navItems = items || defaultNavItems
@@ -87,7 +88,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
         </div>
 
         {/* Center: Navigation Links (Text) for Desktop */}
-        <ul className="hidden md:flex items-center gap-8 lg:gap-12 m-0 p-0 list-none">
+        <ul className="hidden lg:flex items-center gap-6 xl:gap-12 m-0 p-0 list-none">
           {navItems.map((item) => {
             const isActive = activeItem.toLowerCase() === item.label.toLowerCase()
 
@@ -171,7 +172,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
         </ul>
 
         {/* Right: Sign In (or the account pill once signed in) */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3">
           {user ? (
             <>
               <button
@@ -213,7 +214,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
           )}
         </div>
         {/* Mobile Hamburger Button */}
-        <div className="flex md:hidden items-center">
+        <div className="flex lg:hidden items-center">
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -247,7 +248,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
       {/* Mobile Drawer Menu */}
       {isMobileMenuOpen && (
         <div
-          className="absolute top-full left-4 right-4 mt-2 p-5 rounded-3xl md:hidden z-50 backdrop-blur-md flex flex-col gap-4 animate-in fade-in duration-200 pointer-events-auto"
+          className="absolute top-full left-4 right-4 mt-2 p-5 rounded-3xl lg:hidden z-50 backdrop-blur-md flex flex-col gap-4 animate-in fade-in duration-200 pointer-events-auto"
           style={{
             background: 'linear-gradient(135deg, #2b6fe9 0%, #194dc4 100%)',
             border: '2px solid rgba(255, 255, 255, 0.8)',

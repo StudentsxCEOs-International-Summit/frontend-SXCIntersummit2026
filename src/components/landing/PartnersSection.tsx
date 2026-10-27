@@ -44,25 +44,25 @@ export function CaseCollaboratorSection() {
   return (
     <section id="case-collaborator" className="w-full mx-auto max-w-[1200px] px-4 sm:px-6">
       <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Case Collaborator</SectionTitle>
-      <div className={`${panel} relative mt-8 overflow-hidden px-6 py-10 text-center sm:py-14`}>
+      <div className={`${panel} relative mt-8 overflow-hidden px-6 py-7 text-center sm:py-9`}>
         <img
           src={starYellowGlow}
           alt=""
           aria-hidden="true"
-          className="animate-float pointer-events-none absolute top-3 left-4 w-12 -rotate-12 select-none sm:top-6 sm:left-12 sm:w-20"
+          className="animate-float pointer-events-none absolute top-2 left-4 w-10 -rotate-12 select-none sm:top-4 sm:left-12 sm:w-16"
         />
         <img
           src={starYellowGlow}
           alt=""
           aria-hidden="true"
-          className="animate-float-slow pointer-events-none absolute right-4 bottom-3 w-14 rotate-12 select-none sm:right-12 sm:bottom-6 sm:w-24"
+          className="animate-float-slow pointer-events-none absolute right-4 bottom-2 w-11 rotate-12 select-none sm:right-12 sm:bottom-4 sm:w-18"
         />
-        <div className="relative mx-auto flex max-w-lg flex-col items-center gap-3">
+        <div className="relative mx-auto flex max-w-lg flex-col items-center gap-2">
           <span className="rounded-full border-2 border-white/90 bg-white/40 px-4 py-1 font-heading text-xs font-bold tracking-[0.18em] text-[#0b4fd1] uppercase">
             Coming Soon
           </span>
           <p
-            className="font-heading bg-[linear-gradient(100deg,#003F9E_0%,#0262F4_70%,#3E88F5_100%)] bg-clip-text text-4xl leading-tight font-extrabold text-transparent italic sm:text-6xl"
+            className="font-heading bg-[linear-gradient(100deg,#003F9E_0%,#0262F4_70%,#3E88F5_100%)] bg-clip-text text-3xl leading-tight font-extrabold text-transparent italic sm:text-5xl"
           >
             To Be Announced
           </p>

@@ -63,7 +63,7 @@ export function ProgramsSection() {
     <section id="events" className="w-full mx-auto max-w-[1200px] scroll-mt-28 px-4 sm:px-6">
       <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Events</SectionTitle>
 
-      <div className="mt-8 rounded-[2rem] border-2 border-white/40 bg-white/10 p-4 shadow-[0_12px_40px_rgba(0,40,130,0.25)] backdrop-blur-sm sm:p-8">
+      <div className="mx-auto mt-8 max-w-[1100px] rounded-[2rem] border-2 border-white/40 bg-white/10 p-3 shadow-[0_12px_40px_rgba(0,40,130,0.25)] backdrop-blur-sm sm:p-5">
         <div id="competitions" className="scroll-mt-28">
           <GroupLabel>Competitions</GroupLabel>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -73,7 +73,7 @@ export function ProgramsSection() {
           </div>
         </div>
 
-        <div className="mt-10">
+        <div className="mt-8">
           <GroupLabel>More Events</GroupLabel>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:flex-nowrap">
             <div className="order-2 sm:order-1"><CarouselButton direction="prev" onClick={() => scroll(-1)} /></div>

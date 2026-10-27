@@ -5,7 +5,7 @@ function AboutHero() {
     <section
       id="about-hero"
       aria-labelledby="about-hero-title"
-      className="relative flex min-h-[600px] flex-col items-center justify-center overflow-hidden px-4 pt-32 pb-28 sm:min-h-[820px] lg:min-h-screen"
+      className="relative flex min-h-[92svh] flex-col items-center justify-center overflow-hidden px-4 pt-32 pb-28 sm:min-h-[820px] lg:min-h-screen"
     >
 
       <h1

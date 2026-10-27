@@ -7,6 +7,8 @@ import Footer from '@/components/landing/Footer'
 import { SectionTitle } from '@/components/landing/ui'
 import { OutlinedText } from '@/components/about/AboutShared'
 import { contactEmail, contactPersons, socials } from '@/data/landing'
+import { ApiError } from '@/lib/api'
+import { CONTACT_TYPES, contactService, type ContactType } from '@/services/contact'
 
 const partnerships = [
   {
@@ -37,52 +39,93 @@ function toWhatsAppLink(phone: string) {
   return `https://wa.me/${phone.replace(/\D/g, '').replace(/^0/, '62')}`
 }
 
-/** Opens the visitor's email app with the enquiry filled in; nothing is stored on our servers. */
-function EmailForm() {
-  const [form, setForm] = useState({ name: '', organization: '', email: '', type: partnerships[0].title, message: '' })
+/** Sends the enquiry to the back end, which stores it for the committee to read. */
+function ContactForm() {
+  const [form, setForm] = useState({
+    name: '',
+    organization: '',
+    email: '',
+    type: partnerships[0].title as ContactType,
+    message: '',
+    website: '',
+  })
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle')
+  const [error, setError] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const set = (key: keyof typeof form) => (value: string) => setForm((prev) => ({ ...prev, [key]: value }))
 
-  const submit = (event: FormEvent) => {
+  const submit = async (event: FormEvent) => {
     event.preventDefault()
-    const subject = `Partnership enquiry: ${form.type} (${form.organization || form.name})`
-    const body = [
-      `Name: ${form.name}`,
-      `Organization: ${form.organization}`,
-      `Email: ${form.email}`,
-      `Interested in: ${form.type}`,
-      '',
-      form.message,
-    ].join('\n')
-    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    setError(null)
+    setFieldErrors({})
+    setStatus('sending')
+    try {
+      await contactService.send({ ...form, type: form.type as ContactType })
+      setStatus('sent')
+    } catch (err) {
+      setStatus('idle')
+      if (err instanceof ApiError) {
+        setError(err.message)
+        setFieldErrors(err.fieldErrors)
+      } else {
+        setError('Something went wrong. Please try again.')
+      }
+    }
   }
 
+  if (status === 'sent') {
+    return (
+      <div role="status" className="rounded-3xl border-2 border-white bg-white p-7 text-center shadow-[0_12px_32px_rgba(0,40,130,0.3)]">
+        <h3 className="font-heading text-xl font-extrabold text-[#0b4fd1]">Thank you!</h3>
+        <p className="mt-2 text-sm text-slate-600">
+          We received your message and will get back to you at <strong>{form.email}</strong>.
+        </p>
+      </div>
+    )
+  }
+
+  const errorOf = (key: string) =>
+    fieldErrors[key] && (
+      <span role="alert" className="mt-1 block text-xs font-medium text-red-600">
+        {fieldErrors[key]}
+      </span>
+    )
+
   return (
-    <form onSubmit={submit} className="rounded-3xl border-2 border-white bg-white p-5 shadow-[0_12px_32px_rgba(0,40,130,0.3)] sm:p-7">
-      <h3 className="font-heading text-xl font-extrabold text-[#0b4fd1]">Send us an email</h3>
-      <p className="mt-1 text-sm text-slate-500">
-        This opens your email app with your message ready to send to {contactEmail}.
-      </p>
+    <form onSubmit={submit} noValidate className="rounded-3xl border-2 border-white bg-white p-5 shadow-[0_12px_32px_rgba(0,40,130,0.3)] sm:p-7">
+      <h3 className="font-heading text-xl font-extrabold text-[#0b4fd1]">Send us a message</h3>
+      <p className="mt-1 text-sm text-slate-500">Tell us how you would like to work with us.</p>
+
+      {error && (
+        <p role="alert" className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+          {error}
+        </p>
+      )}
 
       <div className="mt-5 grid gap-4 sm:grid-cols-2">
         <label className="block text-sm font-semibold text-slate-700">
           Your name
-          <input required className={`${field} mt-1`} value={form.name} onChange={(e) => set('name')(e.target.value)} />
+          <input required autoComplete="name" className={`${field} mt-1`} value={form.name} onChange={(e) => set('name')(e.target.value)} />
+          {errorOf('name')}
         </label>
         <label className="block text-sm font-semibold text-slate-700">
           Organization
-          <input required className={`${field} mt-1`} value={form.organization} onChange={(e) => set('organization')(e.target.value)} />
+          <input required autoComplete="organization" className={`${field} mt-1`} value={form.organization} onChange={(e) => set('organization')(e.target.value)} />
+          {errorOf('organization')}
         </label>
         <label className="block text-sm font-semibold text-slate-700">
           Your email
-          <input required type="email" className={`${field} mt-1`} value={form.email} onChange={(e) => set('email')(e.target.value)} />
+          <input required type="email" autoComplete="email" className={`${field} mt-1`} value={form.email} onChange={(e) => set('email')(e.target.value)} />
+          {errorOf('email')}
         </label>
         <label className="block text-sm font-semibold text-slate-700">
           Interested in
           <select className={`${field} mt-1`} value={form.type} onChange={(e) => set('type')(e.target.value)}>
-            {partnerships.map((p) => (
-              <option key={p.title}>{p.title}</option>
+            {CONTACT_TYPES.map((type) => (
+              <option key={type}>{type}</option>
             ))}
           </select>
+          {errorOf('type')}
         </label>
       </div>
       <label className="mt-4 block text-sm font-semibold text-slate-700">
@@ -94,12 +137,23 @@ function EmailForm() {
           value={form.message}
           onChange={(e) => set('message')(e.target.value)}
         />
+        {errorOf('message')}
       </label>
+
+      {/* Honeypot: hidden from people, tempting for bots. */}
+      <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+        <label>
+          Website
+          <input tabIndex={-1} autoComplete="off" value={form.website} onChange={(e) => set('website')(e.target.value)} />
+        </label>
+      </div>
+
       <button
         type="submit"
-        className="bg-gold-gloss text-outline-sm font-heading mt-5 inline-flex h-11 w-full cursor-pointer items-center justify-center rounded-full border-2 border-white/90 px-8 text-sm font-bold shadow-[0_4px_16px_rgb(245_158_11/0.45)] transition-transform duration-200 hover:scale-[1.02] focus-visible:ring-4 focus-visible:ring-[#f4a300]/40 focus-visible:outline-none active:scale-95 sm:w-auto"
+        disabled={status === 'sending'}
+        className="bg-gold-gloss text-outline-sm font-heading mt-5 inline-flex h-11 w-full cursor-pointer items-center justify-center rounded-full border-2 border-white/90 px-8 text-sm font-bold shadow-[0_4px_16px_rgb(245_158_11/0.45)] transition-transform duration-200 hover:scale-[1.02] focus-visible:ring-4 focus-visible:ring-[#f4a300]/40 focus-visible:outline-none active:scale-95 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
-        Open in my email app
+        {status === 'sending' ? 'Sending…' : 'Send message'}
       </button>
     </form>
   )
@@ -159,8 +213,8 @@ function ContactPage() {
           <SectionTitle id="reach-title" className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">
             Get in Touch
           </SectionTitle>
-          <div className={`mt-10 grid gap-6 ${contactEmail ? 'lg:grid-cols-[1.3fr_1fr]' : ''}`}>
-            {contactEmail && <EmailForm />}
+          <div className="mt-10 grid gap-6 lg:grid-cols-[1.3fr_1fr]">
+            <ContactForm />
 
             <div className="grid content-start gap-4">
               {contactEmail && (

@@ -9,6 +9,7 @@ const links = [
   { to: '/admin/participants', label: 'Participants' },
   { to: '/admin/files', label: 'Files & Links' },
   { to: '/admin/semifinal', label: 'Semifinal' },
+  { to: '/admin/messages', label: 'Messages' },
   { to: '/admin/settings', label: 'Settings' },
 ]
 

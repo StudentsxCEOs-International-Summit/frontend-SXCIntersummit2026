@@ -123,10 +123,10 @@ export interface ContactPerson {
   phone: string
 }
 
-// TODO: placeholder contacts from the mockup.
+/** IBCC contact persons (WhatsApp). Numbers are written with +62 instead of a leading 0. */
 export const contactPersons: ContactPerson[] = [
-  { name: 'Rafki', phone: '+62 8123 4567 8910' },
-  { name: 'Rafki', phone: '+62 8123 4567 8910' },
+  { name: 'Enzo', phone: '+62 852 2024 0044' },
+  { name: 'Nadira', phone: '+62 889 0593 3549' },
 ]
 
 // TODO: fill in the official social media URLs.

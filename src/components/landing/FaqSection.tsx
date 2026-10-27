@@ -12,12 +12,12 @@ export interface FaqSectionProps {
  * identical white boxes.
  */
 function FaqSection({ items = faqs }: FaqSectionProps = {}) {
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
     <section id="faq" className="w-full mx-auto max-w-[1200px] scroll-mt-28 px-4 sm:px-6">
       <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Frequently Asked Questions</SectionTitle>
-      <ul className="mx-auto mt-8 flex max-w-[960px] flex-col gap-3 sm:gap-4">
+      <ul className="mx-auto mt-8 flex max-w-[960px] flex-col gap-2.5 sm:gap-3">
         {items.map((faq, i) => {
           const open = openIndex === i
           return (
@@ -41,16 +41,16 @@ function FaqSection({ items = faqs }: FaqSectionProps = {}) {
                   aria-expanded={open}
                   aria-controls={`faq-a-${i}`}
                   onClick={() => setOpenIndex(open ? null : i)}
-                  className="flex w-full cursor-pointer items-center gap-3 px-4 py-3.5 text-left focus-visible:ring-4 focus-visible:ring-white/60 focus-visible:outline-none sm:gap-4 sm:px-5 sm:py-4"
+                  className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left focus-visible:ring-4 focus-visible:ring-white/60 focus-visible:outline-none sm:gap-3.5 sm:px-5 sm:py-3"
                 >
                   <span
                     aria-hidden="true"
-                    className="bg-gold-gloss flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-white/90 font-heading text-xs font-extrabold text-brand-blue-700 shadow-[0_3px_8px_rgba(244,163,0,0.45)] sm:h-10 sm:w-10 sm:text-sm"
+                    className="bg-gold-gloss flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-white/90 font-heading text-[11px] font-extrabold text-brand-blue-700 shadow-[0_3px_8px_rgba(244,163,0,0.45)] sm:h-9 sm:w-9 sm:text-xs"
                   >
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <span
-                    className={`min-w-0 flex-1 font-heading text-sm font-semibold transition-colors duration-300 sm:text-base ${
+                    className={`min-w-0 flex-1 font-heading text-sm font-semibold transition-colors duration-300 sm:text-[15px] ${
                       open ? 'text-[#0b3d91]' : 'text-white'
                     }`}
                   >
@@ -58,14 +58,14 @@ function FaqSection({ items = faqs }: FaqSectionProps = {}) {
                   </span>
                   <span
                     aria-hidden="true"
-                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
+                    className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
                       open
                         ? 'rotate-45 border-transparent bg-primary text-white shadow-[0_3px_8px_rgba(2,98,244,0.45)]'
                         : 'border-white/70 bg-white/15 text-white group-hover:bg-white/25'
                     }`}
                   >
                     <svg
-                      className="h-4 w-4"
+                      className="h-3.5 w-3.5"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -85,7 +85,7 @@ function FaqSection({ items = faqs }: FaqSectionProps = {}) {
                 className={`grid transition-[grid-template-rows] duration-300 ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
               >
                 <div className="overflow-hidden">
-                  <p className="px-4 pb-5 pl-[3.75rem] font-body text-xs leading-relaxed text-[#1a2340] sm:px-5 sm:pb-5 sm:pl-[4.75rem] sm:text-sm">
+                  <p className="px-4 pb-4 pl-[3.75rem] font-body text-xs leading-relaxed text-[#1a2340] sm:px-5 sm:pb-4 sm:pl-[4.5rem] sm:text-sm">
                     {faq.answer}
                   </p>
                 </div>

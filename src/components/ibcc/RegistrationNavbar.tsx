@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import logo from '@/assets/ic-icon-internasional.svg'
 import waves from '@/assets/ic-line-wave.svg'
 import rectangle from '@/assets/ic-rectangle-asbtract.svg'
@@ -22,25 +23,32 @@ export default function RegistrationNavbar() {
       />
 
       <div className="relative mx-auto flex h-20 max-w-7xl items-center gap-4 px-4 sm:h-[100px] sm:gap-6 sm:px-6 lg:px-8">
-        <img
-          src={logo}
-          alt="SxC International Summit"
-          className="h-14 w-auto object-contain sm:h-[76px]"
-        />
-        <span className="h-10 w-px bg-[#C3D6F2] sm:h-12" aria-hidden="true" />
-        <div className="leading-tight">
-          <p className="text-base font-normal text-[#1A6FE8] sm:text-[20px]">
-            International Summit 2026
-          </p>
-          <p className="mt-1 flex items-center gap-2 text-xs text-[#2D8CFF] sm:text-[14px]">
-            {TAGLINE.map((word, i) => (
-              <Fragment key={word}>
-                {i > 0 && <span className="h-1 w-1 rounded-full bg-[#2D8CFF]" aria-hidden="true" />}
-                {word}
-              </Fragment>
-            ))}
-          </p>
-        </div>
+        {/* The whole brand block returns to the home page. */}
+        <Link
+          to="/"
+          aria-label="SxC International Summit, back to home"
+          className="flex min-w-0 items-center gap-4 rounded-xl transition-opacity hover:opacity-90 focus-visible:ring-4 focus-visible:ring-[#0262F4]/30 focus-visible:outline-none sm:gap-6"
+        >
+          <img
+            src={logo}
+            alt=""
+            className="h-14 w-auto shrink-0 object-contain sm:h-[76px]"
+          />
+          <span className="h-10 w-px shrink-0 bg-[#C3D6F2] sm:h-12" aria-hidden="true" />
+          <span className="block leading-tight">
+            <span className="block text-base font-normal text-[#1A6FE8] sm:text-[20px]">
+              International Summit 2026
+            </span>
+            <span className="mt-1 flex items-center gap-2 text-xs text-[#2D8CFF] sm:text-[14px]">
+              {TAGLINE.map((word, i) => (
+                <Fragment key={word}>
+                  {i > 0 && <span className="h-1 w-1 rounded-full bg-[#2D8CFF]" aria-hidden="true" />}
+                  {word}
+                </Fragment>
+              ))}
+            </span>
+          </span>
+        </Link>
       </div>
     </header>
   )

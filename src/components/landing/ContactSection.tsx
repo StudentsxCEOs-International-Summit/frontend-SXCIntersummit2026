@@ -28,7 +28,7 @@ function ContactSection() {
         className="font-heading text-3xl font-extrabold italic tracking-tight text-white sm:text-4xl"
         style={{ textShadow: '0 2px 0 #003F9E, 0 0 10px rgba(0, 63, 158, 0.6)' }}
       >
-        Contact Person
+        Contact Person IBCC
       </h2>
       <p className="font-body text-xs text-orange-light sm:text-sm">
         Got questions? Just drop us a message!

@@ -216,7 +216,7 @@ function TimelineSection() {
       className="relative mx-auto w-full max-w-[1200px] scroll-mt-28 px-4 sm:px-6"
     >
       <SectionTitle className=" bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">
-        Timeline
+        Timeline IBCC
       </SectionTitle>
 
       {/* Gradient border wrapper */}
@@ -231,7 +231,7 @@ function TimelineSection() {
             className={`grid auto-cols-[210px] grid-flow-col grid-rows-[auto_32px_auto] overflow-x-auto px-6 pt-7 pb-4 select-none sm:px-10 [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-primary/60 [&::-webkit-scrollbar-track]:bg-transparent [scrollbar-color:rgb(2_98_244/0.6)_transparent] [scrollbar-width:thin] ${
               isDragging ? 'cursor-grabbing' : 'cursor-grab'
             }`}
-            aria-label="Event timeline"
+            aria-label="IBCC timeline"
           >
             {timeline.map((item, i) => {
               const top = i % 2 === 0

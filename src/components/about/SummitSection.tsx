@@ -38,9 +38,8 @@ function SummitSection() {
             <p
               className="font-body text-xs leading-relaxed text-left text-[#1a2340] sm:text-sm lg:flex-1 lg:text-[length:clamp(11px,1.05vw,17px)] lg:leading-relaxed"
             >
-              StudentsxCEOs International Summit 2026 is a flagship program run by StudentsxCEOs
-              Jakarta. We empower the young generation to become ethical innovators who confidently
-              navigate uncertainty, seize emerging opportunities, and create sustainable impact in
+              <strong className="font-bold text-[#0b3d91]">StudentsxCEOs International Summit 2026</strong> is a <strong className="font-bold text-[#0b3d91]">flagship program</strong> run by <strong className="font-bold text-[#0b3d91]">StudentsxCEOs Jakarta</strong>. We empower the young generation to become <strong className="font-bold text-[#0b3d91]">ethical innovators</strong> who confidently
+              navigate uncertainty, seize emerging opportunities, and create <strong className="font-bold text-[#0b3d91]">sustainable impact</strong> in
               the digital era.
             </p>
             <div className="relative w-44 shrink-0 lg:w-[17%]">

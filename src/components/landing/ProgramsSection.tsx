@@ -2,16 +2,15 @@ import { useRef } from 'react'
 import { competitions, events } from '@/data/landing'
 import { ProgramCard, SectionTitle } from './ui'
 
-export function CompetitionsSection() {
+/** Small gold label that names a group inside the shared Events panel. */
+function GroupLabel({ children }: { children: string }) {
   return (
-    <section id="competitions" className="w-full mx-auto max-w-[1100px] scroll-mt-28 px-4 sm:px-6">
-      <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Competitions</SectionTitle>
-      <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {competitions.map((card) => (
-          <ProgramCard key={card.title} card={card} />
-        ))}
-      </div>
-    </section>
+    <div className="mb-5 flex items-center gap-4">
+      <h3 className="bg-gold-gloss font-heading shrink-0 rounded-full border-2 border-white/90 px-5 py-1 text-sm font-extrabold tracking-wide text-brand-blue-700 uppercase italic shadow-[0_4px_12px_rgb(244_163_0/0.4)] sm:text-base">
+        {children}
+      </h3>
+      <span aria-hidden="true" className="h-px flex-1 bg-gradient-to-r from-white/70 to-transparent" />
+    </div>
   )
 }
 
@@ -45,7 +44,11 @@ function CarouselButton({
   )
 }
 
-export function EventsSection() {
+/**
+ * Competitions are part of the events, so both live in one panel under one title instead of two
+ * unrelated sections. The #competitions and #events anchors are kept for the footer links.
+ */
+export function ProgramsSection() {
   const trackRef = useRef<HTMLUListElement>(null)
 
   const scroll = (dir: 1 | -1) => {
@@ -59,22 +62,37 @@ export function EventsSection() {
   return (
     <section id="events" className="w-full mx-auto max-w-[1200px] scroll-mt-28 px-4 sm:px-6">
       <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Events</SectionTitle>
-      <div className="mt-6 flex flex-wrap items-center justify-center gap-4 sm:flex-nowrap">
-        <div className="order-2 sm:order-1"><CarouselButton direction="prev" onClick={() => scroll(-1)} /></div>
-        <ul
-          ref={trackRef}
-          className="order-1 flex w-full snap-x snap-mandatory scroll-px-3 gap-6 overflow-x-auto px-3 pt-3 pb-6 sm:order-2 sm:w-auto sm:flex-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
-          {events.map((card) => (
-            <li
-              key={card.title}
-              className="w-full shrink-0 snap-start sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)]"
+
+      <div className="mt-8 rounded-[2rem] border-2 border-white/40 bg-white/10 p-4 shadow-[0_12px_40px_rgba(0,40,130,0.25)] backdrop-blur-sm sm:p-8">
+        <div id="competitions" className="scroll-mt-28">
+          <GroupLabel>Competitions</GroupLabel>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {competitions.map((card) => (
+              <ProgramCard key={card.title} card={card} />
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-10">
+          <GroupLabel>More Events</GroupLabel>
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:flex-nowrap">
+            <div className="order-2 sm:order-1"><CarouselButton direction="prev" onClick={() => scroll(-1)} /></div>
+            <ul
+              ref={trackRef}
+              className="order-1 flex w-full snap-x snap-mandatory scroll-px-3 gap-6 overflow-x-auto px-3 pt-3 pb-6 sm:order-2 sm:w-auto sm:flex-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
-              <ProgramCard card={card} />
-            </li>
-          ))}
-        </ul>
-        <div className="order-3"><CarouselButton direction="next" onClick={() => scroll(1)} /></div>
+              {events.map((card) => (
+                <li
+                  key={card.title}
+                  className="w-full shrink-0 snap-start sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)]"
+                >
+                  <ProgramCard card={card} />
+                </li>
+              ))}
+            </ul>
+            <div className="order-3"><CarouselButton direction="next" onClick={() => scroll(1)} /></div>
+          </div>
+        </div>
       </div>
     </section>
   )

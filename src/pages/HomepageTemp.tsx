@@ -1,7 +1,7 @@
 import HeroSection from '@/components/landing/HeroSection'
 import AboutSection from '@/components/landing/AboutSection'
 import TimelineSection from '@/components/landing/TimelineSection'
-import { CompetitionsSection, EventsSection } from '@/components/landing/ProgramsSection'
+import { ProgramsSection } from '@/components/landing/ProgramsSection'
 import FaqSection from '@/components/landing/FaqSection'
 import { CaseCollaboratorSection, MediaPartnerSection } from '@/components/landing/PartnersSection'
 import ContactSection from '@/components/landing/ContactSection'
@@ -29,8 +29,7 @@ function HomePage() {
         </BackgroundSection>
 
         <BackgroundSection background={<ProgramsBackground />}>
-          <CompetitionsSection />
-          <EventsSection />
+          <ProgramsSection />
         </BackgroundSection>
 
         <BackgroundSection background={<PartnersBackground />}>

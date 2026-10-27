@@ -53,7 +53,7 @@ function ValuesSection() {
       </p>
 
       <div className="mx-auto mt-6 grid w-full max-w-[1000px] gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-        {values.map((v) => (
+        {values.map((v, index) => (
           <article
             key={v.title}
             style={
@@ -80,7 +80,10 @@ function ValuesSection() {
             </h3>
 
             {/* Value Icon */}
-            <div className="my-4 flex w-24 items-center justify-center sm:w-28 lg:w-[40%]">
+            <div
+              style={{ animationDelay: `${index * 0.9}s` }}
+              className="animate-bob my-4 flex w-24 items-center justify-center sm:w-28 lg:w-[40%]"
+            >
               <img
                 src={v.icon}
                 alt=""

@@ -135,3 +135,6 @@ export const socials = {
   linkedin: 'https://www.linkedin.com/company/sxcintersummit/posts/',
   tiktok: 'https://www.tiktok.com/@studentsxceosjkt',
 }
+
+/** Where partnership enquiries go. Set VITE_CONTACT_EMAIL; without it the Contact page hides the email form. */
+export const contactEmail: string = ((import.meta.env.VITE_CONTACT_EMAIL as string | undefined) ?? '').trim()

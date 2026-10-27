@@ -47,12 +47,10 @@ function JakartaSection() {
             <p
               className="font-body text-xs leading-relaxed text-left text-[#1a2340] sm:text-sm lg:flex-1 lg:pr-[6%] lg:text-[length:clamp(11px,1.05vw,17px)] lg:leading-relaxed"
             >
-              Founded in 2010, StudentsxCEOs Jakarta is a youth-led, student-run platform that
-              accelerates leadership development for future business leaders in Indonesia. With four
-              major chapters, over 150 core members, more than 1,000 top students from 30+
-              universities, and 100+ corporate partners, we bridge student leaders with industry
+              Founded in 2010, <strong className="font-bold text-[#0b3d91]">StudentsxCEOs Jakarta</strong> is a <strong className="font-bold text-[#0b3d91]">youth-led, student-run platform</strong> that
+              accelerates <strong className="font-bold text-[#0b3d91]">leadership development</strong> for future business leaders in Indonesia. With <strong className="font-bold text-[#0b3d91]">four major chapters</strong>, <strong className="font-bold text-[#0b3d91]">over 150 core members</strong>, <strong className="font-bold text-[#0b3d91]">more than 1,000 top students from 30+ universities</strong>, and <strong className="font-bold text-[#0b3d91]">100+ corporate partners</strong>, we bridge student leaders with industry
               through internships, CEO meetings, summits, and collaboration programs. We cultivate
-              real-world leadership experience by simulating corporate structures and
+              <strong className="font-bold text-[#0b3d91]">real-world leadership experience</strong> by simulating corporate structures and
               responsibilities within our internal operations.
             </p>
           </div>

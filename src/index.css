@@ -289,6 +289,39 @@
     animation: float 8s ease-in-out infinite reverse;
   }
 }
+@keyframes twinkle-star {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15) rotate(12deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-twinkle-star {
+    animation: twinkle-star 4.5s ease-in-out infinite;
+  }
+}
+/* Very gentle bob for small icons: barely a few pixels and a hint of a turn. */
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-2.5px) rotate(1deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-bob {
+    animation: bob 6s ease-in-out infinite;
+  }
+}
 @keyframes modal-fade {
   from {
     opacity: 0;

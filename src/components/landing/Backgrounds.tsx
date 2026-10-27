@@ -261,7 +261,7 @@ export function BackgroundSection({
 }) {
   return (
     <section
-      className={`isolate min-h-screen flex relative flex-col gap-12 sm:gap-32 py-12 sm:py-16 ${className}`}
+      className={`isolate sm:min-h-screen flex relative flex-col gap-12 sm:gap-32 py-12 sm:py-16 ${className}`}
     >
       {background && (
         <div

@@ -306,20 +306,20 @@
     animation: twinkle-star 4.5s ease-in-out infinite;
   }
 }
-/* Gentle bob for small icons: a few pixels up and a slight turn, never more. */
+/* Very gentle bob for small icons: barely a few pixels and a hint of a turn. */
 @keyframes bob {
   0%,
   100% {
     transform: translateY(0) rotate(0deg);
   }
   50% {
-    transform: translateY(-6px) rotate(2.5deg);
+    transform: translateY(-2.5px) rotate(1deg);
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .animate-bob {
-    animation: bob 4.5s ease-in-out infinite;
+    animation: bob 6s ease-in-out infinite;
   }
 }
 @keyframes modal-fade {

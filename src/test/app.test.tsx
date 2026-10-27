@@ -28,9 +28,11 @@ describe('HomePage', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
       'StudentsxCEOsInternational Summit 2026',
     )
-    for (const title of ['Timeline', 'Competitions', 'Events', 'Frequently Asked Questions']) {
+    for (const title of ['Timeline IBCC', 'Events', 'Frequently Asked Questions']) {
       expect(screen.getByRole('heading', { name: title, level: 2 })).toBeInTheDocument()
     }
+    // Competitions are part of Events, so they sit under it as a sub-heading.
+    expect(screen.getByRole('heading', { name: 'Competitions', level: 3 })).toBeInTheDocument()
   })
 
   it('toggles FAQ answers', () => {

@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 import { SectionTitle } from './ui'
-import adInLogo from '@/assets/media-partners/55-adins.svg'
+import starYellowGlow from '@/assets/ic-star-yellow-glow.svg'
 
 // File names follow `<order>-<tier>-<name>.<ext>`; the tier sets the logo size.
 const logoModules = import.meta.glob<string>('@/assets/media-partners/*.{png,jpg,jpeg,webp,svg}', {
@@ -39,13 +39,37 @@ const marqueeRows = Array.from({ length: MARQUEE_ROWS }, (_, row) =>
 const panel =
   'rounded-[48px] border-2 border-white/70 bg-[linear-gradient(135deg,#c8dafd_0%,#a3c1fb_45%,#8fb3fa_100%)] shadow-[0_12px_32px_rgb(10_63_184/0.3)]'
 
+/** No case collaborator has been confirmed yet, so the panel teases the reveal instead. */
 export function CaseCollaboratorSection() {
   return (
     <section id="case-collaborator" className="w-full mx-auto max-w-[1200px] px-4 sm:px-6">
       <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Case Collaborator</SectionTitle>
-      {/* TODO: replace the wordmark with the AD-INS logo asset from Figma. */}
-      <div className={`${panel} mt-8 flex items-center justify-center px-6 py-8 sm:py-10`}>
-        <img src={adInLogo} alt="AD-INS" className="h-10 w-auto max-w-full object-contain sm:h-14" />
+      <div className={`${panel} relative mt-8 overflow-hidden px-6 py-10 text-center sm:py-14`}>
+        <img
+          src={starYellowGlow}
+          alt=""
+          aria-hidden="true"
+          className="animate-float pointer-events-none absolute top-3 left-4 w-12 -rotate-12 select-none sm:top-6 sm:left-12 sm:w-20"
+        />
+        <img
+          src={starYellowGlow}
+          alt=""
+          aria-hidden="true"
+          className="animate-float-slow pointer-events-none absolute right-4 bottom-3 w-14 rotate-12 select-none sm:right-12 sm:bottom-6 sm:w-24"
+        />
+        <div className="relative mx-auto flex max-w-lg flex-col items-center gap-3">
+          <span className="rounded-full border-2 border-white/90 bg-white/40 px-4 py-1 font-heading text-xs font-bold tracking-[0.18em] text-[#0b4fd1] uppercase">
+            Coming Soon
+          </span>
+          <p
+            className="font-heading bg-[linear-gradient(100deg,#003F9E_0%,#0262F4_70%,#3E88F5_100%)] bg-clip-text text-4xl leading-tight font-extrabold text-transparent italic sm:text-6xl"
+          >
+            To Be Announced
+          </p>
+          <p className="font-body text-sm text-[#0b3d91] sm:text-base">
+            Our case collaborator is on the way. Stay tuned for the reveal!
+          </p>
+        </div>
       </div>
     </section>
   )

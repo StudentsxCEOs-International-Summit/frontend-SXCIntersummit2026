@@ -170,7 +170,7 @@ export function useIbccRegistration({ leaderDefaults }: UseIbccRegistrationOptio
           nextErrors[`${participantKey}.${field}`] = 'This field is required.'
         }
       })
-      if (participant.email && !EMAIL_PATTERN.test(participant.email)) {
+      if (participant.email.replace(/\s+/g, '') && !EMAIL_PATTERN.test(participant.email.replace(/\s+/g, ''))) {
         nextErrors[`${participantKey}.email`] = 'Enter a valid email address.'
       }
       // Same minimums as the backend schema.
@@ -182,11 +182,11 @@ export function useIbccRegistration({ leaderDefaults }: UseIbccRegistrationOptio
         nextErrors[`${participantKey}.institutionMajor`] = 'Enter your institution and major.'
 
       // The backend rejects repeated emails and a member that reuses the leader's email.
-      if (participantKey !== 'leader' && participant.email) {
-        const email = participant.email.trim().toLowerCase()
+      if (participantKey !== 'leader' && participant.email.replace(/\s+/g, '')) {
+        const email = participant.email.replace(/\s+/g, '').toLowerCase()
         const others: string[] = [form.leader.email]
         if (participantKey === 'secondMember') others.push(form.firstMember.email)
-        if (others.some((other) => other.trim().toLowerCase() === email)) {
+        if (others.some((other) => other.replace(/\s+/g, '').toLowerCase() === email)) {
           nextErrors[`${participantKey}.email`] = 'Each team member needs a different email address.'
         }
       }

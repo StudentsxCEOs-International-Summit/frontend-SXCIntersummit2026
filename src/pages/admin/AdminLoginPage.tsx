@@ -26,14 +26,14 @@ export default function AdminLoginPage() {
   const submit = async (event: FormEvent) => {
     event.preventDefault()
     setError(null)
-    if (!email.trim() || !password) {
+    if (!email.replace(/\s+/g, '') || !password) {
       setError('Enter your admin email and password.')
       return
     }
 
     try {
       setSubmitting(true)
-      setUser(await authService.adminLogin({ email: email.trim(), password }))
+      setUser(await authService.adminLogin({ email: email.replace(/\s+/g, ''), password }))
       navigate(routeState?.from ?? '/admin', { replace: true })
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Something went wrong. Please try again.')

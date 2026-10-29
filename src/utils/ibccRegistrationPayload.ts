@@ -43,7 +43,7 @@ const yearOfStudy = (year: string) => year.toLowerCase()
 
 const toMember = (p: ParticipantInformation) => ({
   fullName: p.fullName.trim(),
-  email: p.email.trim(),
+  email: p.email.replace(/\s+/g, ''),
   whatsapp: p.whatsapp.trim(),
   institution: p.institutionMajor.trim(),
   yearOfStudy: yearOfStudy(p.year),

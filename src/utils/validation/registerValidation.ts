@@ -40,9 +40,10 @@ export function validateRegisterForm(form: RegisterFormState): RegisterFieldErro
     errors.fullName = 'Please enter your full name.'
   }
 
-  if (!form.email.trim()) {
+  const email = form.email.replace(/\s+/g, '')
+  if (!email) {
     errors.email = 'Please enter your email address.'
-  } else if (!EMAIL_RE.test(form.email)) {
+  } else if (!EMAIL_RE.test(email)) {
     errors.email = 'Please enter a valid email address.'
   }
 

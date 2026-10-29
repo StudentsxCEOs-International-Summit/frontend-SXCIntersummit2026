@@ -53,7 +53,7 @@ export default function RegisterPage() {
 
     try {
       setIsSubmitting(true)
-      const email = form.email.trim()
+      const email = form.email.replace(/\s+/g, '')
       await authService.register({ name: form.fullName.trim(), email, password: form.password })
       navigate('/verify-otp', { state: { email, purpose: 'register' } })
     } catch (error) {

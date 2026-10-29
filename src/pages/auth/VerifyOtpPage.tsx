@@ -27,7 +27,7 @@ export default function VerifyOtpPage() {
   const location = useLocation()
   const { setUser } = useAuth()
   const state = location.state as OtpRouteState | null
-  const email = state?.email
+  const email = state?.email?.replace(/\s+/g, '')
   const purpose = state?.purpose ?? 'register'
 
   const [otp, setOtp] = useState('')

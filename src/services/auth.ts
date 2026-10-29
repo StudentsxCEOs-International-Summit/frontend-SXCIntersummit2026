@@ -18,25 +18,25 @@ interface SessionResponse {
 export const authService = {
   /** POST /auth/register -> sends an OTP email; the account is not active until verified. */
   register: (input: { name: string; email: string; password: string }) =>
-    api.post<{ email: string }>('/auth/register', input),
+    api.post<{ email: string }>('/auth/register', { ...input, email: input.email.replace(/\s+/g, '') }),
 
   /** POST /auth/verify-otp. For sign-up it opens a session; for password reset it returns a reset token. */
   verifyOtp: (input: { email: string; otp: string }) =>
-    api.post<{ user?: AuthUser; token?: string; resetToken?: string }>('/auth/verify-otp', input),
+    api.post<{ user?: AuthUser; token?: string; resetToken?: string }>('/auth/verify-otp', { ...input, email: input.email.replace(/\s+/g, '') }),
 
   /** POST /auth/resend-otp */
-  resendOtp: (email: string) => api.post<null>('/auth/resend-otp', { email }),
+  resendOtp: (email: string) => api.post<null>('/auth/resend-otp', { email: email.replace(/\s+/g, '') }),
 
   /** POST /auth/login */
   login: (input: { email: string; password: string }) =>
-    api.post<SessionResponse>('/auth/login', input),
+    api.post<SessionResponse>('/auth/login', { ...input, email: input.email.replace(/\s+/g, '') }),
 
   /** POST /auth/admin/login -> staff session (the JWT payload carries accountType 'staff'). */
   adminLogin: (input: { email: string; password: string }) =>
     api
       .post<{ staff: { id: number; name: string; email: string; role: string } }>(
         '/auth/admin/login',
-        input,
+        { ...input, email: input.email.replace(/\s+/g, '') },
       )
       .then(({ staff }): AuthUser => ({ ...staff, accountType: 'staff' })),
 
@@ -47,7 +47,7 @@ export const authService = {
   me: () => api.get<{ user: AuthUser }>('/auth/me'),
 
   /** POST /auth/forgot-password -> sends a reset OTP email. */
-  forgotPassword: (email: string) => api.post<null>('/auth/forgot-password', { email }),
+  forgotPassword: (email: string) => api.post<null>('/auth/forgot-password', { email: email.replace(/\s+/g, '') }),
 
   /**
    * POST /auth/reset-password. The controller reads the reset token from the

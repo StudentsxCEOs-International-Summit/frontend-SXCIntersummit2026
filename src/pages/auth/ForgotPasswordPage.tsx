@@ -21,7 +21,7 @@ export default function ForgotPasswordPage() {
     e.preventDefault()
     setError(null)
 
-    const value = email.trim()
+    const value = email.replace(/\s+/g, '')
     if (!EMAIL_RE.test(value)) {
       setFieldError('Enter a valid email address.')
       return

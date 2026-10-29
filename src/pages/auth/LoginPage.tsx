@@ -52,7 +52,7 @@ export default function LoginPage() {
 
     try {
       setIsSubmitting(true)
-      const { user } = await authService.login({ email: form.email.trim(), password: form.password })
+      const { user } = await authService.login({ email: form.email.replace(/\s+/g, ''), password: form.password })
       setUser(user)
       navigate(routeState?.from ?? '/', { replace: true })
     } catch (error) {

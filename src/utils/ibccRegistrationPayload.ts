@@ -45,7 +45,8 @@ const toMember = (p: ParticipantInformation) => ({
   fullName: p.fullName.trim(),
   email: p.email.trim(),
   whatsapp: p.whatsapp.trim(),
-  institution: p.institutionMajor.trim(),
+  institution: p.institution.trim(),
+  major: p.major.trim(),
   yearOfStudy: yearOfStudy(p.year),
 })
 
@@ -66,7 +67,8 @@ export function buildRegistrationFormData(form: IbccRegistrationForm): FormData 
     'leaderInfo',
     JSON.stringify({
       whatsapp: leader.whatsapp.trim(),
-      institution: leader.institutionMajor.trim(),
+      institution: leader.institution.trim(),
+      major: leader.major.trim(),
       yearOfStudy: yearOfStudy(leader.year),
     }),
   )

@@ -17,6 +17,7 @@ export interface TeamMemberInfo {
   name: string
   email: string
   institution: string | null
+  major?: string | null
   yearOfStudy: string | null
 }
 
@@ -38,7 +39,6 @@ export interface MyTeam {
   payment: {
     status: 'NOT_SUBMITTED' | 'PENDING_VERIFICATION' | 'PAID' | 'REJECTED'
     isUploaded: boolean
-    fileUrl: string | null
     /** True while the proof is still being copied to Google Drive. */
     isProcessing?: boolean
     submittedAt: string | null
@@ -48,7 +48,7 @@ export interface MyTeam {
     isQualified: boolean
     announcementMessage: string | null
   }
-  leader: { id: number; name: string; email: string; institution: string | null }
+  leader: { id: number; name: string; email: string; institution: string | null; major?: string | null }
   members: TeamMemberInfo[]
   submissions: {
     requirementsCompleted: boolean

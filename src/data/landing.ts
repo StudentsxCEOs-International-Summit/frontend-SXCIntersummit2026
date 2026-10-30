@@ -25,61 +25,58 @@ export interface ProgramCard {
   title: string
   description: string
   href: string
+  /** When set, Read More opens a small picker with these links instead of following `href`. */
+  choices?: { label: string; href: string }[]
 }
 
-// TODO: mockup truncates descriptions; confirm the full copy.
 export const competitions: ProgramCard[] = [
   {
     tab: 'Business Model Canvas',
     title: 'Business Model Canvas',
     description:
-      'Business Model Canvas is a competition exclusively for high school students, to showcase their entrepreneurial skills.',
-    href: '#',
+      'A high school-level competition where participants develop innovative business ideas using the Business Model Canvas framework.',
+    href: 'https://www.instagram.com/s/aGlnaGxpZ2h0OjE3OTE4OTExMDIwNDYxNjE0?srtk=OHVwNHFxMXA2djZz',
   },
   {
     tab: 'International BCC',
     title: 'International Business Case Competition',
     description:
-      'The International Business Case Competition is the core event of the International Summit where participants are challenged to solve real-world business problems through professional collaboration.',
-    href: '#',
-  },
-  {
-    tab: 'International BPC',
-    title: 'International Business Plan Competition',
-    description:
-      "The International Business Plan Competition is envisioned as the core event of this year's International Summit.",
-    href: '#',
+      'Provide a high-level international platform for top student teams to sharpen strategic and analytical skills by solving real-world business problems.',
+    href: '/ibcc',
   },
 ]
 
 export const events: ProgramCard[] = [
   {
-    tab: 'International Conference',
-    title: 'International Conference',
+    tab: 'Business Masterclass',
+    title: 'Business Masterclass',
     description:
-      'A global forum bringing together speakers and participants to discuss innovations, trends, and opportunities in business.',
+      'A preparation class aimed at equipping participants with the foundational knowledge and skills needed for succeeding in BCC and BPC through workshops and expert guidance.',
     href: '#',
+    choices: [
+      { label: 'BPC Masterclass', href: 'https://www.instagram.com/stories/highlights/17912968011556973/' },
+      { label: 'BCC Masterclass', href: 'https://www.instagram.com/stories/highlights/17912162274541833/' },
+    ],
   },
   {
     tab: 'Chambers',
     title: 'Chambers',
-    // TODO: mockup reuses the IBPC description here.
     description:
-      "The International Business Plan Competition is envisioned as the core event of this year's International Summit.",
-    href: '#',
+      'A one-day offline event featuring sessions with experts who will share their experiences, recruitment tips, and job opportunities. A networking event with great chance to talk directly with professionals and peers.',
+    href: 'https://www.instagram.com/s/aGlnaGxpZ2h0OjE3ODc0NDc4MzgzNjAyMDcz?psln=Y3RmM3Fhb3AydWRs',
   },
   {
-    tab: 'Company Visit',
-    title: 'Company Visit',
+    tab: 'Summit Visit',
+    title: 'Summit Visit',
     description:
-      'A two-day webinar exploring career paths in Banking, Consulting, FMCG, and Startups, complete with classes, CV reviews, and more.',
-    href: '#',
+      'An interactive on-site program that provides participants with direct exposure to real company operations and case related to the company.',
+    href: 'https://www.instagram.com/stories/highlights/18107733020258013/',
   },
   {
-    tab: 'Business Competition Launchpad',
-    title: 'Business Competition Launchpad',
-    // TODO: no description in the mockup yet.
-    description: 'Details for the Business Competition Launchpad (BCL) will be announced soon.',
+    tab: 'International Conference',
+    title: 'International Conference',
+    description:
+      'Serve as the grand closing platform bringing together students, economists, and stakeholders to discuss economic trends and celebrate competition winners.',
     href: '#',
   },
 ]
@@ -99,12 +96,12 @@ export const faqs: FaqItem[] = [
   {
     question: 'Who can participate in SxC Inter Summit 2026?',
     answer:
-      'Each program has its own audience. Business Model Canvas is open to high school students, while IBCC is open to undergraduate university students from all universities across Indonesia.',
+      'Each program has its own audience. Business Model Canvas is open to high school students, while IBCC is open to undergraduate university students from all universities across Indonesia, and international students are welcome too.',
   },
   {
     question: 'What activities are included in the summit?',
     answer:
-      'The summit consists of three competitions (Business Model Canvas, International Business Case Competition, International Business Plan Competition) and events such as the International Conference, Chambers, Company Visit, and Business Competition Launchpad.',
+      'The summit consists of two competitions (Business Model Canvas and International Business Case Competition) and events such as the Business Masterclass, Chambers, Summit Visit, and International Conference.',
   },
   {
     question: 'How can I register as a participant?',
@@ -129,12 +126,20 @@ export const contactPersons: ContactPerson[] = [
   { name: 'Nadira', phone: '+62 889 0593 3549' },
 ]
 
+/** General contact persons for the Contact page (WhatsApp). The IBCC contacts above stay separate. */
+export const generalContactPersons: ContactPerson[] = [
+  { name: 'Naura', phone: '+62 812 1197 7827' },
+  { name: 'Natasya', phone: '+62 818 0742 7182' },
+]
+
 // TODO: fill in the official social media URLs.
 export const socials = {
   instagram: 'https://www.instagram.com/sxcintersummit/',
   linkedin: 'https://www.linkedin.com/company/sxcintersummit/posts/',
-  tiktok: 'https://www.tiktok.com/@studentsxceosjkt',
+  tiktok: 'https://www.tiktok.com/@intersummitsxc',
 }
 
-/** Where partnership enquiries go. Set VITE_CONTACT_EMAIL; without it the Contact page hides the email form. */
-export const contactEmail: string = ((import.meta.env.VITE_CONTACT_EMAIL as string | undefined) ?? '').trim()
+/** Where partnership enquiries go. VITE_CONTACT_EMAIL overrides the default marketing address. */
+export const contactEmail: string =
+  ((import.meta.env.VITE_CONTACT_EMAIL as string | undefined) ?? '').trim() ||
+  'marketing.sxcintersummit@gmail.com'

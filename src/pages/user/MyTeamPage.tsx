@@ -30,12 +30,14 @@ function PersonCard({
   name,
   email,
   institution,
+  major,
   yearOfStudy,
   role,
 }: {
   name: string
   email: string
   institution: string | null
+  major?: string | null
   yearOfStudy?: string | null
   role: 'Leader' | 'Member'
 }) {
@@ -54,9 +56,9 @@ function PersonCard({
           {role}
         </span>
       </div>
-      {(institution || yearOfStudy) && (
+      {(institution || major || yearOfStudy) && (
         <p className="mt-2 text-sm text-slate-600">
-          {[institution, yearOfStudy].filter(Boolean).join(' · ')}
+          {[institution, major, yearOfStudy].filter(Boolean).join(' · ')}
         </p>
       )}
     </li>
@@ -312,6 +314,7 @@ export default function MyTeamPage() {
                     name={state.team.leader.name}
                     email={state.team.leader.email}
                     institution={state.team.leader.institution}
+                    major={state.team.leader.major}
                     role="Leader"
                   />
                   {state.team.members.map((m: TeamMemberInfo) => (
@@ -320,6 +323,7 @@ export default function MyTeamPage() {
                       name={m.name}
                       email={m.email}
                       institution={m.institution}
+                      major={m.major}
                       yearOfStudy={m.yearOfStudy}
                       role="Member"
                     />

@@ -18,7 +18,7 @@ import { Badge, Btn, Drawer, Notice, card, formatDate, inputClass, statusTone } 
 
 const waLink = (number: string) => `https://wa.me/${number.replace(/\D/g, '').replace(/^0/, '62')}`
 
-function Person({ person, role, institution, year }: { person: AdminPerson; role: string; institution: string | null; year: string | null }) {
+function Person({ person, role, institution, major, year }: { person: AdminPerson; role: string; institution: string | null; major?: string | null; year: string | null }) {
   return (
     <li className={`${card} p-4`}>
       <div className="flex items-start justify-between gap-2">
@@ -29,7 +29,7 @@ function Person({ person, role, institution, year }: { person: AdminPerson; role
         <div className="break-all">{person.email}</div>
         {institution && (
           <div>
-            {institution}
+            {[institution, major].filter(Boolean).join(' - ')}
             {year ? ` · ${year}` : ''}
           </div>
         )}
@@ -154,7 +154,7 @@ export default function TeamDrawer({
       <Section title="People">
         <ul className="grid gap-3">
           {team.TeamMember.map((m) => (
-            <Person key={m.user.id} person={m.user} role={m.role} institution={m.institution} year={m.yearOfStudy} />
+            <Person key={m.user.id} person={m.user} role={m.role} institution={m.institution} major={m.major ?? m.user.major} year={m.yearOfStudy} />
           ))}
         </ul>
       </Section>

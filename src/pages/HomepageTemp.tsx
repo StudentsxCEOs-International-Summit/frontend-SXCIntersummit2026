@@ -3,7 +3,7 @@ import AboutSection from '@/components/landing/AboutSection'
 import TimelineSection from '@/components/landing/TimelineSection'
 import { ProgramsSection } from '@/components/landing/ProgramsSection'
 import FaqSection from '@/components/landing/FaqSection'
-import { CaseCollaboratorSection, MediaPartnerSection } from '@/components/landing/PartnersSection'
+import { CaseCollaboratorSection, MediaPartnerSection, SponsorSection } from '@/components/landing/PartnersSection'
 import ContactSection from '@/components/landing/ContactSection'
 import Footer from '@/components/landing/Footer'
 
@@ -34,6 +34,7 @@ function HomePage() {
 
         <BackgroundSection background={<PartnersBackground />}>
           <FaqSection />
+          <SponsorSection />
           <CaseCollaboratorSection />
           <MediaPartnerSection />
           <ContactSection />

@@ -36,6 +36,7 @@ export default function ParticipantsPage() {
               email: m.user.email,
               whatsapp: m.user.wa_number,
               institution: m.institution ?? m.user.institution_name,
+              major: m.major ?? m.user.major,
               year: m.yearOfStudy,
             })),
           )
@@ -48,14 +49,14 @@ export default function ParticipantsPage() {
     return rows.filter(
       (r) =>
         (role === 'ALL' || r.role === role) &&
-        (!q || [r.name, r.email, r.team, r.code, r.institution ?? ''].join(' ').toLowerCase().includes(q)),
+        (!q || [r.name, r.email, r.team, r.code, r.institution ?? '', r.major ?? ''].join(' ').toLowerCase().includes(q)),
     )
   }, [rows, query, role])
 
   const exportCsv = () =>
     downloadCsv('participants.csv', [
-      ['Name', 'Email', 'WhatsApp', 'Role', 'Institution', 'Year of study', 'Team', 'Team code'],
-      ...visible.map((r) => [r.name, r.email, r.whatsapp, r.role, r.institution, r.year, r.team, r.code]),
+      ['Name', 'Email', 'WhatsApp', 'Role', 'Institution', 'Major', 'Year of study', 'Team', 'Team code'],
+      ...visible.map((r) => [r.name, r.email, r.whatsapp, r.role, r.institution, r.major, r.year, r.team, r.code]),
     ])
 
   return (
@@ -103,6 +104,7 @@ export default function ParticipantsPage() {
                   <th className="px-4 py-3 font-semibold">Name</th>
                   <th className="px-4 py-3 font-semibold">Contact</th>
                   <th className="px-4 py-3 font-semibold">Institution</th>
+                  <th className="px-4 py-3 font-semibold">Major</th>
                   <th className="px-4 py-3 font-semibold">Role</th>
                   <th className="px-4 py-3 font-semibold">Team</th>
                 </tr>
@@ -119,6 +121,7 @@ export default function ParticipantsPage() {
                       {r.institution ?? '-'}
                       {r.year && <span className="block text-xs text-slate-500">{r.year}</span>}
                     </td>
+                    <td className="px-4 py-3 text-slate-700">{r.major ?? '-'}</td>
                     <td className="px-4 py-3">
                       <Badge tone={r.role === 'LEADER' ? 'amber' : 'blue'}>{r.role === 'LEADER' ? 'Leader' : 'Member'}</Badge>
                     </td>

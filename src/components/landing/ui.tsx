@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import diamonds from '@/assets/ic-diamonds.svg'
 import wave from '@/assets/about/ic-wave.svg'
@@ -57,6 +57,8 @@ interface GoldButtonProps {
 export function GoldButton({ href, children, className = '' }: GoldButtonProps) {
   const classes = `bg-gold-gloss text-outline-sm inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/90 px-8 py-2.5 font-heading text-body-base font-bold shadow-[0_4px_16px_rgb(245_158_11/0.45)] transition-transform duration-200 hover:scale-[1.03] focus-visible:ring-4 focus-visible:ring-white/60 focus-visible:outline-none active:scale-95 ${className}`
 
+  const isExternal = href.startsWith('http://') || href.startsWith('https://')
+
   // In-app paths go through the router (no full reload, so the session isn't re-fetched);
   // anchors like "#about" and external URLs stay plain links.
   if (href.startsWith('/')) {
@@ -68,9 +70,66 @@ export function GoldButton({ href, children, className = '' }: GoldButtonProps) 
   }
 
   return (
-    <a href={href} className={classes}>
+    <a
+      href={href}
+      className={classes}
+      {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+    >
       {children}
     </a>
+  )
+}
+
+/** Small dialog that lets the visitor pick one of several links (e.g. BPC or BCC masterclass). */
+export function ChoiceDialog({
+  title,
+  subtitle = 'Which masterclass do you want to see?',
+  choices,
+  onClose,
+}: {
+  title: string
+  subtitle?: string
+  choices: { label: string; href: string }[]
+  onClose: () => void
+}) {
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [onClose])
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 px-4"
+      onClick={onClose}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        className="bg-glass-blue w-full max-w-sm rounded-3xl border-[3px] border-white/90 p-6 text-center shadow-[0_0_40px_rgba(255,255,255,0.4)]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <p className="font-heading text-lg font-extrabold text-white italic">{title}</p>
+        <p className="mt-1 text-sm text-white/90">{subtitle}</p>
+        <div className="mt-5 flex flex-col gap-3">
+          {choices.map((choice) => (
+            <GoldButton key={choice.href} href={choice.href} className="w-full py-2!">
+              {choice.label} <ArrowIcon />
+            </GoldButton>
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          className="mt-4 cursor-pointer text-sm font-semibold text-white/90 underline-offset-2 hover:underline"
+        >
+          Close
+        </button>
+      </div>
+    </div>
   )
 }
 
@@ -78,7 +137,7 @@ export function GoldButton({ href, children, className = '' }: GoldButtonProps) 
 export function CardTab({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
     <div
-      className={`bg-gradient-to-b from-[#f8ba48] to-[#f4a300] rounded-t-2xl rounded-br-2xl border-2 border-white/90 px-4 py-1.5 text-center font-body text-base font-medium text-white shadow-[0_4px_12px_rgb(244_163_0/0.4)] sm:text-lg ${className}`}
+      className={`bg-gradient-to-b from-[#f8ba48] to-[#f4a300] rounded-t-2xl rounded-br-2xl border-2 border-white/90 px-3 py-1.5 text-center font-body text-sm font-medium whitespace-nowrap text-white shadow-[0_4px_12px_rgb(244_163_0/0.4)] sm:text-base ${className}`}
     >
       {children}
     </div>
@@ -110,6 +169,8 @@ export function ProgramThumbnail({ title }: { title: string }) {
 }
 
 export function ProgramCard({ card }: { card: ProgramCardData }) {
+  const [pickerOpen, setPickerOpen] = useState(false)
+
   return (
     <article className="flex h-full flex-col">
       <CardTab className="relative z-10 mx-4">{card.tab}</CardTab>
@@ -120,9 +181,24 @@ export function ProgramCard({ card }: { card: ProgramCardData }) {
             {card.description}
           </p>
         </div>
-        <GoldButton href={card.href} className="w-full py-2!">
-          Read More <ArrowIcon />
-        </GoldButton>
+        {card.choices ? (
+          <>
+            <button
+              type="button"
+              onClick={() => setPickerOpen(true)}
+              className="bg-gold-gloss text-outline-sm font-heading text-body-base inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border-2 border-white/90 px-8 py-2 font-bold shadow-[0_4px_16px_rgb(245_158_11/0.45)] transition-transform duration-200 hover:scale-[1.03] focus-visible:ring-4 focus-visible:ring-white/60 focus-visible:outline-none active:scale-95"
+            >
+              Read More <ArrowIcon />
+            </button>
+            {pickerOpen && (
+              <ChoiceDialog title={card.title} choices={card.choices} onClose={() => setPickerOpen(false)} />
+            )}
+          </>
+        ) : (
+          <GoldButton href={card.href} className="w-full py-2!">
+            Read More <ArrowIcon />
+          </GoldButton>
+        )}
       </div>
     </article>
   )

@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import diamonds from '@/assets/ic-diamonds.svg'
@@ -172,8 +172,6 @@ export function ProgramThumbnail({ title }: { title: string }) {
 }
 
 export function ProgramCard({ card }: { card: ProgramCardData }) {
-  const [pickerOpen, setPickerOpen] = useState(false)
-
   return (
     <article className="flex h-full flex-col">
       <CardTab className="relative z-10 mx-4">{card.tab}</CardTab>
@@ -184,24 +182,9 @@ export function ProgramCard({ card }: { card: ProgramCardData }) {
             {card.description}
           </p>
         </div>
-        {card.choices ? (
-          <>
-            <button
-              type="button"
-              onClick={() => setPickerOpen(true)}
-              className="bg-gold-gloss text-outline-sm font-heading text-body-base inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border-2 border-white/90 px-8 py-2 font-bold shadow-[0_4px_16px_rgb(245_158_11/0.45)] transition-transform duration-200 hover:scale-[1.03] focus-visible:ring-4 focus-visible:ring-white/60 focus-visible:outline-none active:scale-95"
-            >
-              Read More <ArrowIcon />
-            </button>
-            {pickerOpen && (
-              <ChoiceDialog title={card.title} choices={card.choices} onClose={() => setPickerOpen(false)} />
-            )}
-          </>
-        ) : (
-          <GoldButton href={card.href} className="w-full py-2!">
-            Read More <ArrowIcon />
-          </GoldButton>
-        )}
+        <GoldButton href={card.href} className="w-full py-2!">
+          Read More <ArrowIcon />
+        </GoldButton>
       </div>
     </article>
   )

@@ -25,8 +25,6 @@ export interface ProgramCard {
   title: string
   description: string
   href: string
-  /** When set, Read More opens a small picker with these links instead of following `href`. */
-  choices?: { label: string; href: string }[]
 }
 
 export const competitions: ProgramCard[] = [
@@ -35,7 +33,7 @@ export const competitions: ProgramCard[] = [
     title: 'Business Model Canvas',
     description:
       'A high school-level competition where participants develop innovative business ideas using the Business Model Canvas framework.',
-    href: 'https://www.instagram.com/s/aGlnaGxpZ2h0OjE3OTE4OTExMDIwNDYxNjE0?srtk=OHVwNHFxMXA2djZz',
+    href: '/competition/business-model-canvas',
   },
   {
     tab: 'International BCC',
@@ -52,32 +50,28 @@ export const events: ProgramCard[] = [
     title: 'Business Masterclass',
     description:
       'A preparation class aimed at equipping participants with the foundational knowledge and skills needed for succeeding in BCC and BPC through workshops and expert guidance.',
-    href: '#',
-    choices: [
-      { label: 'BPC Masterclass', href: 'https://www.instagram.com/stories/highlights/17912968011556973/' },
-      { label: 'BCC Masterclass', href: 'https://www.instagram.com/stories/highlights/17912162274541833/' },
-    ],
+    href: '/events/business-masterclass',
   },
   {
     tab: 'Chambers',
     title: 'Chambers',
     description:
       'A one-day offline event featuring sessions with experts who will share their experiences, recruitment tips, and job opportunities. A networking event with great chance to talk directly with professionals and peers.',
-    href: 'https://www.instagram.com/s/aGlnaGxpZ2h0OjE3ODc0NDc4MzgzNjAyMDcz?psln=Y3RmM3Fhb3AydWRs',
+    href: '/events/chambers',
   },
   {
     tab: 'Summit Visit',
     title: 'Summit Visit',
     description:
       'An interactive on-site program that provides participants with direct exposure to real company operations and case related to the company.',
-    href: 'https://www.instagram.com/stories/highlights/18107733020258013/',
+    href: '/events/summit-visit',
   },
   {
     tab: 'International Conference',
     title: 'International Conference',
     description:
       'Serve as the grand closing platform bringing together students, economists, and stakeholders to discuss economic trends and celebrate competition winners.',
-    href: '#',
+    href: '/events/international-conference',
   },
 ]
 

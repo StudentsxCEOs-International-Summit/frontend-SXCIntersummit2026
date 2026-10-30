@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react'
+import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import diamonds from '@/assets/ic-diamonds.svg'
 import wave from '@/assets/about/ic-wave.svg'
@@ -100,7 +101,8 @@ export function ChoiceDialog({
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [onClose])
 
-  return (
+  // Rendered on <body>: inside a clipped or transformed panel a fixed overlay would be cut off.
+  return createPortal(
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 px-4"
       onClick={onClose}
@@ -129,7 +131,8 @@ export function ChoiceDialog({
           Close
         </button>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
 

@@ -276,7 +276,7 @@ export const programs: Program[] = [
       '**Internship session**, adapted to each company',
     ],
     timeline: [
-      { title: 'Registration', dateText: 'Coming soon', status: 'soon' },
+      { title: 'Registration', dateText: 'Open', status: 'ongoing' },
       { title: 'Visit day', dateText: 'To be announced', status: 'tba' },
     ],
     faqs: [

@@ -194,19 +194,13 @@ export const programs: Program[] = [
     category: 'event',
     title: 'Chambers',
     facts: [
-      { kind: 'when', label: 'When', value: 'November 2026' },
+      { kind: 'when', label: 'When', value: 'To be announced' },
       { kind: 'where', label: 'Where', value: 'Offline · Jakarta, Depok and Tangerang' },
       { kind: 'who', label: 'Open to', value: 'Undergraduates and fresh graduates' },
     ],
     description:
       'Chambers is a **one-day offline career preparation event** that provides **in-depth insights and real-world experiences across 4 key industries**. It features expert sessions on **job overviews, recruitment tips and career opportunities**, with an exclusive chance to **network directly with professionals and peers**.',
-    details: [
-      'Held **offline in the Jakarta, Depok and Tangerang (JaDeTa) area** in **November 2026**.',
-      'Choose your **industry preference: FMCG, Consulting, Banking or Startup**. You can submit a first and a second choice when you register.',
-    ],
     theme: 'Rising Above Empty Acceleration: Empowering Resilient Talents for True Career Competence',
-    audience:
-      '**Undergraduate students and fresh graduates** who live in, or can easily reach, the JaDeTa (Jakarta, Depok, Tangerang) area.',
     benefits: [
       '**Expert and industry insights**: direct material presentations and live panel discussions with top professionals',
       '**Live HR review**: a chance to get your CV and LinkedIn profile reviewed live on stage',
@@ -218,13 +212,13 @@ export const programs: Program[] = [
     timeline: [
       {
         title: 'Registration',
-        dateText: 'October – November 2026',
+        dateText: 'Registration open',
         start: '2026-10-24',
         end: '2026-11-18',
       },
       {
         title: 'Event day',
-        dateText: 'November 2026',
+        dateText: 'To be announced',
         start: '2026-11-21',
         end: '2026-11-21',
       },

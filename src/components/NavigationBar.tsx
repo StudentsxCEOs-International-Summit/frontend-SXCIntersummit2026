@@ -263,10 +263,11 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                   <span>{item.label}</span>
                 </Link>
                 {item.badge && (
-                  <span className="pointer-events-none absolute -top-3.5 -right-8 flex items-center gap-1 rounded-full border border-white/90 bg-gold-gloss px-1.5 py-px text-[8px] font-extrabold tracking-wider text-brand-blue-700 uppercase shadow-[0_2px_6px_rgba(244,163,0,0.5)]">
+                  <span className="pointer-events-none absolute -top-[18px] -right-10 flex -rotate-6 items-center gap-1 overflow-hidden rounded-md border-2 border-white bg-[linear-gradient(180deg,#fff3c4_0%,#fcd65b_55%,#f4a300_100%)] px-2 py-[3px] text-[8px] leading-none font-extrabold tracking-wider text-[#1c4fd1] uppercase shadow-[0_3px_7px_rgba(10,40,130,0.4),inset_0_1px_1px_rgba(255,255,255,0.9)]">
+                    <span aria-hidden="true" className="absolute inset-x-0 top-0 h-1/2 bg-white/35" />
                     <span aria-hidden="true" className="relative flex h-1.5 w-1.5">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
-                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-500" />
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#4a8bff] opacity-80" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#1c55d2]" />
                     </span>
                     {item.badge}
                   </span>
@@ -461,10 +462,11 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                   >
                     <span>{item.label}</span>
                     {item.badge && (
-                      <span className="ml-2 inline-flex items-center gap-1 rounded-full border border-white/90 bg-gold-gloss px-2 py-px align-middle text-[9px] font-extrabold tracking-wider text-brand-blue-700 uppercase">
+                      <span className="relative ml-2 inline-flex -rotate-3 items-center gap-1 overflow-hidden rounded-md border-2 border-white bg-[linear-gradient(180deg,#fff3c4_0%,#fcd65b_55%,#f4a300_100%)] px-2 py-[3px] align-middle text-[9px] leading-none font-extrabold tracking-wider text-[#1c4fd1] uppercase shadow-[0_3px_7px_rgba(10,40,130,0.4),inset_0_1px_1px_rgba(255,255,255,0.9)]">
+                        <span aria-hidden="true" className="absolute inset-x-0 top-0 h-1/2 bg-white/35" />
                         <span aria-hidden="true" className="relative flex h-1.5 w-1.5">
-                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
-                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-500" />
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#4a8bff] opacity-80" />
+                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#1c55d2]" />
                         </span>
                         {item.badge}
                       </span>

@@ -42,7 +42,7 @@ export interface AboutSectionProps {
 }
 
 function AboutSection({
-  prizeText = 'Rp xx.xxx.xxx',
+  prizeText = 'Rp.13.000.000+',
   joinHref = '/ibcc',
 }: AboutSectionProps = {}) {
   return (

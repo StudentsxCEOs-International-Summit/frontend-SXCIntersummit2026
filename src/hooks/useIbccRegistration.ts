@@ -29,13 +29,13 @@ function toFormErrorKey(path: string): string | null {
   if (path === 'agreeTerms') return 'agreeToTerms'
   if (path === 'confirmParticipation') return 'confirmParticipation'
 
-  const leader = path.match(/^leaderInfo\.(whatsapp|institution|yearOfStudy)$/)
-  if (leader) return `leader.${leader[1] === 'institution' ? 'institutionMajor' : leader[1] === 'yearOfStudy' ? 'year' : 'whatsapp'}`
+  const leader = path.match(/^leaderInfo\.(whatsapp|institution|major|yearOfStudy)$/)
+  if (leader) return `leader.${leader[1] === 'yearOfStudy' ? 'year' : leader[1]}`
 
-  const member = path.match(/^members\.(\d)\.(fullName|email|whatsapp|institution|yearOfStudy)$/)
+  const member = path.match(/^members\.(\d)\.(fullName|email|whatsapp|institution|major|yearOfStudy)$/)
   if (member) {
     const who = member[1] === '0' ? 'firstMember' : 'secondMember'
-    const field = member[2] === 'institution' ? 'institutionMajor' : member[2] === 'yearOfStudy' ? 'year' : member[2]
+    const field = member[2] === 'yearOfStudy' ? 'year' : member[2]
     return `${who}.${field}`
   }
   return null
@@ -161,7 +161,8 @@ export function useIbccRegistration({ leaderDefaults }: UseIbccRegistrationOptio
         'fullName',
         'email',
         'whatsapp',
-        'institutionMajor',
+        'institution',
+        'major',
         'year',
       ]
 
@@ -178,8 +179,10 @@ export function useIbccRegistration({ leaderDefaults }: UseIbccRegistrationOptio
         nextErrors[`${participantKey}.fullName`] = 'Full name must be at least 2 characters.'
       if (participant.whatsapp.trim() && participant.whatsapp.trim().length < 8)
         nextErrors[`${participantKey}.whatsapp`] = 'Enter a valid WhatsApp number.'
-      if (participant.institutionMajor.trim() && participant.institutionMajor.trim().length < 3)
-        nextErrors[`${participantKey}.institutionMajor`] = 'Enter your institution and major.'
+      if (participant.institution.trim() && participant.institution.trim().length < 3)
+        nextErrors[`${participantKey}.institution`] = 'Enter your institution.'
+      if (participant.major.trim() && participant.major.trim().length < 2)
+        nextErrors[`${participantKey}.major`] = 'Enter your major.'
 
       // The backend rejects repeated emails and a member that reuses the leader's email.
       if (participantKey !== 'leader' && participant.email) {

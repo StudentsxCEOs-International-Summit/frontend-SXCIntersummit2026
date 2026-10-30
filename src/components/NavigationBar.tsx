@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
 import defaultLogo from '@/assets/ic-icon-internasional.svg'
+import { competitionMenu, eventMenu } from '@/data/programs'
 
 export interface NavigationBarProps {
   /** Optional custom logo image source, defaults to summit logo */
@@ -17,10 +18,59 @@ export interface NavigationBarProps {
     label: string
     href: string
     hasDropdown?: boolean
-    dropdownItems?: Array<{ label: string; href: string }>
+    /** Small gold tag on the item, used to point out what is on going right now. */
+    badge?: string
+    dropdownItems?: Array<{ label: string; href: string; description?: string }>
   }>
   /** Positioning mode: 'fixed' | 'absolute' | 'sticky'. Defaults to 'fixed' */
   position?: 'fixed' | 'absolute' | 'sticky'
+}
+
+/** In-app paths use the router (hash links scroll via ScrollToTop); full URLs open in a new tab. */
+function MenuLink({
+  href,
+  className,
+  onClick,
+  children,
+}: {
+  href: string
+  className: string
+  onClick: () => void
+  children: React.ReactNode
+}) {
+  if (/^https?:\/\//.test(href)) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={className} onClick={onClick}>
+        {children}
+      </a>
+    )
+  }
+
+  return (
+    <Link to={href} className={className} onClick={onClick}>
+      {children}
+    </Link>
+  )
+}
+
+/** Gold dot + title + short definition: one row of a Competition / Events dropdown. */
+function MenuEntry({ label, description }: { label: string; description?: string }) {
+  return (
+    <>
+      <span
+        aria-hidden="true"
+        className="mt-[7px] h-2 w-2 shrink-0 rounded-full bg-[#fcd65b] shadow-[0_0_8px_rgba(252,214,91,0.85)] transition-transform group-hover/item:scale-125"
+      />
+      <span className="min-w-0">
+        <span className="block text-[14px] leading-tight font-bold text-white">{label}</span>
+        {description && (
+          <span className="mt-1 block text-[12px] leading-snug font-medium text-white/80">
+            {description}
+          </span>
+        )}
+      </span>
+    </>
+  )
 }
 
 export const NavigationBar: React.FC<NavigationBarProps> = ({
@@ -32,7 +82,9 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   position = 'fixed',
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isProgramDropdownOpen, setIsProgramDropdownOpen] = useState(false)
+  // Which dropdown is open: by hover/click on desktop, and as an accordion in the mobile drawer.
+  const [openMenu, setOpenMenu] = useState<string | null>(null)
+  const [mobileOpenMenu, setMobileOpenMenu] = useState<string | null>(null)
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const firstName = user?.name?.split(' ')[0] ?? ''
@@ -46,7 +98,14 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   const defaultNavItems: NonNullable<NavigationBarProps['items']> = [
     { label: 'Home', href: '/' },
     { label: 'About', href: '/about' },
-    { label: 'IBCC', href: '/ibcc' },
+    { label: 'IBCC', href: '/ibcc', badge: 'Ongoing' },
+    {
+      label: 'Competition',
+      href: '/#competitions',
+      hasDropdown: true,
+      dropdownItems: competitionMenu,
+    },
+    { label: 'Events', href: '/#events', hasDropdown: true, dropdownItems: eventMenu },
     { label: 'Merchandise', href: '/merchandise' },
     { label: 'Gallery', href: '/gallery' },
     { label: 'Contact', href: '/contact' },
@@ -88,23 +147,28 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
         </div>
 
         {/* Center: Navigation Links (Text) for Desktop */}
-        <ul className="hidden lg:flex items-center gap-6 xl:gap-12 m-0 p-0 list-none">
+        <ul className="hidden lg:flex items-center gap-4 xl:gap-9 m-0 p-0 list-none">
           {navItems.map((item) => {
             const isActive = activeItem.toLowerCase() === item.label.toLowerCase()
 
             if (item.hasDropdown) {
+              const isOpen = openMenu === item.label
               return (
                 <li
                   key={item.label}
-                  className="relative group"
-                  onMouseEnter={() => setIsProgramDropdownOpen(true)}
-                  onMouseLeave={() => setIsProgramDropdownOpen(false)}
+                  className="relative"
+                  onMouseEnter={() => setOpenMenu(item.label)}
+                  onMouseLeave={() => setOpenMenu(null)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Escape') setOpenMenu(null)
+                  }}
                 >
                   <button
                     type="button"
-                    onClick={() => setIsProgramDropdownOpen(!isProgramDropdownOpen)}
-                    aria-expanded={isProgramDropdownOpen}
-                    className={`flex items-center gap-1.5 text-[16px] lg:text-[17px] font-semibold tracking-wide transition-all duration-200 cursor-pointer focus:outline-none ${
+                    onClick={() => setOpenMenu(isOpen ? null : item.label)}
+                    aria-expanded={isOpen}
+                    aria-haspopup="true"
+                    className={`flex items-center gap-1.5 text-[15px] xl:text-[17px] font-semibold tracking-wide transition-all duration-200 cursor-pointer focus:outline-none ${
                       isActive
                         ? 'text-white underline underline-offset-[10px] decoration-2 decoration-white'
                         : 'text-white/95 hover:text-white hover:opacity-90'
@@ -113,7 +177,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                     <span>{item.label}</span>
                     <svg
                       className={`w-4 h-4 text-white transition-transform duration-200 stroke-[2.5] ${
-                        isProgramDropdownOpen ? 'rotate-180' : ''
+                        isOpen ? 'rotate-180' : ''
                       }`}
                       fill="none"
                       viewBox="0 0 24 24"
@@ -124,30 +188,41 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                     </svg>
                   </button>
 
-                  {/* Program Dropdown Menu */}
+                  {/* The padding on this wrapper bridges the gap, so the menu doesn't close while the pointer travels to it. */}
                   {item.dropdownItems && (
                     <div
-                      className={`absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 py-2 rounded-2xl transition-all duration-200 origin-top shadow-2xl backdrop-blur-md ${
-                        isProgramDropdownOpen
+                      className={`absolute top-full left-1/2 z-50 -translate-x-1/2 pt-4 transition-all duration-200 origin-top ${
+                        isOpen
                           ? 'opacity-100 scale-100 pointer-events-auto visible'
                           : 'opacity-0 scale-95 pointer-events-none invisible'
                       }`}
-                      style={{
-                        background: 'linear-gradient(135deg, #1d5ce5 0%, #1545b7 100%)',
-                        border: '1.5px solid rgba(255, 255, 255, 0.75)',
-                        boxShadow: '0 14px 32px rgba(15, 35, 110, 0.45)',
-                      }}
                     >
-                      {item.dropdownItems.map((subItem) => (
-                        <Link
-                          key={subItem.label}
-                          to={subItem.href}
-                          className="block px-4 py-2.5 text-[14px] text-white/90 hover:text-white hover:bg-white/15 rounded-xl mx-1.5 transition-colors font-medium"
-                          onClick={() => setIsProgramDropdownOpen(false)}
-                        >
-                          <span>{subItem.label}</span>
-                        </Link>
-                      ))}
+                      <div
+                        className="w-[19rem] rounded-2xl p-2 backdrop-blur-md"
+                        style={{
+                          background: 'linear-gradient(135deg, #2b6fe9 0%, #1545b7 100%)',
+                          border: '1.5px solid rgba(255, 255, 255, 0.8)',
+                          boxShadow:
+                            '0 16px 36px rgba(15, 35, 110, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.5)',
+                        }}
+                      >
+                        <p className="px-3 pt-1.5 pb-1 text-[11px] font-bold tracking-[0.16em] text-[#fcd65b] uppercase">
+                          {item.label} · Summit 2026
+                        </p>
+                        <ul className="m-0 grid list-none gap-0.5 p-0">
+                          {item.dropdownItems.map((subItem) => (
+                            <li key={subItem.label}>
+                              <MenuLink
+                                href={subItem.href}
+                                onClick={() => setOpenMenu(null)}
+                                className="group/item flex items-start gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-white/15 focus-visible:bg-white/15 focus-visible:outline-none"
+                              >
+                                <MenuEntry label={subItem.label} description={subItem.description} />
+                              </MenuLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   )}
                 </li>
@@ -155,10 +230,10 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
             }
 
             return (
-              <li key={item.label}>
+              <li key={item.label} className="relative">
                 <Link
                   to={item.href}
-                  className={`text-[16px] lg:text-[17px] tracking-wide transition-all duration-200 block ${
+                  className={`text-[15px] xl:text-[17px] tracking-wide transition-all duration-200 block ${
                     isActive
                       ? 'text-white font-semibold underline underline-offset-[10px] decoration-2 decoration-white'
                       : 'text-white/95 font-semibold hover:text-white hover:opacity-90'
@@ -166,6 +241,15 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                 >
                   <span>{item.label}</span>
                 </Link>
+                {item.badge && (
+                  <span className="pointer-events-none absolute -top-3.5 -right-8 flex items-center gap-1 rounded-full border border-white/90 bg-gold-gloss px-1.5 py-px text-[8px] font-extrabold tracking-wider text-brand-blue-700 uppercase shadow-[0_2px_6px_rgba(244,163,0,0.5)]">
+                    <span aria-hidden="true" className="relative flex h-1.5 w-1.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-500" />
+                    </span>
+                    {item.badge}
+                  </span>
+                )}
               </li>
             )
           })}
@@ -248,7 +332,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
       {/* Mobile Drawer Menu */}
       {isMobileMenuOpen && (
         <div
-          className="absolute top-full left-4 right-4 mt-2 p-5 rounded-3xl lg:hidden z-50 backdrop-blur-md flex flex-col gap-4 animate-in fade-in duration-200 pointer-events-auto"
+          className="absolute top-full left-4 right-4 mt-2 max-h-[calc(100vh-6rem)] overflow-y-auto p-5 rounded-3xl lg:hidden z-50 backdrop-blur-md flex flex-col gap-4 animate-in fade-in duration-200 pointer-events-auto"
           style={{
             background: 'linear-gradient(135deg, #2b6fe9 0%, #194dc4 100%)',
             border: '2px solid rgba(255, 255, 255, 0.8)',
@@ -258,6 +342,52 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
           <ul className="flex flex-col gap-3 m-0 p-0 list-none font-['Poppins',sans-serif]">
             {navItems.map((item) => {
               const isActive = activeItem.toLowerCase() === item.label.toLowerCase()
+
+              if (item.hasDropdown && item.dropdownItems) {
+                const isOpen = mobileOpenMenu === item.label
+                return (
+                  <li key={item.label} className="border-b border-white/10 pb-2">
+                    <button
+                      type="button"
+                      onClick={() => setMobileOpenMenu(isOpen ? null : item.label)}
+                      aria-expanded={isOpen}
+                      className="flex w-full cursor-pointer items-center justify-between py-1 text-left text-[16px] font-medium text-white/90 hover:text-white"
+                    >
+                      <span>{item.label}</span>
+                      <svg
+                        className={`h-4 w-4 stroke-[2.5] transition-transform duration-200 ${
+                          isOpen ? 'rotate-180' : ''
+                        }`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    {isOpen && (
+                      <ul className="m-0 mt-2 grid list-none gap-1 rounded-2xl bg-white/10 p-2">
+                        {item.dropdownItems.map((subItem) => (
+                          <li key={subItem.label}>
+                            <MenuLink
+                              href={subItem.href}
+                              onClick={() => {
+                                setIsMobileMenuOpen(false)
+                                setMobileOpenMenu(null)
+                              }}
+                              className="group/item flex items-start gap-3 rounded-xl px-2.5 py-2 transition-colors hover:bg-white/15"
+                            >
+                              <MenuEntry label={subItem.label} description={subItem.description} />
+                            </MenuLink>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                )
+              }
+
               return (
                 <li key={item.label} className="border-b border-white/10 pb-2">
                   <Link
@@ -270,6 +400,15 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                     }`}
                   >
                     <span>{item.label}</span>
+                    {item.badge && (
+                      <span className="ml-2 inline-flex items-center gap-1 rounded-full border border-white/90 bg-gold-gloss px-2 py-px align-middle text-[9px] font-extrabold tracking-wider text-brand-blue-700 uppercase">
+                        <span aria-hidden="true" className="relative flex h-1.5 w-1.5">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-500" />
+                        </span>
+                        {item.badge}
+                      </span>
+                    )}
                   </Link>
                 </li>
               )

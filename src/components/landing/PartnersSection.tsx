@@ -10,6 +10,25 @@ const logoModules = import.meta.glob<string>('@/assets/media-partners/*.{png,jpg
 
 type Tier = 'L' | 'M' | 'S'
 
+// Sponsor logos follow `<order>-<name>.<ext>`; drop a file into assets/sponsors to add one.
+const sponsorModules = import.meta.glob<string>('@/assets/sponsors/*.{png,jpg,jpeg,webp,svg}', {
+  eager: true,
+  import: 'default',
+})
+
+const sponsors = Object.entries(sponsorModules)
+  .map(([path, src]) => {
+    const file = path.split('/').pop()!.replace(/\.(png|jpg|jpeg|webp|svg)$/i, '')
+    const match = file.match(/^(\d+)-(.+)$/)
+    const order = match ? Number(match[1]) : 999
+    const name = (match?.[2] ?? file)
+      .replaceAll('-', ' ')
+      .replace(/\b\w/g, (character) => character.toUpperCase())
+
+    return { src, order, name }
+  })
+  .sort((a, b) => a.order - b.order)
+
 const mediaPartners = Object.entries(logoModules)
   .map(([path, src]) => {
     const file = path.split('/').pop()!.replace(/\.(png|jpg|jpeg|webp|svg)$/i, '')
@@ -38,6 +57,45 @@ const marqueeRows = Array.from({ length: MARQUEE_ROWS }, (_, row) =>
 
 const panel =
   'rounded-[48px] border-2 border-white/70 bg-[linear-gradient(135deg,#c8dafd_0%,#a3c1fb_45%,#8fb3fa_100%)] shadow-[0_12px_32px_rgb(10_63_184/0.3)]'
+
+/**
+ * Sponsor logos on white tiles. Hovering (or tabbing to) a tile lifts it and slides the sponsor's
+ * name up from the bottom, so the logos stay clean while the name is one hover away.
+ */
+export function SponsorSection() {
+  return (
+    <section id="sponsor" className="w-full mx-auto max-w-[1200px] px-4 sm:px-6">
+      <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Sponsor</SectionTitle>
+      <div className={`${panel} mt-8 px-5 py-8 sm:px-10 sm:py-10`}>
+        <ul className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+          {sponsors.map((sponsor) => (
+            <li key={sponsor.src}>
+              <div
+                tabIndex={0}
+                aria-label={sponsor.name}
+                className="group relative flex h-24 w-40 cursor-default items-center justify-center overflow-hidden rounded-2xl border-2 border-white bg-white shadow-[0_6px_18px_rgb(10_63_184/0.22)] transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_16px_32px_rgb(10_63_184/0.38)] focus-visible:-translate-y-1.5 focus-visible:ring-4 focus-visible:ring-[#0262F4]/60 focus-visible:outline-none sm:h-32 sm:w-56"
+              >
+                <img
+                  src={sponsor.src}
+                  alt={sponsor.name}
+                  loading="lazy"
+                  decoding="async"
+                  className="max-h-12 w-auto max-w-[78%] object-contain transition-transform duration-300 ease-out group-hover:-translate-y-2.5 group-hover:scale-105 group-focus-visible:-translate-y-2.5 group-focus-visible:scale-105 sm:max-h-16"
+                />
+                <span
+                  aria-hidden="true"
+                  className="font-heading absolute inset-x-0 bottom-0 translate-y-[calc(100%+3px)] border-t-2 border-[#f4a300] bg-[linear-gradient(100deg,#003F9E_0%,#0262F4_100%)] px-2 py-1.5 text-center text-xs font-bold tracking-wide text-white transition-transform duration-300 ease-out group-hover:translate-y-0 group-focus-visible:translate-y-0 sm:text-sm"
+                >
+                  {sponsor.name}
+                </span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
 
 /** No case collaborator has been confirmed yet, so the panel teases the reveal instead. */
 export function CaseCollaboratorSection() {

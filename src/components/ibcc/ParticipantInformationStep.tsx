@@ -25,11 +25,8 @@ const PARTICIPANT_FIELDS: {
   { key: 'fullName', label: 'Full Name', placeholder: 'Enter full name' },
   { key: 'email', label: 'Email', type: 'email', placeholder: 'name@example.com' },
   { key: 'whatsapp', label: 'WhatsApp Number', type: 'tel', placeholder: '+6281234516789' },
-  {
-    key: 'institutionMajor',
-    label: 'Institution - Major',
-    placeholder: 'Universitas Indonesia - Management',
-  },
+  { key: 'institution', label: 'Institution', placeholder: 'Universitas Indonesia' },
+  { key: 'major', label: 'Major', placeholder: 'Management' },
 ]
 
 export default function ParticipantInformationStep({

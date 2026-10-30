@@ -14,6 +14,14 @@ interface ApiEnvelope<T> {
   errors?: unknown
 }
 
+/** Shown when the request never reached the server (offline, DNS, server down). */
+export const NETWORK_ERROR_MESSAGE =
+  "We can't connect right now. Please check your internet connection and refresh the page. If it keeps happening, please contact our team."
+
+/** Shown when the server answered with something we can't use, or failed without a readable message. */
+export const SERVER_ERROR_MESSAGE =
+  'Something went wrong on our side. Please refresh the page and try again. If it keeps happening, please contact our team.'
+
 export class ApiError extends Error {
   status: number
   /** Field-level messages when the backend rejected the body, keyed by field path. */
@@ -82,14 +90,18 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
     })
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') throw error
-    throw new ApiError('Cannot reach the server. Please check your connection and try again.', 0)
+    throw new ApiError(NETWORK_ERROR_MESSAGE, 0)
   }
 
   let payload: ApiEnvelope<T> | null = null
   try {
     payload = (await response.json()) as ApiEnvelope<T>
   } catch {
-    throw new ApiError('The server returned an unexpected response.', response.status)
+    // A gateway or proxy error page (502/503/504) is not JSON: treat it as the server being unavailable.
+    throw new ApiError(
+      response.status >= 500 ? SERVER_ERROR_MESSAGE : 'The server returned an unexpected response.',
+      response.status,
+    )
   }
 
   if (response.status === 401 && !path.startsWith('/auth/')) {
@@ -98,7 +110,7 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
 
   if (!response.ok || !payload.success) {
     throw new ApiError(
-      payload.message || 'Something went wrong.',
+      payload.message || (response.status >= 500 ? SERVER_ERROR_MESSAGE : 'Something went wrong.'),
       response.status,
       toFieldErrors(payload.errors),
     )

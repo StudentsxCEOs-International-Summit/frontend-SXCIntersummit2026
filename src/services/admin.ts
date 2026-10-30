@@ -43,6 +43,7 @@ export interface AdminTeam {
   TeamMember: {
     role: 'LEADER' | 'MEMBER'
     institution: string | null
+    major?: string | null
     yearOfStudy: string | null
     user: AdminPerson
   }[]

@@ -13,7 +13,7 @@ const team = (overrides: Partial<MyTeam> = {}): MyTeam => ({
   status: 'REGISTERED',
   isLeader: true,
   competitionStage: 'REGISTRATION',
-  payment: { status: 'NOT_SUBMITTED', isUploaded: false, fileUrl: null, submittedAt: null },
+  payment: { status: 'NOT_SUBMITTED', isUploaded: false, submittedAt: null },
   selectionResult: { isAnnounced: false, isQualified: false, announcementMessage: null },
   leader: { id: 1, name: 'Lead', email: 'lead@example.com', institution: 'UI' },
   members: [],
@@ -76,7 +76,7 @@ describe('My Team submissions', () => {
     renderWith(
       team({
         selectionResult: { isAnnounced: true, isQualified: true, announcementMessage: 'Congrats' },
-        payment: { status: 'PAID', isUploaded: true, fileUrl: null, submittedAt: null },
+        payment: { status: 'PAID', isUploaded: true, submittedAt: null },
         submissions: {
           requirementsCompleted: true,
           paymentSubmitted: true,

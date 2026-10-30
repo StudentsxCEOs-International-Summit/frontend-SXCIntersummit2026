@@ -4,6 +4,7 @@ import starGlow from '@/assets/ic-star-glow.svg'
 import cursor from '@/assets/ic-cursor.svg'
 import { GoldButton } from '@/components/landing/ui'
 import { useRegisterHref } from '@/hooks/useRegisterHref'
+import { registrationLinks } from '@/utils/registrationLinks'
 
 /**
  * Mirrors the Home hero (same size, backdrop, decorations and title treatment)
@@ -107,7 +108,7 @@ export function IbccHero() {
           </div>
 
           <a
-            href="https://drive.google.com"
+            href={registrationLinks.guidebook.url}
             target="_blank"
             rel="noopener noreferrer"
             className="font-heading text-body-base inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/90 bg-white/20 px-8 py-2.5 font-bold text-white shadow-[0_4px_16px_rgba(2,98,244,0.3)] transition-transform duration-200 hover:scale-[1.03] focus-visible:ring-4 focus-visible:ring-white/60 focus-visible:outline-none active:scale-95"

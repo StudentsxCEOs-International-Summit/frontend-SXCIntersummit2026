@@ -66,9 +66,11 @@ export function ProgramsSection() {
       <div className="mx-auto mt-8 max-w-[1100px] rounded-[2rem] border-2 border-white/40 bg-white/10 p-3 shadow-[0_12px_40px_rgba(0,40,130,0.25)] backdrop-blur-sm sm:p-5">
         <div id="competitions" className="scroll-mt-28">
           <GroupLabel>Competitions</GroupLabel>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="flex flex-wrap justify-center gap-6">
             {competitions.map((card) => (
-              <ProgramCard key={card.title} card={card} />
+              <div key={card.title} className="w-full sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)]">
+                <ProgramCard card={card} />
+              </div>
             ))}
           </div>
         </div>

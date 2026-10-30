@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { ChevronDown, LogOut, User, Users } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
 import defaultLogo from '@/assets/ic-icon-internasional.svg'
@@ -85,12 +86,32 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   // Which dropdown is open: by hover/click on desktop, and as an accordion in the mobile drawer.
   const [openMenu, setOpenMenu] = useState<string | null>(null)
   const [mobileOpenMenu, setMobileOpenMenu] = useState<string | null>(null)
+  const [accountOpen, setAccountOpen] = useState(false)
+  const accountRef = useRef<HTMLDivElement>(null)
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const firstName = user?.name?.split(' ')[0] ?? ''
 
+  // The account menu closes on an outside click or Escape.
+  useEffect(() => {
+    if (!accountOpen) return
+    const onPointerDown = (e: MouseEvent) => {
+      if (!accountRef.current?.contains(e.target as Node)) setAccountOpen(false)
+    }
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setAccountOpen(false)
+    }
+    document.addEventListener('mousedown', onPointerDown)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [accountOpen])
+
   const handleLogout = async () => {
     setIsMobileMenuOpen(false)
+    setAccountOpen(false)
     await logout()
     navigate('/')
   }
@@ -258,28 +279,67 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
         {/* Right: Sign In (or the account pill once signed in) */}
         <div className="hidden lg:flex items-center gap-3">
           {user ? (
-            <>
+            <div className="relative" ref={accountRef}>
               <button
                 type="button"
-                onClick={handleLogout}
-                className="cursor-pointer text-[14px] font-semibold text-white/90 underline-offset-4 transition-colors hover:text-white hover:underline"
-              >
-                Logout
-              </button>
-              <Link
-                to="/my-team"
-                className="group relative flex h-[40px] max-w-[180px] items-center justify-center rounded-full px-6 text-[15px] font-semibold tracking-wide text-[#1c55d2] transition-all duration-200 hover:scale-105 active:scale-95 sm:h-[44px]"
+                onClick={() => setAccountOpen((open) => !open)}
+                aria-expanded={accountOpen}
+                aria-haspopup="menu"
+                title={user.name}
+                className="group relative flex h-[40px] max-w-[200px] cursor-pointer items-center justify-center gap-2 rounded-full pr-3.5 pl-2 text-[15px] font-semibold tracking-wide text-[#1c55d2] transition-all duration-200 hover:scale-105 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/60 active:scale-95 sm:h-[44px]"
                 style={{
                   background: 'linear-gradient(180deg, #fff9e6 0%, #fcd65b 45%, #f49e0b 100%)',
                   border: '2px solid rgba(255, 255, 255, 0.95)',
                   boxShadow:
                     '0 4px 16px rgba(245, 158, 11, 0.45), inset 0 1px 2px rgba(255, 255, 255, 1)',
                 }}
-                title="My Team"
               >
-                <span className="truncate">{firstName || 'My Team'}</span>
-              </Link>
-            </>
+                <span
+                  aria-hidden="true"
+                  className="flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-full bg-[#1c55d2] text-white"
+                >
+                  <User className="h-3.5 w-3.5" strokeWidth={2.5} />
+                </span>
+                <span className="truncate">{firstName || 'Account'}</span>
+                <ChevronDown
+                  aria-hidden="true"
+                  className={`h-4 w-4 shrink-0 transition-transform duration-200 ${accountOpen ? 'rotate-180' : ''}`}
+                  strokeWidth={2.5}
+                />
+              </button>
+
+              {accountOpen && (
+                <div
+                  role="menu"
+                  className="absolute top-full right-0 z-50 mt-3 w-48 rounded-2xl p-1.5 backdrop-blur-md"
+                  style={{
+                    background: 'linear-gradient(135deg, #2b6fe9 0%, #1545b7 100%)',
+                    border: '1.5px solid rgba(255, 255, 255, 0.8)',
+                    boxShadow:
+                      '0 16px 36px rgba(15, 35, 110, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.5)',
+                  }}
+                >
+                  <Link
+                    role="menuitem"
+                    to="/my-team"
+                    onClick={() => setAccountOpen(false)}
+                    className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-white/15 focus-visible:bg-white/15 focus-visible:outline-none"
+                  >
+                    <Users className="h-4 w-4 text-[#fcd65b]" strokeWidth={2.25} aria-hidden="true" />
+                    My Team
+                  </Link>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    onClick={handleLogout}
+                    className="flex w-full cursor-pointer items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-[14px] font-semibold text-white transition-colors hover:bg-white/15 focus-visible:bg-white/15 focus-visible:outline-none"
+                  >
+                    <LogOut className="h-4 w-4 text-[#fcd65b]" strokeWidth={2.25} aria-hidden="true" />
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
             <Link
               to={signInHref}
@@ -429,7 +489,10 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                       '0 4px 14px rgba(245, 158, 11, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.95)',
                   }}
                 >
-                  <span>{firstName ? `${firstName} · My Team` : 'My Team'}</span>
+                  <span className="inline-flex items-center justify-center gap-2">
+                    <User className="h-4 w-4" strokeWidth={2.5} aria-hidden="true" />
+                    {firstName ? `${firstName} · My Team` : 'My Team'}
+                  </span>
                 </Link>
                 <button
                   type="button"

@@ -5,7 +5,7 @@ import goldKey from '@/assets/ic-key.svg'
 import starYellowGlow from '@/assets/ic-star-yellow-glow.svg'
 import { ArrowIcon, GoldButton } from './ui'
 
-function TabBanner({ children, className = '' }: { children: string; className?: string }) {
+export function TabBanner({ children, className = '' }: { children: string; className?: string }) {
   return (
     <div
       className={`bg-gold-gloss inline-block -skew-x-[20deg] rounded-lg border-2 border-white px-5 py-1.5 font-heading text-xl font-extrabold whitespace-nowrap italic shadow-[0_6px_16px_rgb(244_163_0/0.4)] sm:px-8 sm:py-2 sm:text-[1.75rem] sm:not-italic ${className}`}
@@ -34,7 +34,7 @@ function TabBanner({ children, className = '' }: { children: string; className?:
   )
 }
 
-const panelNoBorder = 'bg-glass-blue shadow-[0_12px_32px_rgb(10_63_184/0.35)] overflow-hidden'
+export const panelNoBorder = 'bg-glass-blue shadow-[0_12px_32px_rgb(10_63_184/0.35)] overflow-hidden'
 
 export interface AboutSectionProps {
   prizeText?: string

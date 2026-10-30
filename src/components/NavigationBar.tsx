@@ -136,13 +136,13 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
 
   return (
     <header
-      className="inset-x-0 top-0 z-50 flex w-full justify-center px-4 pt-5 pb-3 sm:px-8 lg:px-14"
+      className="inset-x-0 top-0 z-50 flex w-full justify-center px-4 pt-5 pb-3 sm:px-8 lg:px-8 xl:px-14"
       style={{ position }}
     >
       {/* Outer Pill Container */}
       <nav
         aria-label="Main Navigation"
-        className="w-full max-w-[1240px] h-[64px] sm:h-[68px] rounded-full px-5 sm:px-8 flex items-center justify-between relative transition-all duration-300 font-['Poppins',sans-serif] pointer-events-auto"
+        className="w-full max-w-[1240px] h-[64px] sm:h-[68px] rounded-full px-5 sm:px-8 lg:px-6 xl:px-8 gap-3 xl:gap-5 flex items-center justify-between relative transition-all duration-300 font-['Poppins',sans-serif] pointer-events-auto"
         style={{
           background:
             'linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.0) 50%), linear-gradient(90deg, #4282f6 0%, #3175f6 45%, #1e5fed 100%)',
@@ -161,14 +161,14 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
             <img
               src={logoSrc}
               alt="SxC International Summit"
-              className="h-11 sm:h-[46px] w-auto max-w-[150px] sm:max-w-[175px] object-contain select-none drop-shadow-sm transition-transform duration-200 hover:scale-105"
+              className="h-11 sm:h-[46px] lg:h-10 xl:h-[46px] w-auto max-w-[150px] sm:max-w-[175px] lg:max-w-[140px] xl:max-w-[175px] object-contain select-none drop-shadow-sm transition-transform duration-200 hover:scale-105"
               loading="eager"
             />
           </Link>
         </div>
 
         {/* Center: Navigation Links (Text) for Desktop */}
-        <ul className="hidden lg:flex items-center gap-4 xl:gap-9 m-0 p-0 list-none">
+        <ul className="hidden lg:flex items-center gap-3 xl:gap-6 m-0 p-0 list-none">
           {navItems.map((item) => {
             const isActive = activeItem.toLowerCase() === item.label.toLowerCase()
 
@@ -189,7 +189,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                     onClick={() => setOpenMenu(isOpen ? null : item.label)}
                     aria-expanded={isOpen}
                     aria-haspopup="true"
-                    className={`flex items-center gap-1.5 text-[15px] xl:text-[17px] font-semibold tracking-wide transition-all duration-200 cursor-pointer focus:outline-none ${
+                    className={`flex items-center gap-1.5 text-[14px] xl:text-[15.5px] font-semibold tracking-wide transition-all duration-200 cursor-pointer focus:outline-none ${
                       isActive
                         ? 'text-white underline underline-offset-[10px] decoration-2 decoration-white'
                         : 'text-white/95 hover:text-white hover:opacity-90'
@@ -254,7 +254,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
               <li key={item.label} className="relative">
                 <Link
                   to={item.href}
-                  className={`text-[15px] xl:text-[17px] tracking-wide transition-all duration-200 block ${
+                  className={`text-[14px] xl:text-[15.5px] tracking-wide transition-all duration-200 block ${
                     isActive
                       ? 'text-white font-semibold underline underline-offset-[10px] decoration-2 decoration-white'
                       : 'text-white/95 font-semibold hover:text-white hover:opacity-90'
@@ -346,7 +346,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
               to={signInHref}
               role="button"
               onClick={onSignIn}
-              className="group relative h-[40px] sm:h-[44px] px-7 sm:px-9 rounded-full font-semibold text-[15px] sm:text-[16px] tracking-wide text-[#1c55d2] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer select-none flex items-center justify-center"
+              className="group relative h-[40px] sm:h-[44px] px-7 sm:px-9 lg:px-6 xl:px-9 rounded-full font-semibold text-[15px] sm:text-[16px] tracking-wide text-[#1c55d2] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer select-none flex items-center justify-center"
               style={{
                 background: 'linear-gradient(180deg, #fff9e6 0%, #fcd65b 45%, #f49e0b 100%)',
                 border: '2px solid rgba(255, 255, 255, 0.95)',

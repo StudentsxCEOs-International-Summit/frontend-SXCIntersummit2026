@@ -1,5 +1,8 @@
 import { useState, type FormEvent } from 'react'
 import { Mail } from 'lucide-react'
+import instagramIcon from '@/assets/ic-instagram.svg'
+import linkedinIcon from '@/assets/ic-linkedin.svg'
+import tiktokIcon from '@/assets/ic-tiktok.svg'
 import { usePageTitle } from '@/hooks/usePageTitle'
 import building from '@/assets/ic-buildingus.webp'
 import diamonds from '@/assets/ic-diamonds.svg'
@@ -283,17 +286,18 @@ function ContactPage() {
                 <p className="font-heading text-sm font-semibold text-orange-light">Follow us</p>
                 <ul className="mt-2 flex flex-wrap gap-2">
                   {[
-                    { label: 'Instagram', href: socials.instagram },
-                    { label: 'LinkedIn', href: socials.linkedin },
-                    { label: 'TikTok', href: socials.tiktok },
+                    { label: 'Instagram', icon: instagramIcon, href: socials.instagram },
+                    { label: 'LinkedIn', icon: linkedinIcon, href: socials.linkedin },
+                    { label: 'TikTok', icon: tiktokIcon, href: socials.tiktok },
                   ].map((s) => (
                     <li key={s.label}>
                       <a
                         href={s.href}
                         target="_blank"
                         rel="noreferrer"
-                        className="font-heading inline-flex rounded-full border border-white/70 bg-white/15 px-4 py-1.5 text-sm font-bold text-white transition hover:bg-white/25 focus-visible:ring-4 focus-visible:ring-white/60 focus-visible:outline-none"
+                        className="font-heading inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/15 py-1.5 pr-4 pl-2.5 text-sm font-bold text-white transition hover:bg-white/25 focus-visible:ring-4 focus-visible:ring-white/60 focus-visible:outline-none"
                       >
+                        <img src={s.icon} alt="" aria-hidden="true" className="h-6 w-6" />
                         {s.label}
                       </a>
                     </li>

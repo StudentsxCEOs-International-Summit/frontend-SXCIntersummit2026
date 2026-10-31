@@ -228,8 +228,14 @@ export default function RegisterPage() {
                   </span>
                   <span>
                     I agree to the{' '}
-                    <Link to="/terms" className="text-[#185A9D] hover:underline">
-                      Terms &amp; Conditions
+                    {/* Opens the Terms of Service page in a new tab, so the form you filled in stays as it is. */}
+                    <Link
+                      to="/terms-of-service"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-[#185A9D] underline-offset-2 hover:underline"
+                    >
+                      Terms of Service
                     </Link>
                   </span>
                 </label>

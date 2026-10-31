@@ -1,6 +1,7 @@
 import { Link, Navigate } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react'
 import RegistrationNavbar from '@/components/ibcc/RegistrationNavbar'
+import { ContactTeamText } from '@/components/ContactTeamText'
 import RegistrationBackground from '@/components/ibcc/RegistrationBackground'
 import ParticipantInformationStep from '@/components/ibcc/ParticipantInformationStep'
 import RegistrationClosingStep from '@/components/ibcc/RegistrationClosingStep'
@@ -266,7 +267,7 @@ function TeamRegistrationForm() {
 
           {!submitted && submitError && (
             <p role="alert" className="mt-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-              {submitError}
+              <ContactTeamText text={submitError} />
             </p>
           )}
 

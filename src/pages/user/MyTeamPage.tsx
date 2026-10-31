@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { CheckCircle2, Circle } from 'lucide-react'
+import { ContactTeamText } from '@/components/ContactTeamText'
 import { usePageTitle } from '@/hooks/usePageTitle'
 import { ApiError } from '@/lib/api'
 import { ibccService, type MyTeam, type TeamMemberInfo } from '@/services/ibcc'
@@ -226,7 +227,7 @@ export default function MyTeamPage() {
 
         {state.kind === 'error' && (
           <div role="alert" className="rounded-2xl border border-red-200 bg-white p-6 text-center text-red-600">
-            {state.message}
+            <ContactTeamText text={state.message} />
           </div>
         )}
 

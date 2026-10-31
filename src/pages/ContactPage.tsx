@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Mail } from 'lucide-react'
+import { ContactTeamText } from '@/components/ContactTeamText'
 import instagramIcon from '@/assets/ic-instagram.svg'
 import linkedinIcon from '@/assets/ic-linkedin.svg'
 import tiktokIcon from '@/assets/ic-tiktok.svg'
@@ -128,7 +129,7 @@ function ContactForm() {
 
       {error && (
         <p role="alert" className="mt-4 rounded-xl border border-red-200/70 bg-red-500/25 px-4 py-3 text-sm font-medium text-white">
-          {error}
+          <ContactTeamText text={error} />
         </p>
       )}
 

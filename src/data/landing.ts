@@ -126,6 +126,13 @@ export const generalContactPersons: ContactPerson[] = [
   { name: 'Natasya', phone: '+62 818 0742 7182' },
 ]
 
+/** Who people can reach on WhatsApp when something goes wrong ("please contact our team"). */
+export const supportContact = {
+  name: 'Rafki',
+  phone: '+62 852 8397 1917',
+  whatsappUrl: `https://wa.me/6285283971917?text=${encodeURIComponent('Hello, I need help with the SxC International Summit website.')}`,
+}
+
 // TODO: fill in the official social media URLs.
 export const socials = {
   instagram: 'https://www.instagram.com/sxcintersummit/',

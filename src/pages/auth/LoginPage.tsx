@@ -6,6 +6,7 @@ import { validateLoginForm } from '@/utils/validation/loginValidation'
 import { FormField, Dot } from '@/components/ui'
 import { RegisterHeroPanel, CurveBackground } from '@/components/auth'
 import building from '@/assets/ic-buildingus.webp'
+import { ContactTeamText } from '@/components/ContactTeamText'
 import diamonds from '@/assets/ic-diamonds.svg'
 import starGlow from '@/assets/ic-star-glow.svg'
 import logo from '@/assets/ic-icon-internasional.svg'
@@ -139,7 +140,7 @@ export default function LoginPage() {
 
             {formError && (
               <div className="mt-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-                {formError}
+                <ContactTeamText text={formError} />
               </div>
             )}
 

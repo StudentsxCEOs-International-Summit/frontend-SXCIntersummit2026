@@ -43,13 +43,13 @@ const sponsorGroups = (['xl', 'l'] as const)
 // XL for Cakap and Sompo, L for the rest. On desktop the white tile grows with the tier too, so an XL logo
 // really looks bigger instead of just sitting in the same tile; phones show bare logos, sized by the logo.
 const sponsorLogoSize: Record<'xl' | 'l', string> = {
-  xl: 'max-h-14 max-w-[94%] sm:max-h-20 sm:max-w-[84%]',
-  l: 'max-h-7 max-w-[76%] sm:max-h-12 sm:max-w-[66%]',
+  xl: 'max-h-14 max-w-full sm:max-h-20 sm:max-w-[84%]',
+  l: 'max-h-9 max-w-[90%] sm:max-h-12 sm:max-w-[66%]',
 }
 
 const sponsorTileSize: Record<'xl' | 'l', string> = {
   xl: 'h-14 sm:h-36 sm:w-72',
-  l: 'h-10 sm:h-28 sm:w-48',
+  l: 'h-12 sm:h-28 sm:w-48',
 }
 
 // Phones: two XL logos share the top row (half the width each), the L logos sit three to a row below.

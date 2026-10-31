@@ -109,11 +109,19 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
   }
 
   if (!response.ok || !payload.success) {
-    throw new ApiError(
-      payload.message || (response.status >= 500 ? SERVER_ERROR_MESSAGE : 'Something went wrong.'),
-      response.status,
-      toFieldErrors(payload.errors),
-    )
+    let message = payload.message || (response.status >= 500 ? SERVER_ERROR_MESSAGE : 'Something went wrong.')
+
+    // A server-side failure comes with a request id: show a short reference so the team can find the exact
+    // log line when someone reports the problem, and keep the technical detail in the console.
+    if (response.status >= 500) {
+      const info = payload.errors as { reqId?: unknown; detail?: unknown } | undefined
+      if (typeof info?.reqId === 'string' && info.reqId !== 'unknown') {
+        message += ` (Ref: ${info.reqId.slice(0, 8)})`
+      }
+      console.error('[API]', method, path, response.status, payload.errors ?? payload.message)
+    }
+
+    throw new ApiError(message, response.status, toFieldErrors(payload.errors))
   }
 
   return payload.data as T

@@ -10,7 +10,8 @@ const logoModules = import.meta.glob<string>('@/assets/media-partners/*.{png,jpg
 
 type Tier = 'L' | 'M' | 'S'
 
-// Sponsor logos follow `<order>-<name>.<ext>`; drop a file into assets/sponsors to add one.
+// Sponsor logos follow `<order>-<size>-<name>.<ext>` (size xl or l, l when left out); drop a file into
+// assets/sponsors to add one. The size tier makes the wide wordmarks (Cakap, Sompo) stand out a little more.
 const sponsorModules = import.meta.glob<string>('@/assets/sponsors/*.{png,jpg,jpeg,webp,svg}', {
   eager: true,
   import: 'default',
@@ -19,15 +20,23 @@ const sponsorModules = import.meta.glob<string>('@/assets/sponsors/*.{png,jpg,jp
 const sponsors = Object.entries(sponsorModules)
   .map(([path, src]) => {
     const file = path.split('/').pop()!.replace(/\.(png|jpg|jpeg|webp|svg)$/i, '')
-    const match = file.match(/^(\d+)-(.+)$/)
+    const match = file.match(/^(\d+)-(?:(xl|l)-)?(.+)$/i)
     const order = match ? Number(match[1]) : 999
-    const name = (match?.[2] ?? file)
+    const name = (match?.[3] ?? file)
       .replaceAll('-', ' ')
       .replace(/\b\w/g, (character) => character.toUpperCase())
 
-    return { src, order, name }
+    const size: 'xl' | 'l' = match?.[2]?.toLowerCase() === 'xl' ? 'xl' : 'l'
+
+    return { src, order, name, size }
   })
   .sort((a, b) => a.order - b.order)
+
+// XL for Cakap and Sompo, L for the rest: a bit smaller, but still clearly readable.
+const sponsorLogoSize: Record<'xl' | 'l', string> = {
+  xl: 'max-h-11 max-w-full sm:max-h-20 sm:max-w-[92%]',
+  l: 'max-h-8 max-w-[85%] sm:max-h-12 sm:max-w-[64%]',
+}
 
 const mediaPartners = Object.entries(logoModules)
   .map(([path, src]) => {
@@ -81,7 +90,7 @@ export function SponsorSection() {
                   alt={sponsor.name}
                   loading="lazy"
                   decoding="async"
-                  className="max-h-9 w-auto max-w-full object-contain transition-transform duration-300 ease-out sm:max-h-16 sm:max-w-[78%] sm:group-hover:-translate-y-2.5 sm:group-hover:scale-105 sm:group-focus-visible:-translate-y-2.5 sm:group-focus-visible:scale-105"
+                  className={`w-auto object-contain transition-transform duration-300 ease-out sm:group-hover:-translate-y-2.5 sm:group-hover:scale-105 sm:group-focus-visible:-translate-y-2.5 sm:group-focus-visible:scale-105 ${sponsorLogoSize[sponsor.size]}`}
                 />
                 <span
                   aria-hidden="true"

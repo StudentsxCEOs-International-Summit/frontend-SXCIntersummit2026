@@ -19,7 +19,10 @@ const sponsorModules = import.meta.glob<string>('@/assets/sponsors/*.{png,jpg,jp
 
 const sponsors = Object.entries(sponsorModules)
   .map(([path, src]) => {
-    const file = path.split('/').pop()!.replace(/\.(png|jpg|jpeg|webp|svg)$/i, '')
+    const file = path
+      .split('/')
+      .pop()!
+      .replace(/\.(png|jpg|jpeg|webp|svg)$/i, '')
     const match = file.match(/^(\d+)-(?:(xl|l)-)?(.+)$/i)
     const order = match ? Number(match[1]) : 999
     const name = (match?.[3] ?? file)
@@ -32,21 +35,35 @@ const sponsors = Object.entries(sponsorModules)
   })
   .sort((a, b) => a.order - b.order)
 
+// The XL sponsors sit together on the top row and the L ones below, so the two sizes never mix in a row.
+const sponsorGroups = (['xl', 'l'] as const)
+  .map((size) => sponsors.filter((sponsor) => sponsor.size === size))
+  .filter((group) => group.length > 0)
+
 // XL for Cakap and Sompo, L for the rest. On desktop the white tile grows with the tier too, so an XL logo
 // really looks bigger instead of just sitting in the same tile; phones show bare logos, sized by the logo.
 const sponsorLogoSize: Record<'xl' | 'l', string> = {
-  xl: 'max-h-11 max-w-full sm:max-h-20 sm:max-w-[84%]',
-  l: 'max-h-8 max-w-[85%] sm:max-h-12 sm:max-w-[66%]',
+  xl: 'max-h-14 max-w-[94%] sm:max-h-20 sm:max-w-[84%]',
+  l: 'max-h-7 max-w-[76%] sm:max-h-12 sm:max-w-[66%]',
 }
 
 const sponsorTileSize: Record<'xl' | 'l', string> = {
-  xl: 'sm:h-36 sm:w-72',
-  l: 'sm:h-28 sm:w-48',
+  xl: 'h-14 sm:h-36 sm:w-72',
+  l: 'h-10 sm:h-28 sm:w-48',
+}
+
+// Phones: two XL logos share the top row (half the width each), the L logos sit three to a row below.
+const sponsorItemWidth: Record<'xl' | 'l', string> = {
+  xl: 'w-[calc((100%-0.75rem)/2)]',
+  l: 'w-[calc((100%-1.5rem)/3)]',
 }
 
 const mediaPartners = Object.entries(logoModules)
   .map(([path, src]) => {
-    const file = path.split('/').pop()!.replace(/\.(png|jpg|jpeg|webp|svg)$/i, '')
+    const file = path
+      .split('/')
+      .pop()!
+      .replace(/\.(png|jpg|jpeg|webp|svg)$/i, '')
     const match = file.match(/^(\d+)-(?:(l|m|s)-)?(.+)$/i)
     const order = match ? Number(match[1]) : 999
     const tier: Tier = match?.[2] ? (match[2].toUpperCase() as Tier) : 'S'
@@ -80,34 +97,43 @@ const panel =
 export function SponsorSection() {
   return (
     <section id="sponsor" className="w-full mx-auto max-w-[1200px] px-4 sm:px-6">
-      <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Sponsor</SectionTitle>
+      <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">
+        Sponsor
+      </SectionTitle>
       <div className={`${panel} mt-8 px-4 py-6 sm:px-10 sm:py-10`}>
-        {/* Phones: bare logos, three to a row (no white tiles), so the panel stays short. From sm up: tiles with the name on hover. */}
-        <ul className="flex flex-wrap items-center justify-center gap-x-3 gap-y-5 sm:gap-6">
-          {sponsors.map((sponsor) => (
-            <li key={sponsor.src} className="w-[calc((100%-1.5rem)/3)] sm:w-auto">
-              <div
-                tabIndex={0}
-                aria-label={sponsor.name}
-                className={`group relative flex h-12 w-full cursor-default items-center justify-center focus-visible:ring-4 focus-visible:ring-[#0262F4]/60 focus-visible:outline-none sm:overflow-hidden sm:rounded-2xl sm:border-2 sm:border-white sm:bg-white sm:shadow-[0_6px_18px_rgb(10_63_184/0.22)] sm:transition-all sm:duration-300 sm:ease-out sm:hover:-translate-y-1.5 sm:hover:shadow-[0_16px_32px_rgb(10_63_184/0.38)] sm:focus-visible:-translate-y-1.5 ${sponsorTileSize[sponsor.size]}`}
-              >
-                <img
-                  src={sponsor.src}
-                  alt={sponsor.name}
-                  loading="lazy"
-                  decoding="async"
-                  className={`w-auto object-contain transition-transform duration-300 ease-out sm:group-hover:-translate-y-2.5 sm:group-hover:scale-105 sm:group-focus-visible:-translate-y-2.5 sm:group-focus-visible:scale-105 ${sponsorLogoSize[sponsor.size]}`}
-                />
-                <span
-                  aria-hidden="true"
-                  className="font-heading absolute inset-x-0 bottom-0 hidden translate-y-[calc(100%+3px)] border-t-2 border-[#f4a300] bg-[linear-gradient(100deg,#003F9E_0%,#0262F4_100%)] px-2 py-1.5 text-center text-xs font-bold tracking-wide text-white transition-transform duration-300 ease-out group-hover:translate-y-0 group-focus-visible:translate-y-0 sm:block sm:text-sm"
-                >
-                  {sponsor.name}
-                </span>
-              </div>
-            </li>
+        {/* Phones: bare logos (no white tiles), XL on the top row and L below, so the panel stays short. From sm up: tiles with the name on hover. */}
+        <div className="flex flex-col gap-y-5 sm:gap-y-6">
+          {sponsorGroups.map((group) => (
+            <ul
+              key={group[0].size}
+              className="flex flex-wrap items-center justify-center gap-x-3 gap-y-5 sm:gap-6"
+            >
+              {group.map((sponsor) => (
+                <li key={sponsor.src} className={`${sponsorItemWidth[sponsor.size]} sm:w-auto`}>
+                  <div
+                    tabIndex={0}
+                    aria-label={sponsor.name}
+                    className={`group relative flex w-full cursor-default items-center justify-center focus-visible:ring-4 focus-visible:ring-[#0262F4]/60 focus-visible:outline-none sm:overflow-hidden sm:rounded-2xl sm:border-2 sm:border-white sm:bg-white sm:shadow-[0_6px_18px_rgb(10_63_184/0.22)] sm:transition-all sm:duration-300 sm:ease-out sm:hover:-translate-y-1.5 sm:hover:shadow-[0_16px_32px_rgb(10_63_184/0.38)] sm:focus-visible:-translate-y-1.5 ${sponsorTileSize[sponsor.size]}`}
+                  >
+                    <img
+                      src={sponsor.src}
+                      alt={sponsor.name}
+                      loading="lazy"
+                      decoding="async"
+                      className={`w-auto object-contain transition-transform duration-300 ease-out sm:group-hover:-translate-y-2.5 sm:group-hover:scale-105 sm:group-focus-visible:-translate-y-2.5 sm:group-focus-visible:scale-105 ${sponsorLogoSize[sponsor.size]}`}
+                    />
+                    <span
+                      aria-hidden="true"
+                      className="font-heading absolute inset-x-0 bottom-0 hidden translate-y-[calc(100%+3px)] border-t-2 border-[#f4a300] bg-[linear-gradient(100deg,#003F9E_0%,#0262F4_100%)] px-2 py-1.5 text-center text-xs font-bold tracking-wide text-white transition-transform duration-300 ease-out group-hover:translate-y-0 group-focus-visible:translate-y-0 sm:block sm:text-sm"
+                    >
+                      {sponsor.name}
+                    </span>
+                  </div>
+                </li>
+              ))}
+            </ul>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   )
@@ -117,7 +143,9 @@ export function SponsorSection() {
 export function CaseCollaboratorSection() {
   return (
     <section id="case-collaborator" className="w-full mx-auto max-w-[1200px] px-4 sm:px-6">
-      <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Case Collaborator</SectionTitle>
+      <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">
+        Case Collaborator
+      </SectionTitle>
       <div className={`${panel} relative mt-8 overflow-hidden px-6 py-7 text-center sm:py-9`}>
         <img
           src={starYellowGlow}
@@ -135,9 +163,7 @@ export function CaseCollaboratorSection() {
           <span className="rounded-full border-2 border-white/90 bg-white/40 px-4 py-1 font-heading text-xs font-bold tracking-[0.18em] text-[#0b4fd1] uppercase">
             Coming Soon
           </span>
-          <p
-            className="font-heading bg-[linear-gradient(100deg,#003F9E_0%,#0262F4_70%,#3E88F5_100%)] bg-clip-text text-3xl leading-tight font-extrabold text-transparent italic sm:text-5xl"
-          >
+          <p className="font-heading bg-[linear-gradient(100deg,#003F9E_0%,#0262F4_70%,#3E88F5_100%)] bg-clip-text text-3xl leading-tight font-extrabold text-transparent italic sm:text-5xl">
             To Be Announced
           </p>
           <p className="font-body text-sm text-[#0b3d91] sm:text-base">
@@ -152,7 +178,9 @@ export function CaseCollaboratorSection() {
 export function MediaPartnerSection() {
   return (
     <section id="media-partner" className="w-full mx-auto max-w-[1200px] px-4 sm:px-6">
-      <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Media Partner</SectionTitle>
+      <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">
+        Media Partner
+      </SectionTitle>
       <div className={`${panel} mt-12 flex flex-col gap-5 overflow-hidden py-10 sm:py-12`}>
         {marqueeRows.map((row, rowIndex) => (
           <div
@@ -166,7 +194,11 @@ export function MediaPartnerSection() {
               {/* The list is rendered twice so the -50% loop lands seamlessly. */}
               {[0, 1].map((copy) =>
                 row.map((p) => (
-                  <li key={`${copy}-${p.src}`} className="shrink-0 px-5 sm:px-7" aria-hidden={copy === 1 || undefined}>
+                  <li
+                    key={`${copy}-${p.src}`}
+                    className="shrink-0 px-5 sm:px-7"
+                    aria-hidden={copy === 1 || undefined}
+                  >
                     <img
                       src={p.src}
                       alt={copy === 0 ? p.name : ''}

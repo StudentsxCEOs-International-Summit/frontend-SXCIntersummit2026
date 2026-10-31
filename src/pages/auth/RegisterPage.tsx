@@ -5,6 +5,7 @@ import type { RegisterFormState } from '@/types/register'
 import { PASSWORD_REQUIREMENTS, validateRegisterForm } from '@/utils/validation/registerValidation'
 import { FormField, PasswordChecklist, Dot } from '@/components/ui'
 import { RegisterHeroPanel, CurveBackground } from '@/components/auth'
+import building from '@/assets/ic-buildingus.webp'
 import diamonds from '@/assets/ic-diamonds.svg'
 import starGlow from '@/assets/ic-star-glow.svg'
 import logo from '@/assets/ic-icon-internasional.svg'
@@ -70,7 +71,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="relative h-screen w-full overflow-hidden bg-ds-white font-body">
+    <div className="relative h-screen w-full overflow-hidden bg-landing font-body lg:bg-ds-white">
       <style>{`
         input[type='password']::-ms-reveal,
         input[type='password']::-ms-clear { display: none; }
@@ -81,6 +82,13 @@ export default function RegisterPage() {
         }
       `}</style>
 
+      {/* Phones and tablets: the same blue city backdrop as the other pages, so the white card stands out. */}
+      <img
+        src={building}
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 h-full w-full scale-115 origin-center object-cover select-none lg:hidden [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)]"
+      />
       <img src={diamonds} alt="" aria-hidden="true" className="animate-sway pointer-events-none absolute -top-6 -right-14 z-[2] w-40 rotate-45 select-none sm:-right-16 sm:w-56" />
       <div className="pointer-events-none absolute -right-12 top-0 z-[2] h-42 w-42 -translate-y-1/3 translate-x-1/3 rounded-full bg-gradient-to-br from-brand-gold/60 via-cream/40 to-transparent blur-3xl sm:h-80 sm:w-80" />
       <img src={starGlow} alt="" aria-hidden="true" className="animate-twinkle pointer-events-none absolute -right-16 -bottom-10 z-[2] w-40 rotate-12 select-none sm:w-60" />
@@ -102,7 +110,7 @@ export default function RegisterPage() {
           <img src={logo} alt="StudentsxCEOs" className="h-10 w-10 sm:h-12 sm:w-12" />
           <div className="leading-tight">
             <p className="font-heading text-sm font-bold text-brand-blue-700">StudentsxCEOs</p>
-            <p className="text-xs text-brand-blue-muted">International Summit 2026</p>
+            <p className="text-xs text-brand-blue-700/80">International Summit 2026</p>
           </div>
         </div>
 

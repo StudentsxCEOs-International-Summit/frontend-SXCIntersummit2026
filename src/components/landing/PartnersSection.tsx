@@ -66,25 +66,26 @@ export function SponsorSection() {
   return (
     <section id="sponsor" className="w-full mx-auto max-w-[1200px] px-4 sm:px-6">
       <SectionTitle className="bg-[linear-gradient(100deg,#FFFFFF_0%,#0262F4_85%,#003F9E_100%)]">Sponsor</SectionTitle>
-      <div className={`${panel} mt-8 px-5 py-8 sm:px-10 sm:py-10`}>
-        <ul className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+      <div className={`${panel} mt-8 px-4 py-6 sm:px-10 sm:py-10`}>
+        {/* Phones: bare logos, three to a row (no white tiles), so the panel stays short. From sm up: tiles with the name on hover. */}
+        <ul className="flex flex-wrap items-center justify-center gap-x-3 gap-y-5 sm:gap-6">
           {sponsors.map((sponsor) => (
-            <li key={sponsor.src}>
+            <li key={sponsor.src} className="w-[calc((100%-1.5rem)/3)] sm:w-auto">
               <div
                 tabIndex={0}
                 aria-label={sponsor.name}
-                className="group relative flex h-24 w-40 cursor-default items-center justify-center overflow-hidden rounded-2xl border-2 border-white bg-white shadow-[0_6px_18px_rgb(10_63_184/0.22)] transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_16px_32px_rgb(10_63_184/0.38)] focus-visible:-translate-y-1.5 focus-visible:ring-4 focus-visible:ring-[#0262F4]/60 focus-visible:outline-none sm:h-32 sm:w-56"
+                className="group relative flex h-12 w-full cursor-default items-center justify-center focus-visible:ring-4 focus-visible:ring-[#0262F4]/60 focus-visible:outline-none sm:h-32 sm:w-56 sm:overflow-hidden sm:rounded-2xl sm:border-2 sm:border-white sm:bg-white sm:shadow-[0_6px_18px_rgb(10_63_184/0.22)] sm:transition-all sm:duration-300 sm:ease-out sm:hover:-translate-y-1.5 sm:hover:shadow-[0_16px_32px_rgb(10_63_184/0.38)] sm:focus-visible:-translate-y-1.5"
               >
                 <img
                   src={sponsor.src}
                   alt={sponsor.name}
                   loading="lazy"
                   decoding="async"
-                  className="max-h-12 w-auto max-w-[78%] object-contain transition-transform duration-300 ease-out group-hover:-translate-y-2.5 group-hover:scale-105 group-focus-visible:-translate-y-2.5 group-focus-visible:scale-105 sm:max-h-16"
+                  className="max-h-9 w-auto max-w-full object-contain transition-transform duration-300 ease-out sm:max-h-16 sm:max-w-[78%] sm:group-hover:-translate-y-2.5 sm:group-hover:scale-105 sm:group-focus-visible:-translate-y-2.5 sm:group-focus-visible:scale-105"
                 />
                 <span
                   aria-hidden="true"
-                  className="font-heading absolute inset-x-0 bottom-0 translate-y-[calc(100%+3px)] border-t-2 border-[#f4a300] bg-[linear-gradient(100deg,#003F9E_0%,#0262F4_100%)] px-2 py-1.5 text-center text-xs font-bold tracking-wide text-white transition-transform duration-300 ease-out group-hover:translate-y-0 group-focus-visible:translate-y-0 sm:text-sm"
+                  className="font-heading absolute inset-x-0 bottom-0 hidden translate-y-[calc(100%+3px)] border-t-2 border-[#f4a300] bg-[linear-gradient(100deg,#003F9E_0%,#0262F4_100%)] px-2 py-1.5 text-center text-xs font-bold tracking-wide text-white transition-transform duration-300 ease-out group-hover:translate-y-0 group-focus-visible:translate-y-0 sm:block sm:text-sm"
                 >
                   {sponsor.name}
                 </span>

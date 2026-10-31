@@ -32,10 +32,16 @@ const sponsors = Object.entries(sponsorModules)
   })
   .sort((a, b) => a.order - b.order)
 
-// XL for Cakap and Sompo, L for the rest: a bit smaller, but still clearly readable.
+// XL for Cakap and Sompo, L for the rest. On desktop the white tile grows with the tier too, so an XL logo
+// really looks bigger instead of just sitting in the same tile; phones show bare logos, sized by the logo.
 const sponsorLogoSize: Record<'xl' | 'l', string> = {
-  xl: 'max-h-11 max-w-full sm:max-h-20 sm:max-w-[92%]',
-  l: 'max-h-8 max-w-[85%] sm:max-h-12 sm:max-w-[64%]',
+  xl: 'max-h-11 max-w-full sm:max-h-20 sm:max-w-[84%]',
+  l: 'max-h-8 max-w-[85%] sm:max-h-12 sm:max-w-[66%]',
+}
+
+const sponsorTileSize: Record<'xl' | 'l', string> = {
+  xl: 'sm:h-36 sm:w-72',
+  l: 'sm:h-28 sm:w-48',
 }
 
 const mediaPartners = Object.entries(logoModules)
@@ -83,7 +89,7 @@ export function SponsorSection() {
               <div
                 tabIndex={0}
                 aria-label={sponsor.name}
-                className="group relative flex h-12 w-full cursor-default items-center justify-center focus-visible:ring-4 focus-visible:ring-[#0262F4]/60 focus-visible:outline-none sm:h-32 sm:w-56 sm:overflow-hidden sm:rounded-2xl sm:border-2 sm:border-white sm:bg-white sm:shadow-[0_6px_18px_rgb(10_63_184/0.22)] sm:transition-all sm:duration-300 sm:ease-out sm:hover:-translate-y-1.5 sm:hover:shadow-[0_16px_32px_rgb(10_63_184/0.38)] sm:focus-visible:-translate-y-1.5"
+                className={`group relative flex h-12 w-full cursor-default items-center justify-center focus-visible:ring-4 focus-visible:ring-[#0262F4]/60 focus-visible:outline-none sm:overflow-hidden sm:rounded-2xl sm:border-2 sm:border-white sm:bg-white sm:shadow-[0_6px_18px_rgb(10_63_184/0.22)] sm:transition-all sm:duration-300 sm:ease-out sm:hover:-translate-y-1.5 sm:hover:shadow-[0_16px_32px_rgb(10_63_184/0.38)] sm:focus-visible:-translate-y-1.5 ${sponsorTileSize[sponsor.size]}`}
               >
                 <img
                   src={sponsor.src}

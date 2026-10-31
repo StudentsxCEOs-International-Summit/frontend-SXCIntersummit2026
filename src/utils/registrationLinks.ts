@@ -1,7 +1,7 @@
 export const registrationLinks = {
   registrationKit: {
     label: 'Registration Kit',
-    url: 'https://drive.google.com/drive/folders/1gScA2k5NkrPJs6cQGkfU0KYaTxIIGDhL',
+    url: 'https://bit.ly/RegistrationsKitIBCC_SxC2026',
     target: '_blank',
   },
   guidebook: {

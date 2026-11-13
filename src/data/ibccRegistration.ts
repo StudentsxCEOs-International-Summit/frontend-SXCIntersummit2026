@@ -9,7 +9,8 @@ export const EMPTY_PARTICIPANT: ParticipantInformation = {
   fullName: '',
   email: '',
   whatsapp: '',
-  institutionMajor: '',
+  institution: '',
+  major: '',
   year: '',
 }
 

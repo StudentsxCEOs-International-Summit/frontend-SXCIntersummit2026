@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '@/assets/ic-icon-internasional.svg'
+import { ContactTeamText } from '@/components/ContactTeamText'
 import building from '@/assets/ic-buildingus.webp'
 import diamonds from '@/assets/ic-diamonds.svg'
 import starGlow from '@/assets/ic-star-glow.svg'
@@ -49,7 +50,7 @@ export function Alert({ kind, children }: { kind: 'error' | 'success'; children:
       : 'border-emerald-200 bg-emerald-50 text-emerald-700'
   return (
     <div role={kind === 'error' ? 'alert' : 'status'} className={`rounded-lg border px-4 py-3 text-sm ${tone}`}>
-      {children}
+      {typeof children === 'string' ? <ContactTeamText text={children} /> : children}
     </div>
   )
 }

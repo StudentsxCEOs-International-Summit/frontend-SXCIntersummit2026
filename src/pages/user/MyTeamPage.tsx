@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { CheckCircle2, Circle } from 'lucide-react'
+import { ContactTeamText } from '@/components/ContactTeamText'
 import { usePageTitle } from '@/hooks/usePageTitle'
 import { ApiError } from '@/lib/api'
 import { ibccService, type MyTeam, type TeamMemberInfo } from '@/services/ibcc'
@@ -30,12 +31,14 @@ function PersonCard({
   name,
   email,
   institution,
+  major,
   yearOfStudy,
   role,
 }: {
   name: string
   email: string
   institution: string | null
+  major?: string | null
   yearOfStudy?: string | null
   role: 'Leader' | 'Member'
 }) {
@@ -54,9 +57,9 @@ function PersonCard({
           {role}
         </span>
       </div>
-      {(institution || yearOfStudy) && (
+      {(institution || major || yearOfStudy) && (
         <p className="mt-2 text-sm text-slate-600">
-          {[institution, yearOfStudy].filter(Boolean).join(' · ')}
+          {[institution, major, yearOfStudy].filter(Boolean).join(' · ')}
         </p>
       )}
     </li>
@@ -224,7 +227,7 @@ export default function MyTeamPage() {
 
         {state.kind === 'error' && (
           <div role="alert" className="rounded-2xl border border-red-200 bg-white p-6 text-center text-red-600">
-            {state.message}
+            <ContactTeamText text={state.message} />
           </div>
         )}
 
@@ -312,6 +315,7 @@ export default function MyTeamPage() {
                     name={state.team.leader.name}
                     email={state.team.leader.email}
                     institution={state.team.leader.institution}
+                    major={state.team.leader.major}
                     role="Leader"
                   />
                   {state.team.members.map((m: TeamMemberInfo) => (
@@ -320,6 +324,7 @@ export default function MyTeamPage() {
                       name={m.name}
                       email={m.email}
                       institution={m.institution}
+                      major={m.major}
                       yearOfStudy={m.yearOfStudy}
                       role="Member"
                     />

@@ -10,6 +10,10 @@ function MainLayout() {
   useEffect(() => {
     if (location.pathname === '/ibcc' || location.hash === '#competitions') {
       setActiveItem('IBCC')
+    } else if (location.pathname.startsWith('/competition/')) {
+      setActiveItem('Competition')
+    } else if (location.pathname.startsWith('/events/')) {
+      setActiveItem('Events')
     } else if (location.pathname === '/gallery') {
       setActiveItem('Gallery')
     } else if (location.pathname === '/contact') {

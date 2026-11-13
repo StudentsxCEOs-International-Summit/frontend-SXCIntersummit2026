@@ -5,7 +5,7 @@ import goldKey from '@/assets/ic-key.svg'
 import starYellowGlow from '@/assets/ic-star-yellow-glow.svg'
 import { ArrowIcon, GoldButton } from './ui'
 
-function TabBanner({ children, className = '' }: { children: string; className?: string }) {
+export function TabBanner({ children, className = '' }: { children: string; className?: string }) {
   return (
     <div
       className={`bg-gold-gloss inline-block -skew-x-[20deg] rounded-lg border-2 border-white px-5 py-1.5 font-heading text-xl font-extrabold whitespace-nowrap italic shadow-[0_6px_16px_rgb(244_163_0/0.4)] sm:px-8 sm:py-2 sm:text-[1.75rem] sm:not-italic ${className}`}
@@ -34,7 +34,7 @@ function TabBanner({ children, className = '' }: { children: string; className?:
   )
 }
 
-const panelNoBorder = 'bg-glass-blue shadow-[0_12px_32px_rgb(10_63_184/0.35)] overflow-hidden'
+export const panelNoBorder = 'bg-glass-blue shadow-[0_12px_32px_rgb(10_63_184/0.35)] overflow-hidden'
 
 export interface AboutSectionProps {
   prizeText?: string
@@ -42,7 +42,7 @@ export interface AboutSectionProps {
 }
 
 function AboutSection({
-  prizeText = 'Rp.13.500.000+',
+  prizeText = 'Rp.13.000.000+',
   joinHref = '/ibcc',
 }: AboutSectionProps = {}) {
   return (
@@ -64,10 +64,10 @@ function AboutSection({
                 <strong className="font-bold">
                   The International Business Case Competition (IBCC)
                 </strong>{' '}
-                is the core event of the International Summit where participants are challenged to
-                solve real-world business problems through professional collaboration. Through this
-                year&apos;s theme, we aim to harness the potential of growing technology to thrive
-                on the modern age of business.
+                is an annual event by StudentsxCEOs International Summit where top undergraduate
+                students tackle real-world business cases, develop innovative solutions, and present
+                their ideas to industry experts. It&apos;s more than a competition. It&apos;s a
+                chance to grow, network, and make a difference.
               </p>
               <h3 className="mt-5 font-heading text-lg font-bold text-orange-light">
                 Who can Participate?
@@ -75,8 +75,9 @@ function AboutSection({
               <p className="mt-1.5 font-heading text-sm leading-relaxed text-white sm:text-base">
                 IBCC is exclusively open to{' '}
                 <strong className="font-bold">
-                  undergraduate university students from all universities across Indonesia.
+                  undergraduate university students from all universities across Indonesia
                 </strong>
+                , and international students are welcome too.
               </p>
               {/* Mobile-only decorations (the illustration card is hidden below lg) */}
               <img

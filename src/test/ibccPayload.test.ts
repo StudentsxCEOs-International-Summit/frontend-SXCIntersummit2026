@@ -7,7 +7,8 @@ const person = (n: number): ParticipantInformation => ({
   fullName: `Person ${n}`,
   email: `p${n}@example.com`,
   whatsapp: '+6281234516789',
-  institutionMajor: 'Universitas Indonesia - Management',
+  institution: 'Universitas Indonesia',
+  major: 'Management',
   year: '2nd Year',
 })
 
@@ -50,7 +51,8 @@ describe('buildRegistrationFormData', () => {
     const leaderInfo = JSON.parse(String(data.get('leaderInfo')))
     expect(leaderInfo).toEqual({
       whatsapp: '+6281234516789',
-      institution: 'Universitas Indonesia - Management',
+      institution: 'Universitas Indonesia',
+      major: 'Management',
       yearOfStudy: '2nd year',
     })
 
@@ -60,7 +62,8 @@ describe('buildRegistrationFormData', () => {
       fullName: 'Person 2',
       email: 'p2@example.com',
       whatsapp: '+6281234516789',
-      institution: 'Universitas Indonesia - Management',
+      institution: 'Universitas Indonesia',
+      major: 'Management',
       yearOfStudy: '2nd year',
     })
   })

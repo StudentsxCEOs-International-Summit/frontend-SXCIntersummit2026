@@ -17,6 +17,9 @@ import {
 } from '@/components/landing/Backgrounds'
 import type { FaqItem } from '@/data/landing'
 
+// Hidden until the previous winner's testimony content is ready.
+const SHOW_TESTIMONY = false
+
 const ibccFaqs: FaqItem[] = [
   {
     question: 'Will I get mentoring on any particular stage?',
@@ -62,7 +65,7 @@ export default function IbccPage() {
 
         {/* Band 3: Previous Winner's Testimony & FAQ */}
         <BackgroundSection background={<PartnersBackground />}>
-          <IbccTestimonySection />
+          {SHOW_TESTIMONY && <IbccTestimonySection />}
           <FaqSection items={ibccFaqs} />
         </BackgroundSection>
       </div>

@@ -45,17 +45,16 @@ export default function RegistrationClosingStep({
             official competition terms.
           </p>
           <div className="my-3 h-px bg-[#E8EEF6]" />
-          <p className="font-medium text-slate-700">
-            By submitting this registration, your team confirms that:
-          </p>
+          <p className="font-medium text-slate-700">Terms and Conditions:</p>
           <ul className="mt-2 list-disc space-y-1.5 pl-5 marker:text-[#2874D8]">
-            <li>It consists of three members, and each member’s information is accurate.</li>
-            <li>It has completed and submitted the participation proofs requested in this form.</li>
-            <li>It is committed to participating in IBCC 2026.</li>
+            <li>Open to all active undergraduate and vocational students from any field of study or major proved by Student ID card (KTM) or any student identification</li>
+            <li>Registrants must form a team of three (3) members, including team leader and have a team name that will be used as the identity during the competition</li>
+            <li>Team members are allowed to come from different universities and majors/disciplines</li>
+            <li>Each participant is permitted to join only one team throughout the competition</li>
+            <li>Once team has been registered, its composition cannot be changed under any circumstances</li>
           </ul>
           <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-[#E8EEF6] pt-3 text-xs">
             <RegistrationLink linkKey="guidebook">Read the Guidebook</RegistrationLink>
-            <span className="text-slate-400">(The link currently directs to the home page.)</span>
           </div>
         </div>
         <ChoiceCard

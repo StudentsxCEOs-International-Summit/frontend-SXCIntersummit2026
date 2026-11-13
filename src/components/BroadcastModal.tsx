@@ -4,8 +4,9 @@ import { CardLabel, ContainShape } from '@/components/about/AboutShared'
 import { useAuth } from '@/context/AuthContext'
 
 /**
- * First-visit announcement. Edit this object to change what everyone sees; bump `id`
- * to show a new announcement again to people who already dismissed the old one.
+ * Announcement shown on arrival and then again every 3 hours. Edit this object to change what
+ * everyone sees; bump `id` to show a new announcement right away to people who already dismissed
+ * the old one.
  */
 // TODO: replace the placeholder copy with the final announcement text.
 export const broadcast = {
@@ -23,20 +24,38 @@ export const broadcast = {
 
 const STORAGE_KEY = 'sxc-broadcast-seen'
 
-function hasSeen(): boolean {
+/** How long a dismissed announcement stays hidden before it comes back. */
+const REPEAT_INTERVAL_MS = 3 * 60 * 60 * 1000
+
+/** Fallback for browsers that block storage, so closing it still holds off the next showing. */
+let lastClosedAt = 0
+
+/** The stored value is JSON {id, at}; the old format was just the id, which counts as "never seen". */
+function readClosedAt(): number {
+  let stored = 0
   try {
-    return window.localStorage.getItem(STORAGE_KEY) === broadcast.id
+    const raw = window.localStorage.getItem(STORAGE_KEY)
+    const parsed = raw ? (JSON.parse(raw) as { id?: unknown; at?: unknown }) : null
+    if (parsed && parsed.id === broadcast.id && typeof parsed.at === 'number') stored = parsed.at
   } catch {
-    return false
+    // Missing, blocked or old-format storage: fall back to the in-memory value.
+  }
+  return Math.max(stored, lastClosedAt)
+}
+
+function markClosed() {
+  lastClosedAt = Date.now()
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ id: broadcast.id, at: lastClosedAt }))
+  } catch {
+    // Storage blocked (private mode): the in-memory value above still spaces out the showings.
   }
 }
 
-function markSeen() {
-  try {
-    window.localStorage.setItem(STORAGE_KEY, broadcast.id)
-  } catch {
-    // Storage blocked (private mode): the announcement simply shows again next visit.
-  }
+/** Milliseconds until the announcement is due again (0 when it should show now). */
+function msUntilDue(): number {
+  const closedAt = readClosedAt()
+  return closedAt ? Math.max(0, closedAt + REPEAT_INTERVAL_MS - Date.now()) : 0
 }
 
 function BroadcastModal() {
@@ -45,14 +64,16 @@ function BroadcastModal() {
   const [open, setOpen] = useState(false)
   const laterRef = useRef<HTMLButtonElement>(null)
 
+  // Arm the next showing whenever the modal is closed: shortly after arrival if it is due, otherwise
+  // once the 3 hours are up (also for a tab that stays open all day).
   useEffect(() => {
-    if (hasSeen()) return
-    const timer = window.setTimeout(() => setOpen(true), 600)
+    if (open) return
+    const timer = window.setTimeout(() => setOpen(true), Math.max(msUntilDue(), 600))
     return () => window.clearTimeout(timer)
-  }, [])
+  }, [open])
 
   const close = useCallback(() => {
-    markSeen()
+    markClosed()
     setOpen(false)
   }, [])
 

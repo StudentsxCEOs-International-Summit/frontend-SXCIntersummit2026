@@ -9,16 +9,15 @@ import tiktok from '@/assets/ic-tiktok.svg'
 import { socials } from '@/data/landing'
 
 const footerEvents = [
-  'Business Competition Launchpad (BCL)',
+  'Business Masterclass',
   'Chambers',
-  'Company Visit',
+  'Summit Visit',
   'International Conference',
 ]
 
 const footerCompetitions = [
   'Business Model Canvas (BMC)',
   'International Business Case Competition (IBCC)',
-  'International Business Plan Competition (IBPC)',
 ]
 
 function FooterLinks({ title, items, href }: { title: string; items: string[]; href: string }) {

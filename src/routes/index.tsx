@@ -28,6 +28,7 @@ import FilesPage from '@/pages/admin/FilesPage'
 import SemifinalPage from '@/pages/admin/SemifinalPage'
 import SettingsPage from '@/pages/admin/SettingsPage'
 import MessagesPage from '@/pages/admin/MessagesPage'
+import ProgramDetailPage from '@/pages/ProgramDetailPage'
 
 function AppRoutes() {
   return (
@@ -38,6 +39,8 @@ function AppRoutes() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/ibcc" element={<IbccPage />} />
+          <Route path="/competition/:slug" element={<ProgramDetailPage category="competition" />} />
+          <Route path="/events/:slug" element={<ProgramDetailPage category="event" />} />
           <Route path="/merchandise" element={<MerchandisePage />} />
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/contact" element={<ContactPage />} />

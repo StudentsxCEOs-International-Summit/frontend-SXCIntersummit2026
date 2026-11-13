@@ -7,7 +7,8 @@ export interface ParticipantInformation {
   fullName: string
   email: string
   whatsapp: string
-  institutionMajor: string
+  institution: string
+  major: string
   year: StudyYear
 }
 

@@ -1,6 +1,7 @@
 import { useId, useRef, useState, type ChangeEvent } from 'react'
 import { CheckCircle2, UploadCloud } from 'lucide-react'
 import { ApiError } from '@/lib/api'
+import { ContactTeamText } from '@/components/ContactTeamText'
 
 interface UploadCardProps {
   title: string
@@ -110,7 +111,7 @@ export default function UploadCard({
 
       {error && (
         <p role="alert" className="mt-2 text-sm text-red-600">
-          {error}
+          <ContactTeamText text={error} />
         </p>
       )}
       {sent && (

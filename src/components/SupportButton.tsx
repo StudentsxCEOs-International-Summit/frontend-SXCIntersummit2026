@@ -17,9 +17,10 @@ export function SupportButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Need help? Contact IT support on WhatsApp"
-      className="fixed right-4 bottom-4 z-40 inline-flex items-center gap-2 rounded-full border border-[#D8E1EE] bg-white px-4 py-3 text-sm font-semibold text-[#0A60F5] shadow-[0_8px_24px_rgba(15,23,42,0.25)] transition hover:bg-[#F1F6FF] focus-visible:ring-4 focus-visible:ring-[#0A60F5]/30 focus-visible:outline-none sm:right-6 sm:bottom-6"
+      // Solid blue with a white rim: stands out on the light registration pages and the blue hero alike.
+      className="fixed right-4 bottom-4 z-40 inline-flex items-center gap-2 rounded-full border-2 border-white bg-[#0A60F5] px-4 py-3 text-sm font-semibold text-white shadow-[0_10px_28px_rgba(10,96,245,0.45)] transition hover:bg-[#0850cc] focus-visible:ring-4 focus-visible:ring-[#0A60F5]/30 focus-visible:outline-none sm:right-6 sm:bottom-6"
     >
-      <MessageCircle className="h-5 w-5 text-emerald-600" aria-hidden="true" />
+      <MessageCircle className="h-5 w-5" aria-hidden="true" />
       <span>
         Need help? <span className="hidden sm:inline">Contact IT Support</span>
       </span>

@@ -1,4 +1,4 @@
-import { MessageCircle } from 'lucide-react'
+import WhatsAppLogo from '@/components/WhatsAppLogo'
 import { ibccWhatsappGroupUrl } from '@/data/landing'
 
 /**
@@ -25,9 +25,9 @@ export function JoinWhatsappGroupCard({ link, className = '' }: { link?: string 
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-4 inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-emerald-600 px-5 text-sm font-semibold text-white shadow-[0_6px_16px_rgba(5,150,105,0.25)] hover:bg-emerald-700 sm:mt-0"
+        className="mt-4 inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-[#25D366] px-5 text-sm font-bold text-white shadow-[0_6px_16px_rgba(37,211,102,0.35)] hover:bg-[#1EBE5A] sm:mt-0"
       >
-        <MessageCircle className="h-4 w-4" aria-hidden="true" />
+        <WhatsAppLogo className="h-5 w-5" />
         Join WhatsApp Group
       </a>
     </div>

@@ -13,7 +13,7 @@ import logo from '@/assets/ic-icon-internasional.svg'
 import lockIcon from '@/assets/ic-lock.svg'
 import { usePageTitle } from '@/hooks/usePageTitle'
 import { authService } from '@/services/auth'
-import { ApiError } from '@/lib/api'
+import { API_BASE_URL, ApiError } from '@/lib/api'
 import { useAuth } from '@/context/AuthContext'
 
 const initialFormState: LoginFormState = {
@@ -33,6 +33,12 @@ export default function LoginPage() {
   const location = useLocation()
   const { setUser, user, loading } = useAuth()
   const routeState = location.state as { from?: string; notice?: string } | null
+  const returnUrl = new URL('/', window.location.origin)
+  if (routeState?.from?.startsWith('/')) {
+    const candidate = new URL(routeState.from, window.location.origin)
+    if (candidate.origin === window.location.origin) returnUrl.href = candidate.href
+  }
+  const googleLoginUrl = `${API_BASE_URL}/auth/google?state=${encodeURIComponent(returnUrl.toString())}`
 
   // Already signed in: there is nothing to do here (this also covers the moment right after login).
   if (!loading && user) return <Navigate to={routeState?.from ?? '/'} replace />
@@ -54,13 +60,17 @@ export default function LoginPage() {
 
     try {
       setIsSubmitting(true)
-      const { user } = await authService.login({ email: form.email.trim(), password: form.password })
+      const { user } = await authService.login({
+        email: form.email.trim(),
+        password: form.password,
+      })
       setUser(user)
       navigate(routeState?.from ?? '/', { replace: true })
     } catch (error) {
       if (error instanceof ApiError) {
         setFormError(error.message)
-        if (error.fieldErrors.email) setErrors((prev) => ({ ...prev, email: error.fieldErrors.email }))
+        if (error.fieldErrors.email)
+          setErrors((prev) => ({ ...prev, email: error.fieldErrors.email }))
       } else {
         setFormError('Something went wrong. Please try again.')
       }
@@ -88,9 +98,19 @@ export default function LoginPage() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 h-full w-full scale-115 origin-center object-cover select-none lg:hidden [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)]"
       />
-      <img src={diamonds} alt="" aria-hidden="true" className="animate-sway pointer-events-none absolute -top-6 -right-14 z-[2] w-40 rotate-45 select-none sm:-right-16 sm:w-56" />
+      <img
+        src={diamonds}
+        alt=""
+        aria-hidden="true"
+        className="animate-sway pointer-events-none absolute -top-6 -right-14 z-[2] w-40 rotate-45 select-none sm:-right-16 sm:w-56"
+      />
       <div className="pointer-events-none absolute -right-12 top-0 z-[2] h-42 w-42 -translate-y-1/3 translate-x-1/3 rounded-full bg-gradient-to-br from-brand-gold/60 via-cream/40 to-transparent blur-3xl sm:h-80 sm:w-80" />
-      <img src={starGlow} alt="" aria-hidden="true" className="animate-twinkle pointer-events-none absolute -right-16 -bottom-10 z-[2] w-40 rotate-12 select-none sm:w-60" />
+      <img
+        src={starGlow}
+        alt=""
+        aria-hidden="true"
+        className="animate-twinkle pointer-events-none absolute -right-16 -bottom-10 z-[2] w-40 rotate-12 select-none sm:w-60"
+      />
       <CurveBackground className="pointer-events-none absolute inset-y-0 right-0 z-[1] hidden h-full w-[57%] lg:block" />
 
       <div className="relative flex h-full w-full flex-col lg:flex-row">
@@ -216,6 +236,37 @@ export default function LoginPage() {
                   </>
                 )}
               </button>
+
+              <div className="relative flex items-center justify-center">
+                <div className="flex-grow border-t border-brand-blue-100" />
+                <span className="mx-4 shrink-0 text-xs text-brand-blue-muted">or</span>
+                <div className="flex-grow border-t border-brand-blue-100" />
+              </div>
+
+              <a
+                href={googleLoginUrl}
+                className="inline-flex h-11 w-full items-center justify-center gap-3 rounded-full border border-brand-blue-100 bg-white text-sm font-semibold text-brand-blue-700 transition-colors hover:bg-brand-blue-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-blue-200"
+              >
+                <svg aria-hidden="true" viewBox="0 0 48 48" className="h-5 w-5">
+                  <path
+                    fill="#4285F4"
+                    d="M43.6 24.5c0-1.4-.1-2.8-.4-4.1H24v7.8h11c-.5 2.5-2 4.7-4.2 6.1l6.8 5.3c4-3.7 6.3-9.1 6-15.1Z"
+                  />
+                  <path
+                    fill="#34A853"
+                    d="M24 44c5.6 0 10.3-1.9 13.7-5.1l-6.8-5.3c-1.9 1.3-4.3 2-6.9 2-5.3 0-9.8-3.6-11.4-8.4l-7.1 5.5C9 39 16 44 24 44Z"
+                  />
+                  <path
+                    fill="#FBBC05"
+                    d="M12.6 27.2a12 12 0 0 1 0-6.4l-7.1-5.5a20 20 0 0 0 0 17.4l7.1-5.5Z"
+                  />
+                  <path
+                    fill="#EA4335"
+                    d="M24 12c3.1 0 5.8 1.1 8 3.2l6-6C34.4 5.8 29.7 4 24 4 16 4 9 9 5.5 15.3l7.1 5.5C14.2 15.6 18.7 12 24 12Z"
+                  />
+                </svg>
+                Continue with Google
+              </a>
 
               <p className="text-center text-sm text-brand-blue-muted">
                 Don&apos;t have an account?{' '}

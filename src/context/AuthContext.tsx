@@ -37,6 +37,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Restore the session from the httpOnly cookie on first load.
   useEffect(() => {
     let cancelled = false
+    const url = new URL(window.location.href)
+    if (url.searchParams.has('token')) {
+      url.searchParams.delete('token')
+      window.history.replaceState(
+        window.history.state,
+        '',
+        `${url.pathname}${url.search}${url.hash}`,
+      )
+    }
+
     authService
       .me()
       .then(({ user }) => {

@@ -15,6 +15,7 @@ import { usePageTitle } from '@/hooks/usePageTitle'
 import { authService } from '@/services/auth'
 import { ApiError } from '@/lib/api'
 import { useAuth } from '@/context/AuthContext'
+import GoogleOAuthButton from '@/components/auth/GoogleOAuthButton'
 
 const initialFormState: RegisterFormState = {
   fullName: '',
@@ -62,7 +63,12 @@ export default function RegisterPage() {
       if (error instanceof ApiError) {
         setFormError(error.message)
         const { name, email, password } = error.fieldErrors
-        setErrors((prev) => ({ ...prev, fullName: name ?? prev.fullName, email: email ?? prev.email, password: password ?? prev.password }))
+        setErrors((prev) => ({
+          ...prev,
+          fullName: name ?? prev.fullName,
+          email: email ?? prev.email,
+          password: password ?? prev.password,
+        }))
       } else {
         setFormError('Something went wrong. Please try again.')
       }
@@ -90,9 +96,19 @@ export default function RegisterPage() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 h-full w-full scale-115 origin-center object-cover select-none lg:hidden [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)]"
       />
-      <img src={diamonds} alt="" aria-hidden="true" className="animate-sway pointer-events-none absolute -top-6 -right-14 z-[2] w-40 rotate-45 select-none sm:-right-16 sm:w-56" />
+      <img
+        src={diamonds}
+        alt=""
+        aria-hidden="true"
+        className="animate-sway pointer-events-none absolute -top-6 -right-14 z-[2] w-40 rotate-45 select-none sm:-right-16 sm:w-56"
+      />
       <div className="pointer-events-none absolute -right-12 top-0 z-[2] h-42 w-42 -translate-y-1/3 translate-x-1/3 rounded-full bg-gradient-to-br from-brand-gold/60 via-cream/40 to-transparent blur-3xl sm:h-80 sm:w-80" />
-      <img src={starGlow} alt="" aria-hidden="true" className="animate-twinkle pointer-events-none absolute -right-16 -bottom-10 z-[2] w-40 rotate-12 select-none sm:w-60" />
+      <img
+        src={starGlow}
+        alt=""
+        aria-hidden="true"
+        className="animate-twinkle pointer-events-none absolute -right-16 -bottom-10 z-[2] w-40 rotate-12 select-none sm:w-60"
+      />
       <CurveBackground className="pointer-events-none absolute inset-y-0 right-0 z-[1] hidden h-full w-[57%] lg:block" />
 
       <div className="relative flex h-full w-full flex-col lg:flex-row">
@@ -259,6 +275,8 @@ export default function RegisterPage() {
                   </>
                 )}
               </button>
+
+              <GoogleOAuthButton returnTo="/team-register" />
 
               <p className="text-center text-sm text-brand-blue-muted">
                 Already have an account?{' '}

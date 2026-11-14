@@ -17,8 +17,8 @@ export function JoinWhatsappGroupCard({ link, className = '' }: { link?: string 
           Make sure your whole team has joined the WhatsApp group
         </p>
         <p className="mt-1 text-sm leading-6 text-emerald-900/80">
-          The preliminary case, announcements and Q&amp;A for IBCC 2026 are shared in the Preliminary WhatsApp
-          group. Every member of your team needs to join, so please share this link with your teammates too.
+          Announcements and other important information about IBCC 2026 will be shared in this group. Every
+          member of your team needs to join, so please share this link with your teammates too.
         </p>
       </div>
       <a

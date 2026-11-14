@@ -40,9 +40,22 @@ const cardVariants: Record<TimelineStatus, TimelineCardVariant> = {
   },
 }
 
-function getStatus(index: number, activeIndex: number): TimelineStatus {
-  if (index === activeIndex) return 'active'
-  return index < activeIndex ? 'past' : 'upcoming'
+/**
+ * Each step's status comes from its own dates, because steps can overlap (the case is distributed while
+ * registration is still open). When nothing is running today, the next step is highlighted instead.
+ */
+/** "2026-11-18" as local midnight (`new Date("2026-11-18")` would be UTC, i.e. 07:00 in WIB). */
+const localDay = (iso: string) => {
+  const [y, m, d] = iso.split('-').map(Number)
+  return new Date(y, m - 1, d)
+}
+
+function getStatus(item: TimelineItem, index: number, now: Date, fallbackIndex: number, anyRunning: boolean): TimelineStatus {
+  const start = localDay(item.startDate)
+  const end = localDay(item.endDate)
+  if (end < now) return 'past'
+  if (start <= now) return 'active'
+  return !anyRunning && index === fallbackIndex ? 'active' : 'upcoming'
 }
 
 function TimelineCard({ item, status }: { item: TimelineItem; status: TimelineStatus }) {
@@ -205,10 +218,11 @@ function TimelineSection() {
   const now = new Date()
   now.setHours(0, 0, 0, 0)
 
-  let activeIndex = timeline.findIndex((item) => new Date(item.endDate) >= now)
+  let activeIndex = timeline.findIndex((item) => localDay(item.endDate) >= now)
   if (activeIndex === -1) {
     activeIndex = timeline.length - 1 // All events in the past, default to last
   }
+  const anyRunning = timeline.some((item) => localDay(item.startDate) <= now && localDay(item.endDate) >= now)
 
   return (
     <section
@@ -235,7 +249,7 @@ function TimelineSection() {
           >
             {timeline.map((item, i) => {
               const top = i % 2 === 0
-              const status = getStatus(i, activeIndex)
+              const status = getStatus(item, i, now, activeIndex, anyRunning)
               const isFirst = i === 0
               const isLast = i === timeline.length - 1
 

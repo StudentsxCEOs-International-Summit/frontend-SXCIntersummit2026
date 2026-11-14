@@ -11,6 +11,7 @@ export interface TimelineItem {
 // TODO: replace with the real schedule (mockup repeats one placeholder).
 export const timeline: TimelineItem[] = [
   { title: 'Open Registration', date: '30th October - 19th December 2026', startDate: '2026-10-30', endDate: '2026-12-19' },
+  { title: 'Preliminary Case Distribution', date: '18th November 2026', startDate: '2026-11-18', endDate: '2026-11-18' },
   { title: 'Preliminary Submission', date: '31st December 2026', startDate: '2026-12-31', endDate: '2026-12-31' },
   { title: 'Preliminary Deliberation', date: '4th January - 10th January 2027', startDate: '2027-01-04', endDate: '2027-01-10' },
   { title: 'Semifinal Annoucement', date: '11th January 2027', startDate: '2027-01-11', endDate: '2027-01-11' },

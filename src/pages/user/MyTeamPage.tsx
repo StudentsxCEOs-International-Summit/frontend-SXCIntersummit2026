@@ -381,15 +381,8 @@ export default function MyTeamPage() {
                   Only the team leader can upload files for the team.
                 </p>
               ) : (
-                <>
-                  {!semifinalOpen(state.team) && (
-                    <p className="mb-3 text-sm text-white/90">
-                      The preliminary round is free. Payment ({SEMIFINAL_FEE_TEXT}) only opens if your team
-                      advances to the semifinal.
-                    </p>
-                  )}
-                  <SubmissionCards team={state.team} onUploaded={reload} />
-                </>
+                // Payment is not mentioned before the semifinal: teams only hear about it once they pass.
+                <SubmissionCards team={state.team} onUploaded={reload} />
               )}
             </section>
           </>

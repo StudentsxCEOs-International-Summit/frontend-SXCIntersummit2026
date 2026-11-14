@@ -48,7 +48,16 @@ describe('My Team submissions', () => {
     expect(await screen.findByRole('heading', { name: 'Preliminary slide deck' })).toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: 'Semifinal payment' })).not.toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: 'Semifinal slide deck' })).not.toBeInTheDocument()
-    expect(screen.getByText(/preliminary round is free/i)).toBeInTheDocument()
+    // Payment is not mentioned at all before the team reaches the semifinal.
+    expect(screen.queryByText(/payment|Rp 180/i)).not.toBeInTheDocument()
+  })
+
+  it('asks the team to join the preliminary WhatsApp group', async () => {
+    renderWith(team())
+
+    const join = await screen.findByRole('link', { name: /Join WhatsApp Group/i })
+    expect(join).toHaveAttribute('href', expect.stringContaining('chat.whatsapp.com'))
+    expect(screen.getByText(/whole team has joined the WhatsApp group/i)).toBeInTheDocument()
   })
 
   it('opens the Rp 180.000 payment and the semifinal deck once the team passed the preliminary', async () => {

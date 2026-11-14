@@ -7,6 +7,7 @@ import { ApiError } from '@/lib/api'
 import { ibccService, type MyTeam, type TeamMemberInfo } from '@/services/ibcc'
 import Footer from '@/components/landing/Footer'
 import UploadCard from '@/components/ibcc/UploadCard'
+import JoinWhatsappGroupCard from '@/components/ibcc/JoinWhatsappGroupCard'
 import { SEMIFINAL_FEE_TEXT, statusLabel } from '@/data/fees'
 
 type Load =
@@ -280,6 +281,10 @@ export default function MyTeamPage() {
                 Your files were received and are being processed. This page updates by itself, and your
                 submission time is already recorded.
               </p>
+            )}
+
+            {state.team.competitionStage !== 'SEMIFINAL' && state.team.preliminaryResult !== 'FAILED' && (
+              <JoinWhatsappGroupCard link={state.team.waGroupLink} className="mx-auto mt-6 max-w-2xl" />
             )}
 
             {state.team.preliminaryResult === 'PASSED' && (

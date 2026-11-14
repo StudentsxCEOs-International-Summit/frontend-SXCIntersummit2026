@@ -133,6 +133,12 @@ export const supportContact = {
   whatsappUrl: `https://wa.me/6285283971917?text=${encodeURIComponent('Hello, I need help with the SxC International Summit website.')}`,
 }
 
+/**
+ * IBCC 2026 Preliminary WhatsApp group (bit.ly/WAGroupIBCC_SxC2026). The full link is used so it opens
+ * straight in WhatsApp; the backend sends the same link and it wins when present.
+ */
+export const ibccWhatsappGroupUrl = 'https://chat.whatsapp.com/Hh5beE54nRB9S08sE5TWsI'
+
 // TODO: fill in the official social media URLs.
 export const socials = {
   instagram: 'https://www.instagram.com/sxcintersummit/',

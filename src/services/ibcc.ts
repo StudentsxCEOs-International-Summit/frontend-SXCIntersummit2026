@@ -30,6 +30,8 @@ export interface MyTeam {
   competitionStage: 'REGISTRATION' | 'PREELIM' | 'SEMIFINAL'
   /** IBCC Preliminary WhatsApp group invite link. */
   waGroupLink?: string | null
+  /** TEMPORARY: true for test accounts, which may go through team registration again. */
+  canRegisterAgain?: boolean
   /** Set once the committee has judged the preliminary deck. */
   preliminaryResult?: 'PASSED' | 'FAILED' | null
   /** Payment and the semifinal deck only open for teams that passed the preliminary. */

@@ -128,9 +128,9 @@ export const generalContactPersons: ContactPerson[] = [
 
 /** Who people can reach on WhatsApp when something goes wrong ("please contact our team"). */
 export const supportContact = {
-  name: 'Rafki',
-  phone: '+62 852 8397 1917',
-  whatsappUrl: `https://wa.me/6285283971917?text=${encodeURIComponent('Hello, I need help with the SxC International Summit website.')}`,
+  name: 'IT Support',
+  phone: '+62 895-4224-12400',
+  whatsappUrl: `https://wa.me/62895422412400?text=${encodeURIComponent('Hello, I need help with the SxC International Summit website.')}`,
 }
 
 /**

@@ -11,6 +11,7 @@ export interface TimelineItem {
 // TODO: replace with the real schedule (mockup repeats one placeholder).
 export const timeline: TimelineItem[] = [
   { title: 'Open Registration', date: '30th October - 19th December 2026', startDate: '2026-10-30', endDate: '2026-12-19' },
+  { title: 'Preliminary Case Distribution', date: '18th November 2026', startDate: '2026-11-18', endDate: '2026-11-18' },
   { title: 'Preliminary Submission', date: '31st December 2026', startDate: '2026-12-31', endDate: '2026-12-31' },
   { title: 'Preliminary Deliberation', date: '4th January - 10th January 2027', startDate: '2027-01-04', endDate: '2027-01-10' },
   { title: 'Semifinal Annoucement', date: '11th January 2027', startDate: '2027-01-11', endDate: '2027-01-11' },
@@ -128,10 +129,16 @@ export const generalContactPersons: ContactPerson[] = [
 
 /** Who people can reach on WhatsApp when something goes wrong ("please contact our team"). */
 export const supportContact = {
-  name: 'Rafki',
-  phone: '+62 852 8397 1917',
-  whatsappUrl: `https://wa.me/6285283971917?text=${encodeURIComponent('Hello, I need help with the SxC International Summit website.')}`,
+  name: 'IT Support',
+  phone: '+62 895-4224-12400',
+  whatsappUrl: `https://wa.me/62895422412400?text=${encodeURIComponent('Hello, I need help with the SxC International Summit website.')}`,
 }
+
+/**
+ * IBCC 2026 Preliminary WhatsApp group (bit.ly/WAGroupIBCC_SxC2026). The full link is used so it opens
+ * straight in WhatsApp; the backend sends the same link and it wins when present.
+ */
+export const ibccWhatsappGroupUrl = 'https://chat.whatsapp.com/Hh5beE54nRB9S08sE5TWsI'
 
 // TODO: fill in the official social media URLs.
 export const socials = {

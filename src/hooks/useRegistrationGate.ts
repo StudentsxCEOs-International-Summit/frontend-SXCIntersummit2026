@@ -25,7 +25,8 @@ export function useRegistrationGate(): RegistrationGate {
     Promise.allSettled([ibccService.getMyTeam(), configService.get()]).then(([team, config]) => {
       if (cancelled) return
 
-      if (team.status === 'fulfilled') {
+      // Test accounts (backend utils/test-accounts.ts) may register again; their old team is replaced.
+      if (team.status === 'fulfilled' && !team.value.canRegisterAgain) {
         setGate({ status: 'hasTeam' })
       } else if (config.status === 'fulfilled' && config.value.registrationOpen === false) {
         setGate({ status: 'closed', deadline: config.value.deadline ?? null })

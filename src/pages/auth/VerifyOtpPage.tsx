@@ -121,7 +121,8 @@ export default function VerifyOtpPage() {
         <SubmitButton loading={submitting}>Verify</SubmitButton>
 
         <p className="text-center text-xs text-slate-500">
-          Can&apos;t find the email? Check your spam or promotions folder, and mark it as &ldquo;Not spam&rdquo;.
+          The email can take up to 60 seconds to arrive. Still nothing after that? Check your Spam or
+          Promotions folder, and mark it as &ldquo;Not spam&rdquo;.
         </p>
 
         <p className="text-center text-sm text-slate-500">

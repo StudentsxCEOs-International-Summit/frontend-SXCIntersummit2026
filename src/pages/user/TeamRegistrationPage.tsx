@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react'
 import RegistrationNavbar from '@/components/ibcc/RegistrationNavbar'
 import { ContactTeamText } from '@/components/ContactTeamText'
 import RegistrationBackground from '@/components/ibcc/RegistrationBackground'
+import JoinWhatsappGroupCard from '@/components/ibcc/JoinWhatsappGroupCard'
 import ParticipantInformationStep from '@/components/ibcc/ParticipantInformationStep'
 import RegistrationClosingStep from '@/components/ibcc/RegistrationClosingStep'
 import RegistrationRequirementsStep from '@/components/ibcc/RegistrationRequirementsStep'
@@ -100,7 +101,7 @@ function TeamRegistrationForm() {
         <div className="py-8 text-center">
           <CheckCircle2 className="mx-auto h-14 w-14 text-emerald-500" />
           <h2 className="mt-4 font-heading text-2xl font-bold text-primary">
-            Thank You for Joining
+            Your Team Is Registered
           </h2>
           <p className="mt-2 text-slate-600">
             International Business Case Competition - SxC International Summit 2026
@@ -121,10 +122,11 @@ function TeamRegistrationForm() {
               </div>
             </dl>
           )}
+          <JoinWhatsappGroupCard link={result?.waGroupLink} className="mx-auto mt-6 max-w-xl" />
           <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-slate-500">
-            A confirmation email is on its way. Your teammates have been added to the team; they
-            can set their own password with &quot;Forgot password&quot; using the email address you
-            entered.
+            A confirmation email with the group link is on its way (check your Spam folder if it is not in
+            your inbox). Your teammates have been added to the team; they can set their own password with
+            &quot;Forgot password&quot; using the email address you entered.
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <Link
@@ -133,16 +135,6 @@ function TeamRegistrationForm() {
             >
               View My Team
             </Link>
-            {result?.waGroupLink && (
-              <a
-                href={result.waGroupLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-11 items-center rounded-lg border border-[#D8E1EE] bg-white px-5 text-sm font-semibold text-[#1D6FEA]"
-              >
-                Join WhatsApp Group
-              </a>
-            )}
           </div>
         </div>
       )

@@ -7,6 +7,7 @@ import { ApiError } from '@/lib/api'
 import { ibccService, type MyTeam, type TeamMemberInfo } from '@/services/ibcc'
 import Footer from '@/components/landing/Footer'
 import UploadCard from '@/components/ibcc/UploadCard'
+import JoinWhatsappGroupCard from '@/components/ibcc/JoinWhatsappGroupCard'
 import { SEMIFINAL_FEE_TEXT, statusLabel } from '@/data/fees'
 
 type Load =
@@ -282,6 +283,10 @@ export default function MyTeamPage() {
               </p>
             )}
 
+            {state.team.competitionStage !== 'SEMIFINAL' && state.team.preliminaryResult !== 'FAILED' && (
+              <JoinWhatsappGroupCard link={state.team.waGroupLink} className="mx-auto mt-6 max-w-2xl" />
+            )}
+
             {state.team.preliminaryResult === 'PASSED' && (
               <p className="mx-auto mt-6 max-w-2xl rounded-2xl bg-emerald-50 px-5 py-4 text-center text-sm font-medium text-emerald-700">
                 Congratulations, your team passed the preliminary round! Next, pay the semifinal fee of{' '}
@@ -376,15 +381,8 @@ export default function MyTeamPage() {
                   Only the team leader can upload files for the team.
                 </p>
               ) : (
-                <>
-                  {!semifinalOpen(state.team) && (
-                    <p className="mb-3 text-sm text-white/90">
-                      The preliminary round is free. Payment ({SEMIFINAL_FEE_TEXT}) only opens if your team
-                      advances to the semifinal.
-                    </p>
-                  )}
-                  <SubmissionCards team={state.team} onUploaded={reload} />
-                </>
+                // Payment is not mentioned before the semifinal: teams only hear about it once they pass.
+                <SubmissionCards team={state.team} onUploaded={reload} />
               )}
             </section>
           </>

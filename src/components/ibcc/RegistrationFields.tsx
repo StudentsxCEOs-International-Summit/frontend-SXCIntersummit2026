@@ -122,10 +122,9 @@ export function FileUploadField({
         </span>
         <span className="min-w-0">
           <span className="block truncate text-sm font-semibold text-slate-800">
-            {file?.name ?? 'Choose one JPG or PDF file'}
-          </span>
-          <span className="mt-1 block text-xs text-slate-500">
-            {file ? 'Click to replace this file' : 'One file per requirement'}
+            {file
+              ? 'Click to replace this file (Max 10 MB)'
+              : 'One file per requirement (Max 10 MB)'}
           </span>
         </span>
         <input

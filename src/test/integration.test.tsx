@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { ApiError, apiRequest, setUnauthorizedHandler } from '@/lib/api'
 import { AuthProvider } from '@/context/AuthContext'
@@ -67,7 +67,7 @@ describe('team registration gate', () => {
       '/auth/me': authed,
       '/ibcc/my-team': () => reply(404, 'No registered team found for this user.'),
       '/config': () =>
-        reply(200, 'ok', { registrationOpen: false, deadline: '2026-11-15T16:59:59.000Z' }),
+        reply(200, 'ok', { registrationOpen: false, deadline: '2026-12-31T16:59:59.000Z' }),
     })
 
     renderPage()
@@ -79,7 +79,7 @@ describe('team registration gate', () => {
     stubBackend({
       '/auth/me': authed,
       '/ibcc/my-team': () => reply(200, 'ok', { id: 7, name: 'Existing Team' }),
-      '/config': () => reply(200, 'ok', { registrationOpen: true, deadline: '2026-11-15T16:59:59.000Z' }),
+      '/config': () => reply(200, 'ok', { registrationOpen: true, deadline: '2026-12-31T16:59:59.000Z' }),
     })
 
     renderPage()
@@ -91,11 +91,45 @@ describe('team registration gate', () => {
     stubBackend({
       '/auth/me': authed,
       '/ibcc/my-team': () => reply(404, 'No registered team found for this user.'),
-      '/config': () => reply(200, 'ok', { registrationOpen: true, deadline: '2026-11-15T16:59:59.000Z' }),
+      '/config': () => reply(200, 'ok', { registrationOpen: true, deadline: '2026-12-31T16:59:59.000Z' }),
     })
 
     renderPage()
 
     expect(await screen.findByRole('heading', { level: 1, name: /Team Registration/ })).toBeInTheDocument()
+  })
+
+  it('allows the leader name to be edited while keeping the account email locked', async () => {
+    stubBackend({
+      '/auth/me': authed,
+      '/ibcc/my-team': () => reply(404, 'No registered team found for this user.'),
+      '/config': () => reply(200, 'ok', { registrationOpen: true, deadline: '2026-12-31T16:59:59.000Z' }),
+    })
+
+    renderPage()
+
+    await screen.findByRole('heading', { level: 1, name: /Team Registration/ })
+    fireEvent.click(screen.getByRole('button', { name: /Continue/ }))
+
+    fireEvent.change(await screen.findByLabelText(/Team Name/), {
+      target: { value: 'Alpha Team' },
+    })
+    fireEvent.click(screen.getByLabelText('Same University Students'))
+    fireEvent.click(screen.getByLabelText('Instagram'))
+    fireEvent.click(screen.getByRole('button', { name: /Continue/ }))
+
+    const fullName = await screen.findByLabelText(/Full Name/)
+    const email = screen.getByLabelText(/Email/)
+    expect(fullName).not.toHaveAttribute('readonly')
+    expect(email).toHaveAttribute('readonly')
+    expect(email).toHaveValue('lead@example.com')
+    expect(
+      screen.getByText(
+        "This name will be saved to your SxC profile and won't affect your Google account.",
+      ),
+    ).toBeInTheDocument()
+
+    fireEvent.change(fullName, { target: { value: 'Lead Full Name' } })
+    expect(fullName).toHaveValue('Lead Full Name')
   })
 })

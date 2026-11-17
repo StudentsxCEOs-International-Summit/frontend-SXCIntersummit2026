@@ -180,7 +180,7 @@ function TeamRegistrationForm() {
           participant={form[participantKey]}
           errors={errors}
           onChange={(field, value) => updateParticipant(participantKey, field, value)}
-          readOnlyFields={participantKey === 'leader' ? ['fullName', 'email'] : []}
+          readOnlyFields={participantKey === 'leader' ? ['email'] : []}
         />
       )
     }

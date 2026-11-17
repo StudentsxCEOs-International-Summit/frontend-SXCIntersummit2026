@@ -45,11 +45,12 @@ describe('buildRegistrationFormData', () => {
     expect(data.get('confirmParticipation')).toBe('true')
   })
 
-  it('sends the leader without identity (it comes from the session) and two members', () => {
+  it('sends the editable leader name and details, plus two members', () => {
     const data = buildRegistrationFormData(baseForm())
 
     const leaderInfo = JSON.parse(String(data.get('leaderInfo')))
     expect(leaderInfo).toEqual({
+      fullName: 'Person 1',
       whatsapp: '+6281234516789',
       institution: 'Universitas Indonesia',
       major: 'Management',

@@ -12,7 +12,7 @@ interface ParticipantInformationStepProps {
   participant: ParticipantInformation
   errors: RegistrationErrors
   onChange: (field: keyof ParticipantInformation, value: string) => void
-  /** Fields shown but not editable (the leader's name/email come from the account). */
+  /** Fields shown but not editable. */
   readOnlyFields?: (keyof ParticipantInformation)[]
 }
 
@@ -57,6 +57,11 @@ export default function ParticipantInformationStep({
               }`}
               onChange={(event) => onChange(key, event.target.value)}
             />
+            {participantKey === 'leader' && key === 'fullName' && (
+              <p className="mt-1.5 text-xs text-slate-500">
+                This name will be saved to your SxC profile and won't affect your Google account.
+              </p>
+            )}
           </FormField>
         )
       })}

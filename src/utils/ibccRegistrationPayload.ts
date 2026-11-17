@@ -61,11 +61,12 @@ export function buildRegistrationFormData(form: IbccRegistrationForm): FormData 
   // The form allows several sources; the backend stores one, so the first pick wins.
   data.append('sourceInfo', SOURCE_INFO[form.informationSources[0]] ?? 'OTHERS')
 
-  // The leader's name and email come from the logged-in account (JWT), not from the body.
+  // The leader email comes from the authenticated account; the registration name is editable.
   const leader = form.leader
   data.append(
     'leaderInfo',
     JSON.stringify({
+      fullName: leader.fullName.trim(),
       whatsapp: leader.whatsapp.trim(),
       institution: leader.institution.trim(),
       major: leader.major.trim(),

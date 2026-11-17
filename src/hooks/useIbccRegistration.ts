@@ -29,7 +29,7 @@ function toFormErrorKey(path: string): string | null {
   if (path === 'agreeTerms') return 'agreeToTerms'
   if (path === 'confirmParticipation') return 'confirmParticipation'
 
-  const leader = path.match(/^leaderInfo\.(whatsapp|institution|major|yearOfStudy)$/)
+  const leader = path.match(/^leaderInfo\.(fullName|whatsapp|institution|major|yearOfStudy)$/)
   if (leader) return `leader.${leader[1] === 'yearOfStudy' ? 'year' : leader[1]}`
 
   const member = path.match(/^members\.(\d)\.(fullName|email|whatsapp|institution|major|yearOfStudy)$/)
@@ -42,7 +42,7 @@ function toFormErrorKey(path: string): string | null {
 }
 
 interface UseIbccRegistrationOptions {
-  /** Name/email of the logged-in account: the backend takes the leader's identity from the session. */
+  /** Prefill the leader's name and email from the logged-in account. */
   leaderDefaults?: { fullName: string; email: string }
 }
 
@@ -54,7 +54,7 @@ export function useIbccRegistration({ leaderDefaults }: UseIbccRegistrationOptio
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [result, setResult] = useState<RegisteredTeam | null>(null)
 
-  // Prefill the leader from the account (those two fields are locked in the form).
+  // Prefill the leader from the account; the name can be changed for registration.
   useEffect(() => {
     if (!leaderDefaults) return
     setForm((current) => ({

@@ -7,6 +7,7 @@ import { ApiError } from '@/lib/api'
 import { ibccService, type MyTeam, type TeamMemberInfo } from '@/services/ibcc'
 import Footer from '@/components/landing/Footer'
 import UploadCard from '@/components/ibcc/UploadCard'
+import IBCCCaseCard from '@/components/ibcc/IBCCCaseCard'
 import JoinWhatsappGroupCard from '@/components/ibcc/JoinWhatsappGroupCard'
 import { SEMIFINAL_FEE_TEXT, statusLabel } from '@/data/fees'
 
@@ -286,6 +287,8 @@ export default function MyTeamPage() {
             {state.team.competitionStage !== 'SEMIFINAL' && state.team.preliminaryResult !== 'FAILED' && (
               <JoinWhatsappGroupCard link={state.team.waGroupLink} className="mx-auto mt-6 max-w-2xl" />
             )}
+
+            <IBCCCaseCard className="mx-auto mt-5 max-w-2xl" />
 
             {state.team.preliminaryResult === 'PASSED' && (
               <p className="mx-auto mt-6 max-w-2xl rounded-2xl bg-emerald-50 px-5 py-4 text-center text-sm font-medium text-emerald-700">

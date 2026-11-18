@@ -58,6 +58,25 @@ describe('My Team submissions', () => {
     const join = await screen.findByRole('link', { name: /Join WhatsApp Group/i })
     expect(join).toHaveAttribute('href', expect.stringContaining('chat.whatsapp.com'))
     expect(screen.getByText(/whole team has joined the WhatsApp group/i)).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Open Case Brief/i })).toHaveAttribute(
+      'href',
+      'https://bit.ly/Case1IBCCxMayapadaHealthcare_Sxc2026',
+    )
+  })
+
+  it('does not show the case brief when the account has no registered team', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => reply(404, 'No registered team found for this user.')),
+    )
+    render(
+      <MemoryRouter>
+        <MyTeamPage />
+      </MemoryRouter>,
+    )
+
+    expect(await screen.findByRole('heading', { name: 'No Team Yet' })).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: /Open Case Brief/i })).not.toBeInTheDocument()
   })
 
   it('opens the Rp 180.000 payment and the semifinal deck once the team passed the preliminary', async () => {

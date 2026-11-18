@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react'
 import RegistrationNavbar from '@/components/ibcc/RegistrationNavbar'
 import { ContactTeamText } from '@/components/ContactTeamText'
 import RegistrationBackground from '@/components/ibcc/RegistrationBackground'
+import IBCCCaseCard from '@/components/ibcc/IBCCCaseCard'
 import JoinWhatsappGroupCard from '@/components/ibcc/JoinWhatsappGroupCard'
 import ParticipantInformationStep from '@/components/ibcc/ParticipantInformationStep'
 import RegistrationClosingStep from '@/components/ibcc/RegistrationClosingStep'
@@ -123,6 +124,7 @@ function TeamRegistrationForm() {
             </dl>
           )}
           <JoinWhatsappGroupCard link={result?.waGroupLink} className="mx-auto mt-6 max-w-xl" />
+          <IBCCCaseCard className="mx-auto mt-5 max-w-xl" />
           <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-slate-500">
             A confirmation email with the group link is on its way (check your Spam folder if it is not in
             your inbox). Your teammates have been added to the team; they can set their own password with

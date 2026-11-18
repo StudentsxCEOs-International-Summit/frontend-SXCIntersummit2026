@@ -140,6 +140,9 @@ export const supportContact = {
  */
 export const ibccWhatsappGroupUrl = 'https://chat.whatsapp.com/Hh5beE54nRB9S08sE5TWsI'
 
+/** IBCC x Mayapada Healthcare case brief, shared with teams after registration. */
+export const ibccMayapadaCaseUrl = 'https://bit.ly/Case1IBCCxMayapadaHealthcare_Sxc2026'
+
 // TODO: fill in the official social media URLs.
 export const socials = {
   instagram: 'https://www.instagram.com/sxcintersummit/',

@@ -10,14 +10,17 @@ const logoModules = import.meta.glob<string>('@/assets/media-partners/*.{png,jpg
 
 type Tier = 'L' | 'M' | 'S'
 
-// Sponsor logos follow `<order>-<size>-<name>.<ext>` (size xl or l, l when left out); drop a file into
+// Sponsor logos follow `<order>-<size>-<name>.<ext>` (size xxl, xl, or l; l when left out); drop a file into
 // assets/sponsors to add one. The size tier makes the wide wordmarks (Cakap, Sompo) stand out a little more.
 const sponsorModules = import.meta.glob<string>('@/assets/sponsors/*.{png,jpg,jpeg,webp,svg}', {
   eager: true,
   import: 'default',
 })
 
-const sponsors = Object.entries(sponsorModules)
+type SponsorSize = 'xxl' | 'xl' | 'l'
+type Sponsor = { src: string; order: number; name: string; size: SponsorSize }
+
+const sponsors: Sponsor[] = Object.entries(sponsorModules)
   .map(([path, src]) => {
     const file = path
       .split('/')
@@ -33,27 +36,31 @@ const sponsors = Object.entries(sponsorModules)
 
     return { src, order, name, size }
   })
-  .sort((a, b) => a.order - b.order)
 
-// The XL sponsors sit together on the top row and the L ones below, so the two sizes never mix in a row.
-const sponsorGroups = (['xl', 'l'] as const)
+sponsors.push({ src: Mayapada, order: 0, name: 'Mayapada', size: 'xxl' })
+sponsors.sort((a, b) => a.order - b.order)
+
+// Sponsor tiers each get their own row, with the largest sponsor at the top.
+const sponsorGroups = (['xxl', 'xl', 'l'] as const)
   .map((size) => sponsors.filter((sponsor) => sponsor.size === size))
   .filter((group) => group.length > 0)
 
-// XL for Cakap and Sompo, L for the rest. On desktop the white tile grows with the tier too, so an XL logo
-// really looks bigger instead of just sitting in the same tile; phones show bare logos, sized by the logo.
-const sponsorLogoSize: Record<'xl' | 'l', string> = {
+// On desktop the white tile grows with the tier too; phones show bare logos sized by the logo.
+const sponsorLogoSize: Record<'xxl' | 'xl' | 'l', string> = {
+  xxl: 'max-h-24 max-w-full sm:max-h-36 sm:max-w-[90%]',
   xl: 'max-h-14 max-w-full sm:max-h-20 sm:max-w-[84%]',
   l: 'max-h-9 max-w-[90%] sm:max-h-12 sm:max-w-[66%]',
 }
 
-const sponsorTileSize: Record<'xl' | 'l', string> = {
+const sponsorTileSize: Record<'xxl' | 'xl' | 'l', string> = {
+  xxl: 'h-24 sm:h-48 sm:w-[36rem]',
   xl: 'h-14 sm:h-36 sm:w-72',
   l: 'h-12 sm:h-28 sm:w-48',
 }
 
-// Phones: two XL logos share the top row (half the width each), the L logos sit three to a row below.
-const sponsorItemWidth: Record<'xl' | 'l', string> = {
+// Phones: XXL gets its own row, two XL logos share a row, and L logos sit three to a row below.
+const sponsorItemWidth: Record<'xxl' | 'xl' | 'l', string> = {
+  xxl: 'w-full',
   xl: 'w-[calc((100%-0.75rem)/2)]',
   l: 'w-[calc((100%-1.5rem)/3)]',
 }

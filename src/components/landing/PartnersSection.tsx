@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 import { SectionTitle } from './ui'
-import Mayapada from "@/assets/sponsors/8-I-Mayapada 1.png";
+import Mayapada from "@/assets/sponsors/case collab/8-I-Mayapada 1.png";
 
 // File names follow `<order>-<tier>-<name>.<ext>`; the tier sets the logo size.
 const logoModules = import.meta.glob<string>('@/assets/media-partners/*.{png,jpg,jpeg,webp,svg}', {

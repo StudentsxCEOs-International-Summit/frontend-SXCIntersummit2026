@@ -85,11 +85,25 @@ const PROCESSING_POLL_MS = 6000
 const DECK_EXTENSIONS = ['pdf', 'ppt', 'pptx']
 const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'gif']
 
-function InfoCard({ title, children }: { title: string; children: string }) {
+function InfoCard({
+  title,
+  children,
+  fileName,
+}: {
+  title: string
+  children: string
+  fileName?: string
+}) {
   return (
     <div className="rounded-2xl border border-[#E1EAF5] bg-white p-4 shadow-sm">
       <h3 className="font-heading text-base font-bold text-slate-900">{title}</h3>
       <p className="mt-1 text-sm text-slate-500">{children}</p>
+      {fileName && (
+        <p className="mt-3 flex items-center gap-2 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-800">
+          <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" aria-hidden="true" />
+          <span className="min-w-0 break-all font-medium">{fileName}</span>
+        </p>
+      )}
     </div>
   )
 }
@@ -98,7 +112,18 @@ function InfoCard({ title, children }: { title: string; children: string }) {
  * The upload endpoints (POST /ibcc/submission/*) only check that the caller leads a team, so the
  * page decides which uploads make sense from the data GET /ibcc/my-team returns.
  */
-function SubmissionCards({ team, onUploaded }: { team: MyTeam; onUploaded: () => void }) {
+type SubmissionType = 'payment' | 'preliminary' | 'semifinal'
+type RecentUploads = Partial<Record<SubmissionType, string>>
+
+function SubmissionCards({
+  team,
+  recentUploads,
+  onUploaded,
+}: {
+  team: MyTeam
+  recentUploads: RecentUploads
+  onUploaded: (type: SubmissionType, fileName: string) => void
+}) {
   const cards: ReactNode[] = []
 
   const eligible = semifinalOpen(team)
@@ -121,13 +146,17 @@ function SubmissionCards({ team, onUploaded }: { team: MyTeam; onUploaded: () =>
         buttonLabel="Send payment proof"
         onUpload={async (file) => {
           await ibccService.submitPayment(file, team.id)
-          onUploaded()
+          onUploaded('payment', file.name)
         }}
       />,
     )
   } else if (eligible && paymentStatus === 'PENDING_VERIFICATION') {
     cards.push(
-      <InfoCard key="payment" title="Semifinal payment">
+      <InfoCard
+        key="payment"
+        title="Semifinal payment"
+        fileName={recentUploads.payment}
+      >
         {team.payment.isProcessing
           ? 'Received. Your proof is being processed, then the committee will verify it.'
           : 'Received. The committee is verifying your payment.'}
@@ -146,9 +175,19 @@ function SubmissionCards({ team, onUploaded }: { team: MyTeam; onUploaded: () =>
         buttonLabel="Send slide deck"
         onUpload={async (file) => {
           await ibccService.submitPreliminary(file, team.id)
-          onUploaded()
+          onUploaded('preliminary', file.name)
         }}
       />,
+    )
+  } else if (!eligible) {
+    cards.push(
+      <InfoCard
+        key="preliminary"
+        title="Preliminary slide deck"
+        fileName={recentUploads.preliminary}
+      >
+        Uploaded successfully.
+      </InfoCard>,
     )
   }
 
@@ -163,9 +202,19 @@ function SubmissionCards({ team, onUploaded }: { team: MyTeam; onUploaded: () =>
         buttonLabel="Send semifinal deck"
         onUpload={async (file) => {
           await ibccService.submitSemifinal(file, team.id)
-          onUploaded()
+          onUploaded('semifinal', file.name)
         }}
       />,
+    )
+  } else if (eligible && team.semifinal?.submitted) {
+    cards.push(
+      <InfoCard
+        key="semifinal"
+        title="Semifinal slide deck"
+        fileName={recentUploads.semifinal}
+      >
+        Uploaded successfully.
+      </InfoCard>,
     )
   }
 
@@ -183,9 +232,14 @@ function SubmissionCards({ team, onUploaded }: { team: MyTeam; onUploaded: () =>
 export default function MyTeamPage() {
   usePageTitle('My Team')
   const [state, setState] = useState<Load>({ kind: 'loading' })
+  const [recentUploads, setRecentUploads] = useState<RecentUploads>({})
   // Bumped after an upload so the page re-reads GET /ibcc/my-team without flashing a spinner.
   const [reloadKey, setReloadKey] = useState(0)
   const reload = () => setReloadKey((key) => key + 1)
+  const handleUploaded = (type: SubmissionType, fileName: string) => {
+    setRecentUploads((current) => ({ ...current, [type]: fileName }))
+    reload()
+  }
 
   const filesProcessing = state.kind === 'ready' && Boolean(state.team.submissions.filesProcessing)
 
@@ -385,7 +439,11 @@ export default function MyTeamPage() {
                 </p>
               ) : (
                 // Payment is not mentioned before the semifinal: teams only hear about it once they pass.
-                <SubmissionCards team={state.team} onUploaded={reload} />
+                <SubmissionCards
+                  team={state.team}
+                  recentUploads={recentUploads}
+                  onUploaded={handleUploaded}
+                />
               )}
             </section>
           </>

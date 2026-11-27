@@ -93,6 +93,19 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
     throw new ApiError(NETWORK_ERROR_MESSAGE, 0)
   }
 
+  if (response.status === 413) {
+    // nginx returns an HTML 413 page before Express runs when total uploaded files exceed 50 MB.
+    throw new ApiError(
+      'Your uploaded files exceed the total 50 MB limit. Please compress your files and try again.',
+      413,
+    )
+  }
+
+  if (response.status === 401 && !path.startsWith('/auth/')) {
+    unauthorizedHandler?.()
+    throw new ApiError('Your 1-hour session has expired. Please sign in again and resubmit.', 401)
+  }
+
   let payload: ApiEnvelope<T> | null = null
   try {
     payload = (await response.json()) as ApiEnvelope<T>
@@ -102,10 +115,6 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
       response.status >= 500 ? SERVER_ERROR_MESSAGE : 'The server returned an unexpected response.',
       response.status,
     )
-  }
-
-  if (response.status === 401 && !path.startsWith('/auth/')) {
-    unauthorizedHandler?.()
   }
 
   if (!response.ok || !payload.success) {

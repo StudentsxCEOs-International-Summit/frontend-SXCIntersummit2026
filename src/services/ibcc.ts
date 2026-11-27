@@ -16,9 +16,23 @@ export interface TeamMemberInfo {
   id: number
   name: string
   email: string
+  whatsapp?: string | null
   institution: string | null
   major?: string | null
   yearOfStudy: string | null
+}
+
+export interface EditableParticipantDetails {
+  fullName?: string
+  whatsapp?: string
+  institution?: string
+  major?: string
+  yearOfStudy?: string
+}
+
+export interface UpdateMyTeamPayload {
+  leader?: EditableParticipantDetails
+  members?: Array<EditableParticipantDetails & { userId: number }>
 }
 
 export interface MyTeam {
@@ -52,7 +66,15 @@ export interface MyTeam {
     isQualified: boolean
     announcementMessage: string | null
   }
-  leader: { id: number; name: string; email: string; institution: string | null; major?: string | null }
+  leader: {
+    id: number
+    name: string
+    email: string
+    whatsapp?: string | null
+    institution: string | null
+    major?: string | null
+    yearOfStudy?: string | null
+  }
   members: TeamMemberInfo[]
   submissions: {
     requirementsCompleted: boolean
@@ -73,6 +95,9 @@ export const ibccService = {
 
   /** GET /ibcc/my-team -> 404 ("No registered team found") when the user has no team yet. */
   getMyTeam: () => api.get<MyTeam>('/ibcc/my-team'),
+
+  /** PATCH /ibcc/my-team -> leader-only partial update of participant details (teamName & email locked). */
+  updateMyTeam: (body: UpdateMyTeamPayload) => api.patch<MyTeam>('/ibcc/my-team', body),
 
   /** POST /ibcc/submission/preliminary (multipart, field `file`; PDF/PPT/PPTX/image, max 20 MB). */
   submitPreliminary: (file: File, teamId?: number) =>

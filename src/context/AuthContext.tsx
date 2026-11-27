@@ -94,3 +94,8 @@ export function useAuth() {
   if (!context) throw new Error('useAuth must be used inside <AuthProvider>')
   return context
 }
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function useOptionalAuth() {
+  return useContext(AuthContext)
+}

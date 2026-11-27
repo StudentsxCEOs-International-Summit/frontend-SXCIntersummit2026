@@ -272,14 +272,10 @@ export default function MyTeamPage() {
   usePageTitle('My Team')
   const auth = useOptionalAuth()
   const [state, setState] = useState<Load>({ kind: 'loading' })
-  const [recentUploads, setRecentUploads] = useState<RecentUploads>({})
+  const [editingTarget, setEditingTarget] = useState<EditableParticipantTarget | null>(null)
   // Bumped after an upload so the page re-reads GET /ibcc/my-team without flashing a spinner.
   const [reloadKey, setReloadKey] = useState(0)
   const reload = () => setReloadKey((key) => key + 1)
-  const handleUploaded = (type: SubmissionType, fileName: string) => {
-    setRecentUploads((current) => ({ ...current, [type]: fileName }))
-    reload()
-  }
 
   const handleSaveParticipant = async (payload: UpdateMyTeamPayload) => {
     const updatedTeam = await ibccService.updateMyTeam(payload)

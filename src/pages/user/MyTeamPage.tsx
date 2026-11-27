@@ -2,13 +2,17 @@ import { useEffect, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { CheckCircle2, Circle } from 'lucide-react'
 import { ContactTeamText } from '@/components/ContactTeamText'
+import { useOptionalAuth } from '@/context/AuthContext'
 import { usePageTitle } from '@/hooks/usePageTitle'
 import { ApiError } from '@/lib/api'
-import { ibccService, type MyTeam, type TeamMemberInfo } from '@/services/ibcc'
+import { ibccService, type MyTeam, type TeamMemberInfo, type UpdateMyTeamPayload } from '@/services/ibcc'
 import Footer from '@/components/landing/Footer'
 import UploadCard from '@/components/ibcc/UploadCard'
 import IBCCCaseCard from '@/components/ibcc/IBCCCaseCard'
 import JoinWhatsappGroupCard from '@/components/ibcc/JoinWhatsappGroupCard'
+import EditParticipantModal, {
+  type EditableParticipantTarget,
+} from '@/components/ibcc/EditParticipantModal'
 import { SEMIFINAL_FEE_TEXT, statusLabel } from '@/data/fees'
 
 type Load =
@@ -36,6 +40,7 @@ function PersonCard({
   major,
   yearOfStudy,
   role,
+  onEdit,
 }: {
   name: string
   email: string
@@ -43,6 +48,7 @@ function PersonCard({
   major?: string | null
   yearOfStudy?: string | null
   role: 'Leader' | 'Member'
+  onEdit?: () => void
 }) {
   return (
     <li className="rounded-2xl border border-[#E1EAF5] bg-white p-4 shadow-sm">
@@ -64,6 +70,17 @@ function PersonCard({
           {[institution, major, yearOfStudy].filter(Boolean).join(' · ')}
         </p>
       )}
+      {onEdit && (
+        <div className="mt-3 flex justify-end">
+          <button
+            type="button"
+            onClick={onEdit}
+            className="cursor-pointer rounded-full border border-[#C9DCF6] bg-[#F5F9FF] px-3.5 py-1 text-xs font-semibold text-[#1748be] transition hover:border-[#8AB6F2] hover:bg-[#E7F0FF]"
+          >
+            Edit Details
+          </button>
+        </div>
+      )}
     </li>
   )
 }
@@ -80,6 +97,28 @@ function Step({ done, children }: { done: boolean; children: string }) {
     </li>
   )
 }
+
+const toEditableTarget = (
+  kind: EditableParticipantTarget['kind'],
+  person: {
+    id: number
+    name: string
+    email: string
+    whatsapp?: string | null
+    institution: string | null
+    major?: string | null
+    yearOfStudy?: string | null
+  },
+): EditableParticipantTarget => ({
+  kind,
+  userId: person.id,
+  name: person.name,
+  email: person.email,
+  whatsapp: person.whatsapp ?? null,
+  institution: person.institution,
+  major: person.major ?? null,
+  yearOfStudy: person.yearOfStudy ?? null,
+})
 
 const PROCESSING_POLL_MS = 6000
 const DECK_EXTENSIONS = ['pdf', 'ppt', 'pptx']
@@ -231,14 +270,20 @@ function SubmissionCards({
 
 export default function MyTeamPage() {
   usePageTitle('My Team')
+  const auth = useOptionalAuth()
   const [state, setState] = useState<Load>({ kind: 'loading' })
-  const [recentUploads, setRecentUploads] = useState<RecentUploads>({})
+  const [editingTarget, setEditingTarget] = useState<EditableParticipantTarget | null>(null)
   // Bumped after an upload so the page re-reads GET /ibcc/my-team without flashing a spinner.
   const [reloadKey, setReloadKey] = useState(0)
   const reload = () => setReloadKey((key) => key + 1)
-  const handleUploaded = (type: SubmissionType, fileName: string) => {
-    setRecentUploads((current) => ({ ...current, [type]: fileName }))
-    reload()
+
+  const handleSaveParticipant = async (payload: UpdateMyTeamPayload) => {
+    const updatedTeam = await ibccService.updateMyTeam(payload)
+    setState({ kind: 'ready', team: updatedTeam })
+    if (editingTarget?.kind === 'leader' && auth?.user && auth.user.name !== updatedTeam.leader.name) {
+      auth.setUser({ ...auth.user, name: updatedTeam.leader.name })
+    }
+    setEditingTarget(null)
   }
 
   const filesProcessing = state.kind === 'ready' && Boolean(state.team.submissions.filesProcessing)
@@ -378,7 +423,13 @@ export default function MyTeamPage() {
                     email={state.team.leader.email}
                     institution={state.team.leader.institution}
                     major={state.team.leader.major}
+                    yearOfStudy={state.team.leader.yearOfStudy}
                     role="Leader"
+                    onEdit={
+                      state.team.isLeader
+                        ? () => setEditingTarget(toEditableTarget('leader', state.team.leader))
+                        : undefined
+                    }
                   />
                   {state.team.members.map((m: TeamMemberInfo) => (
                     <PersonCard
@@ -389,6 +440,11 @@ export default function MyTeamPage() {
                       major={m.major}
                       yearOfStudy={m.yearOfStudy}
                       role="Member"
+                      onEdit={
+                        state.team.isLeader
+                          ? () => setEditingTarget(toEditableTarget('member', m))
+                          : undefined
+                      }
                     />
                   ))}
                 </ul>
@@ -449,6 +505,15 @@ export default function MyTeamPage() {
           </>
         )}
       </section>
+      {state.kind === 'ready' && editingTarget && (
+        <EditParticipantModal
+          key={`${editingTarget.kind}-${editingTarget.userId}`}
+          teamName={state.team.name}
+          target={editingTarget}
+          onClose={() => setEditingTarget(null)}
+          onSave={handleSaveParticipant}
+        />
+      )}
       <Footer />
     </div>
   )

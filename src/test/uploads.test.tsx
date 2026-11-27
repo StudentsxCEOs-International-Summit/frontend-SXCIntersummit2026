@@ -52,6 +52,45 @@ describe('My Team submissions', () => {
     expect(screen.queryByText(/payment|Rp 180/i)).not.toBeInTheDocument()
   })
 
+  it('keeps the uploaded file name visible after the team status refreshes', async () => {
+    let teamRequestCount = 0
+    const myTeam = team()
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (url: string) => {
+        const path = String(url).replace(/^https?:\/\/[^/]+\/api/, '')
+        if (path === '/ibcc/submission/preliminary') return reply(201, 'ok', {})
+        if (path === '/ibcc/my-team') {
+          teamRequestCount += 1
+          return reply(
+            200,
+            'ok',
+            teamRequestCount === 1
+              ? myTeam
+              : {
+                  ...myTeam,
+                  submissions: { ...myTeam.submissions, preliminaryOutputSubmitted: true },
+                },
+          )
+        }
+        return reply(404, 'Not found')
+      }),
+    )
+    const { container } = render(
+      <MemoryRouter>
+        <MyTeamPage />
+      </MemoryRouter>,
+    )
+
+    await screen.findByRole('heading', { name: 'Preliminary slide deck' })
+    fireEvent.change(container.querySelector('input[type=file]') as HTMLInputElement, {
+      target: { files: [new File(['deck'], 'team-final.pdf', { type: 'application/pdf' })] },
+    })
+    fireEvent.click(screen.getByRole('button', { name: 'Send slide deck' }))
+
+    expect(await screen.findByText('team-final.pdf')).toBeInTheDocument()
+  })
+
   it('asks the team to join the preliminary WhatsApp group', async () => {
     renderWith(team())
 

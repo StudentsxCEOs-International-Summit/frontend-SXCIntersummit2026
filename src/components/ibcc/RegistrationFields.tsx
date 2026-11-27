@@ -1,5 +1,5 @@
 import { type ChangeEvent, type ReactNode } from 'react'
-import { FileUp } from 'lucide-react'
+import { CheckCircle2, FileUp } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { registrationLinks } from '@/utils/registrationLinks'
 
@@ -113,19 +113,39 @@ export function FileUploadField({
     <div>
       <label
         htmlFor={id}
-        className={`flex min-h-20 cursor-pointer items-center gap-3 rounded-lg border border-dashed px-4 py-3 transition hover:bg-[#F5FAFF] ${
-          error ? 'border-red-400 bg-red-50/40' : 'border-[#7BADEB] bg-white'
+        className={`flex min-h-20 cursor-pointer items-center gap-3 rounded-lg border border-dashed px-4 py-3 transition ${
+          error
+            ? 'border-red-400 bg-red-50/40'
+            : file
+              ? 'border-emerald-400 bg-emerald-50/60 hover:bg-emerald-50'
+              : 'border-[#7BADEB] bg-white hover:bg-[#F5FAFF]'
         }`}
       >
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EAF3FF] text-[#2874D8]">
-          <FileUp className="h-5 w-5" aria-hidden="true" />
+        <span
+          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
+            file ? 'bg-emerald-100 text-emerald-600' : 'bg-[#EAF3FF] text-[#2874D8]'
+          }`}
+        >
+          {file ? (
+            <CheckCircle2 className="h-5 w-5" aria-hidden="true" />
+          ) : (
+            <FileUp className="h-5 w-5" aria-hidden="true" />
+          )}
         </span>
         <span className="min-w-0">
-          <span className="block truncate text-sm font-semibold text-slate-800">
-            {file
-              ? 'Click to replace this file (Max 10 MB)'
-              : 'One file per requirement (Max 10 MB)'}
-          </span>
+          {file ? (
+            <>
+              <span className="block truncate text-sm font-semibold text-slate-800">{file.name}</span>
+              <span className="mt-0.5 block text-xs text-emerald-700">Selected - click to replace</span>
+            </>
+          ) : (
+            <>
+              <span className="block text-sm font-semibold text-slate-800">
+                One file per requirement (Max 10 MB)
+              </span>
+              <span className="mt-0.5 block text-xs text-slate-500">Not selected yet</span>
+            </>
+          )}
         </span>
         <input
           id={id}

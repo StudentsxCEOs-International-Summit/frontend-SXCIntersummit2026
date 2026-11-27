@@ -23,7 +23,7 @@ export default function RequireAuth({ children }: { children: ReactNode }) {
         replace
         state={{
           from: location.pathname + location.search,
-          notice: sessionExpired ? 'Your session has expired. Please log in again.' : undefined,
+          notice: sessionExpired ? 'Your 1-hour session has expired. Please log in again before submitting.' : undefined,
         }}
       />
     )

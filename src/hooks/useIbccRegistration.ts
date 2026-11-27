@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react'
 import { INITIAL_FORM, REGISTRATION_STEPS, REQUIREMENTS } from '@/data/ibccRegistration'
 import { ApiError } from '@/lib/api'
 import { ibccService, type RegisteredTeam } from '@/services/ibcc'
-import { buildRegistrationFormData, MAX_PROOF_FILE_BYTES } from '@/utils/ibccRegistrationPayload'
+import {
+  buildRegistrationFormData,
+  findEarliestErrorStep,
+  formatRegistrationError,
+  isValidWhatsappNumber,
+  MAX_PROOF_FILE_BYTES,
+} from '@/utils/ibccRegistrationPayload'
 import type {
   IbccRegistrationForm,
   ParticipantInformation,
@@ -177,8 +183,9 @@ export function useIbccRegistration({ leaderDefaults }: UseIbccRegistrationOptio
       // Same minimums as the backend schema.
       if (participant.fullName.trim() && participant.fullName.trim().length < 2)
         nextErrors[`${participantKey}.fullName`] = 'Full name must be at least 2 characters.'
-      if (participant.whatsapp.trim() && participant.whatsapp.trim().length < 8)
-        nextErrors[`${participantKey}.whatsapp`] = 'Enter a valid WhatsApp number.'
+      if (participant.whatsapp.trim() && !isValidWhatsappNumber(participant.whatsapp))
+        nextErrors[`${participantKey}.whatsapp`] =
+          'Please enter a valid WhatsApp number (e.g. 08123456789 or +628123456789).'
       if (participant.institution.trim() && participant.institution.trim().length < 3)
         nextErrors[`${participantKey}.institution`] = 'Enter your institution.'
       if (participant.major.trim() && participant.major.trim().length < 2)
@@ -220,7 +227,7 @@ export function useIbccRegistration({ leaderDefaults }: UseIbccRegistrationOptio
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } catch (error) {
       if (error instanceof ApiError) {
-        setSubmitError(error.message)
+        setSubmitError(formatRegistrationError(error.message))
 
         // Surface backend field errors next to the right input and jump back to that step.
         const mapped: RegistrationErrors = {}
@@ -228,7 +235,15 @@ export function useIbccRegistration({ leaderDefaults }: UseIbccRegistrationOptio
           const key = toFormErrorKey(path)
           if (key) mapped[key] = message
         }
-        if (Object.keys(mapped).length > 0) setErrors((current) => ({ ...current, ...mapped }))
+        const mappedKeys = Object.keys(mapped)
+        if (mappedKeys.length > 0) {
+          setErrors((current) => ({ ...current, ...mapped }))
+          const errorStep = findEarliestErrorStep(mappedKeys)
+          if (errorStep !== null) {
+            setStep(errorStep)
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+          }
+        }
       } else {
         setSubmitError('Something went wrong. Please try again.')
       }
